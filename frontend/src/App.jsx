@@ -12,6 +12,10 @@ import ToasterProvider from './components/ui/ToasterProvider';
 import InformacionFinancieraPage from './pages/student/InformacionFinancieraPage'; 
 import ContactoPage from './pages/student/ContactoPage';
 
+
+import MatriculaView from './pages/student/MatriculaView';
+
+
 function App() {
   return (
     <AuthProvider>
@@ -40,6 +44,8 @@ function App() {
               <Route path="/tramites/grado" element={<TramitesPage />} />
               <Route path="/docentes" element={<DocentesPage />} />
               <Route path="/contacto" element={<ContactoPage />} />
+
+              <Route path="/matricula" element={<MatriculaView />}/> 
 
             </Route>
           </Route>

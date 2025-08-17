@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { FaFacebookF, FaTwitter, FaWhatsapp } from "react-icons/fa";
 import { 
   MdHome, 
   MdSchool, 
@@ -19,11 +18,9 @@ import {
   MdGavel,
   MdRateReview,
   MdPersonSearch,
-  MdScience,
-  MdBarChart,
-  MdExitToApp
+  MdExitToApp,
+  MdHelpOutline
 } from "react-icons/md";
-// Importar MdCertificate por separado o usar un ícono alternativo
 import { MdVerifiedUser as MdCertificate } from "react-icons/md";
 import universidadLogo from "../../assets/logo-upg.webp";
 import LogoutConfirmModal from "../modals/LogoutConfirmModal";
@@ -32,15 +29,12 @@ function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [showLogoutModal, setShowLogoutModal] = useState(false);
-  const [socialMenuOpen, setSocialMenuOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState({
-    admision: false,
-    financiera: false,
-    tramites: false,
-    docentes: false
+    matricula: false,
+    informacion: false,
+    graduacion: false
   });
 
-  // Usar tu AuthContext
   const { isAuthenticated, userType, user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -58,7 +52,6 @@ function Header() {
     };
 
     const handleClickOutside = (event) => {
-      // Solo cerrar dropdowns en desktop y si no está dentro del nav
       const isDesktop = window.innerWidth >= 768;
       const clickedInsideNav = event.target.closest('nav');
       const clickedInsideMobileMenu = event.target.closest('[data-mobile-menu]');
@@ -72,7 +65,6 @@ function Header() {
     window.addEventListener("scroll", handleScroll);
     document.addEventListener("click", handleClickOutside);
 
-    // Llamar handleScroll para establecer el estado inicial
     handleScroll();
 
     return () => {
@@ -97,7 +89,6 @@ function Header() {
     setShowLogoutModal(false);
   };
 
-  // Funciones para manejar dropdowns
   const toggleDropdown = (menu) => {
     setDropdownOpen(prev => ({
       ...Object.keys(prev).reduce((acc, key) => ({ ...acc, [key]: false }), {}),
@@ -105,7 +96,6 @@ function Header() {
     }));
   };
 
-  // Función específica para móvil que previene el cierre accidental
   const toggleMobileDropdown = (menu, event) => {
     event.stopPropagation();
     event.preventDefault();
@@ -114,14 +104,12 @@ function Header() {
 
   const closeAllDropdowns = () => {
     setDropdownOpen({
-      admision: false,
-      financiera: false,
-      tramites: false,
-      docentes: false
+      matricula: false,
+      informacion: false,
+      graduacion: false
     });
   };
 
-  // Si no está autenticado, no mostrar el header
   if (!isAuthenticated) {
     return null;
   }
@@ -135,6 +123,7 @@ function Header() {
             : "bg-transparent"
         }`}
       >
+        {/* Logo centrado para móvil */}
         <div className="flex md:hidden justify-center items-center py-2 absolute left-0 right-0 mx-auto w-full pointer-events-none z-10">
           <Link
             to="/home"
@@ -150,225 +139,71 @@ function Header() {
         </div>
         
         <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
-          {/* Redes sociales */}
-          <div className="relative">
-            {/* Desktop - mostrar todas las redes */}
-            <div className="hidden md:flex gap-4 text-xl">
-              <a
-                href="https://www.facebook.com/PosgradoEducacionUNMSM/?locale=es_LA"
-                className="hover:text-gray-300 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Facebook Posgrado Educación UNMSM"
-              >
-                <FaFacebookF />
-              </a>
-              <a
-                href="https://x.com/PosgradoUNMSM"
-                className="hover:text-gray-300 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="Twitter Posgrado UNMSM"
-              >
-                <FaTwitter />
-              </a>
-              <a
-                href="https://wa.me/51965229338?text=Hola,%20necesito%20informacion."
-                className="hover:text-gray-300 transition-colors"
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label="WhatsApp Posgrado UNMSM"
-              >
-                <FaWhatsapp />
-              </a>
-            </div>
-
-            {/* Mobile - dropdown de redes sociales */}
-            <div className="md:hidden">
-              <button
-                onClick={() => setSocialMenuOpen(!socialMenuOpen)}
-                className="flex items-center hover:text-gray-300 transition-colors p-2"
-                aria-label="Abrir menú de redes sociales"
-              >
-                {/* Ícono de flecha para dropdown */}
-                <svg
-                  className={`w-5 h-5 transition-transform duration-300 ${
-                    socialMenuOpen ? "rotate-180" : ""
-                  }`}
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </button>
-              {socialMenuOpen && (
-                <div className="absolute top-full left-0 bg-[#880E1F] rounded-lg shadow-lg z-50">
-                  <div className="flex flex-col p-2 gap-2 min-w-[140px]">
-                    <a
-                      href="https://www.facebook.com/PosgradoEducacionUNMSM/?locale=es_LA"
-                      className="flex items-center gap-3 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setSocialMenuOpen(false)}
-                    >
-                      <FaFacebookF className="text-lg" />
-                      <span className="text-sm">Facebook</span>
-                    </a>
-                    <a
-                      href="https://x.com/PosgradoUNMSM"
-                      className="flex items-center gap-3 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setSocialMenuOpen(false)}
-                    >
-                      <FaTwitter className="text-lg" />
-                      <span className="text-sm">Twitter</span>
-                    </a>
-                    <a
-                      href="https://wa.me/51965229338?text=Hola,%20necesito%20informacion."
-                      className="flex items-center gap-3 px-3 py-2 hover:bg-white/10 rounded-lg transition-colors"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      onClick={() => setSocialMenuOpen(false)}
-                    >
-                      <FaWhatsapp className="text-lg" />
-                      <span className="text-sm">WhatsApp</span>
-                    </a>
-                  </div>
-                </div>
-              )}
-            </div>
-          </div>
-
           {/* Navegación principal */}
-          <nav className="hidden md:flex gap-4 items-center select-none font-bold relative">
-            <Link to="/home" className="hover:text-gray-300 transition-colors">
-              Inicio
-            </Link>
+          <nav className="hidden md:flex gap-6 items-center select-none font-bold relative w-full justify-center">
+            {/* Sección izquierda */}
+            <div className="flex gap-6 items-center">
+              <Link to="/home" className="hover:text-gray-300 transition-colors">
+                Inicio
+              </Link>
 
-            {/* Admisión Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => toggleDropdown('admision')}
-                className="flex items-center gap-1 hover:text-gray-300 transition-colors"
-                aria-expanded={dropdownOpen.admision}
-                aria-haspopup="true"
-              >
-                Admisión
-                <svg 
-                  className={`w-4 h-4 transition-transform ${dropdownOpen.admision ? 'rotate-180' : ''}`} 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+              {/* Matrícula Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown('matricula')}
+                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  aria-expanded={dropdownOpen.matricula}
+                  aria-haspopup="true"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {dropdownOpen.admision && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                  <div className="py-2">
-                    <Link 
-                      to="/admision#cronograma" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Cronograma 2025-II
-                    </Link>
-                    <Link 
-                      to="/admision#requisitos" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Requisitos de Postulación
-                    </Link>
-                    <Link 
-                      to="/admision#inscripcion" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Proceso de Inscripción
-                    </Link>
-                    <Link 
-                      to="/admision#examen" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Examen de Aptitud
-                    </Link>
-                    <Link 
-                      to="/admision#resultados" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Resultados
-                    </Link>
+                  Matrícula
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${dropdownOpen.matricula ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {dropdownOpen.matricula && (
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
+                    <div className="py-2">
+                      <Link 
+                        to="/matricula/cronograma-academico" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Cronograma Académico
+                      </Link>
+                      <Link 
+                        to="/matricula/cronograma-pagos" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Cronograma de Pagos
+                      </Link>
+                      <Link 
+                        to="/matricula/proceso" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Proceso de Matrícula
+                      </Link>
+                      <Link 
+                        to="/matricula/horarios" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Horario de Cursos
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-
-            {/* Información Financiera Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => toggleDropdown('financiera')}
-                className="flex items-center gap-1 hover:text-gray-300 transition-colors"
-                aria-expanded={dropdownOpen.financiera}
-                aria-haspopup="true"
-              >
-                Información Financiera
-                <svg 
-                  className={`w-4 h-4 transition-transform ${dropdownOpen.financiera ? 'rotate-180' : ''}`} 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
-                >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {dropdownOpen.financiera && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                  <div className="py-2">
-                    <Link 
-                      to="/tarifarios/oficiales" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Tarifarios Oficiales
-                    </Link>
-                    <Link 
-                      to="/tarifarios/pagos" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Formas de Pago
-                    </Link>
-                    <Link 
-                      to="/tarifarios/becas" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Becas y Financiamiento
-                    </Link>
-                    <Link 
-                      to="/tarifarios/calendario" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Calendario de Pagos
-                    </Link>
-                  </div>
-                </div>
-              )}
+                )}
+              </div>
             </div>
 
             {/* Logo en el centro */}
-            <div className="flex items-center gap-3 px-4">
+            <div className="flex items-center gap-3 px-8">
               <Link
                 to="/home"
                 className="flex items-center gap-3 cursor-pointer hover:text-gray-300 transition-colors"
@@ -381,68 +216,137 @@ function Header() {
               </Link>
             </div>
 
-            {/* Trámites Dropdown */}
-            <div className="relative">
-              <button
-                onClick={() => toggleDropdown('tramites')}
-                className="flex items-center gap-1 hover:text-gray-300 transition-colors"
-                aria-expanded={dropdownOpen.tramites}
-                aria-haspopup="true"
-              >
-                Trámites
-                <svg 
-                  className={`w-4 h-4 transition-transform ${dropdownOpen.tramites ? 'rotate-180' : ''}`} 
-                  fill="none" 
-                  stroke="currentColor" 
-                  viewBox="0 0 24 24"
+            {/* Sección derecha */}
+            <div className="flex gap-6 items-center">
+              {/* Información Académica Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown('informacion')}
+                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  aria-expanded={dropdownOpen.informacion}
+                  aria-haspopup="true"
                 >
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                </svg>
-              </button>
-              {dropdownOpen.tramites && (
-                <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                  <div className="py-2">
-                    <Link 
-                      to="/tramites/matricula" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Proceso de Matrícula
-                    </Link>
-                    <Link 
-                      to="/tramites/certificados" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Certificados y Constancias
-                    </Link>
-                    <Link 
-                      to="/tramites/modificacion" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Modificación de Matrícula
-                    </Link>
-                    <Link 
-                      to="/tramites/grado" 
-                      className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                      onClick={closeAllDropdowns}
-                    >
-                      Trámites de Grado
-                    </Link>
+                  Información Académica
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${dropdownOpen.informacion ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {dropdownOpen.informacion && (
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
+                    <div className="py-2">
+                      <Link 
+                        to="/informacion-academica/direccion" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Dirección Académica
+                      </Link>
+                      <Link 
+                        to="/informacion-academica/comite-directivo" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Comité Directivo
+                      </Link>
+                      <Link 
+                        to="/informacion-academica/coordinadores" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Coordinadores Académicos
+                      </Link>
+                      <Link 
+                        to="/informacion-academica/docentes" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Plana Docente
+                      </Link>
+                      <Link 
+                        to="/informacion-academica/plan-estudios" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Plan de Estudios
+                      </Link>
+                      <Link
+                        to="/informacion-academica/reglamento" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Reglamento de Estudios
+                      </Link>
+                      <Link 
+                        to="/informacion-academica/preguntas-frecuentes"
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Preguntas Frecuentes
+                      </Link>
+                    </div>
                   </div>
-                </div>
-              )}
+                )}
+              </div>
+
+              {/* Graduación Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown('graduacion')}
+                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  aria-expanded={dropdownOpen.graduacion}
+                  aria-haspopup="true"
+                >
+                  Graduación
+                  <svg 
+                    className={`w-4 h-4 transition-transform ${dropdownOpen.graduacion ? 'rotate-180' : ''}`} 
+                    fill="none" 
+                    stroke="currentColor" 
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {dropdownOpen.graduacion && (
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
+                    <div className="py-2">
+                      <Link 
+                        to="/graduacion/procesos-requisitos" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Procesos y Requisitos
+                      </Link>
+                      <Link 
+                        to="/graduacion/guia" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Guía de Graduación
+                      </Link>
+                      <Link 
+                        to="/graduacion/sustentacion" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Programación de Sustentación
+                      </Link>
+                      <Link 
+                        to="/graduacion/preguntas-frecuentes" 
+                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        Preguntas Frecuentes
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
             </div>
-
-            {/* Plana Docente Dropdown */}
-            <Link to="/docentes" className="hover:text-gray-300 transition-colors">
-  Plana Docente
-</Link>
-
-            <Link to="/contacto" className="hover:text-gray-300 transition-colors">
-              Contacto
-            </Link>
           </nav>
 
           {/* Usuario logueado y logout */}
@@ -450,7 +354,6 @@ function Header() {
             <div className="hidden xl:flex items-center gap-2">
               <MdPeople className="text-lg" />
               <span className="text-sm">
-                {" "}
                 {userType === "admin"
                   ? user?.username || "Admin"
                   : "Estudiante"}
@@ -485,7 +388,6 @@ function Header() {
               }`}
               onClick={() => {
                 setMenuOpen(!menuOpen);
-                setSocialMenuOpen(false);
                 closeAllDropdowns();
               }}
               aria-label="Abrir menú de navegación"
@@ -532,16 +434,16 @@ function Header() {
             </div>
           </Link>
 
-          {/* Admisión Mobile Submenu */}
+          {/* Matrícula Mobile Submenu */}
           <div>
             <button
-              onClick={(e) => toggleMobileDropdown('admision', e)}
+              onClick={(e) => toggleMobileDropdown('matricula', e)}
               className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
-              aria-expanded={dropdownOpen.admision}
+              aria-expanded={dropdownOpen.matricula}
             >
-              Admisión 
+              Matrícula 
               <svg 
-                className={`w-5 h-5 transition-transform ${dropdownOpen.admision ? 'rotate-180' : ''}`} 
+                className={`w-5 h-5 transition-transform ${dropdownOpen.matricula ? 'rotate-180' : ''}`} 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -549,57 +451,50 @@ function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            {dropdownOpen.admision && (
+            {dropdownOpen.matricula && (
               <div className="mt-2 ml-4 space-y-2">
                 <Link 
-                  to="/admision#cronograma" 
+                  to="/matricula/cronograma-academico" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdSchedule className="text-lg" /> Cronograma 2025-II
+                  <MdSchedule className="text-lg" /> Cronograma Académico
                 </Link>
                 <Link 
-                  to="/admision#requisitos" 
+                  to="/matricula/cronograma-pagos" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdLibraryBooks className="text-lg" /> Requisitos de Postulación
+                  <MdPayment className="text-lg" /> Cronograma de Pagos
                 </Link>
                 <Link 
-                  to="/admision#inscripcion" 
+                  to="/matricula/proceso" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdEdit className="text-lg" /> Proceso de Inscripción
+                  <MdEdit className="text-lg" /> Proceso de Matrícula
                 </Link>
                 <Link 
-                  to="/admision#examen" 
+                  to="/matricula/horarios" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdQuiz className="text-lg" /> Examen de Aptitud
-                </Link>
-                <Link 
-                  to="/admision#resultados" 
-                  onClick={() => setMenuOpen(false)} 
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdEmojiEvents className="text-lg" /> Resultados
+                  <MdSchedule className="text-lg" /> Horarios de Cursos
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Información Financiera Mobile Submenu */}
+          {/* Información Académica Mobile Submenu */}
           <div>
             <button
-              onClick={(e) => toggleMobileDropdown('financiera', e)}
+              onClick={(e) => toggleMobileDropdown('informacion', e)}
               className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
-              aria-expanded={dropdownOpen.financiera}
+              aria-expanded={dropdownOpen.informacion}
             >
-              Información Financiera
+              Información Académica
               <svg 
-                className={`w-5 h-5 transition-transform ${dropdownOpen.financiera ? 'rotate-180' : ''}`} 
+                className={`w-5 h-5 transition-transform ${dropdownOpen.informacion ? 'rotate-180' : ''}`} 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -607,50 +502,71 @@ function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            {dropdownOpen.financiera && (
+            {dropdownOpen.informacion && (
               <div className="mt-2 ml-4 space-y-2">
                 <Link 
-                  to="/tarifarios/oficiales" 
+                  to="/informacion-academica/direccion" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdAccountBalance className="text-lg" /> Tarifarios Oficiales
+                  <MdSchool className="text-lg" /> Dirección Académica
                 </Link>
                 <Link 
-                  to="/tarifarios/pagos" 
+                  to="/informacion-academica/comite-directivo" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdPayment className="text-lg" /> Formas de Pago
+                  <MdPeople className="text-lg" /> Comité Directivo
                 </Link>
                 <Link 
-                  to="/tarifarios/becas" 
+                  to="/informacion-academica/coordinadores" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdCardGiftcard className="text-lg" /> Becas y Financiamiento
+                  <MdPersonSearch className="text-lg" /> Coordinadores Académicos
                 </Link>
                 <Link 
-                  to="/tarifarios/calendario" 
+                  to="/informacion-academica/docentes" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdCalendarToday className="text-lg" /> Calendario de Pagos
+                  <MdPersonSearch className="text-lg" /> Plana Docente
+                </Link>
+                <Link 
+                  to="/informacion-academica/plan-estudios" 
+                  onClick={() => setMenuOpen(false)} 
+                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+                >
+                  <MdLibraryBooks className="text-lg" /> Plan de Estudios
+                </Link>
+                <Link 
+                  to="/informacion-academica/reglamento" 
+                  onClick={() => setMenuOpen(false)} 
+                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+                >
+                  <MdGavel className="text-lg" /> Reglamento de Estudios
+                </Link>
+                <Link 
+                  to="/informacion-academica/preguntas-frecuentes"
+                  onClick={() => setMenuOpen(false)} 
+                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+                >
+                  <MdHelpOutline className="text-lg" /> Preguntas Frecuentes
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Trámites Mobile Submenu */}
+          {/* Graduación Mobile Submenu */}
           <div>
             <button
-              onClick={(e) => toggleMobileDropdown('tramites', e)}
+              onClick={(e) => toggleMobileDropdown('graduacion', e)}
               className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
-              aria-expanded={dropdownOpen.tramites}
+              aria-expanded={dropdownOpen.graduacion}
             >
-              Trámites
+              Graduación
               <svg 
-                className={`w-5 h-5 transition-transform ${dropdownOpen.tramites ? 'rotate-180' : ''}`} 
+                className={`w-5 h-5 transition-transform ${dropdownOpen.graduacion ? 'rotate-180' : ''}`} 
                 fill="none" 
                 stroke="currentColor" 
                 viewBox="0 0 24 24"
@@ -658,65 +574,44 @@ function Header() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
               </svg>
             </button>
-            {dropdownOpen.tramites && (
+            {dropdownOpen.graduacion && (
               <div className="mt-2 ml-4 space-y-2">
                 <Link 
-                  to="/tramites/matricula" 
+                  to="/graduacion/procesos-requisitos" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdSchool className="text-lg" /> Proceso de Matrícula
+                  <MdLibraryBooks className="text-lg" /> Procesos y Requisitos
                 </Link>
                 <Link 
-                  to="/tramites/certificados" 
+                  to="/graduacion/guia" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdCertificate className="text-lg" /> Certificados y Constancias
+                  <MdCertificate className="text-lg" /> Guía de Graduación
                 </Link>
                 <Link 
-                  to="/tramites/modificacion" 
+                  to="/graduacion/sustentacion" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdRateReview className="text-lg" /> Modificación de Matrícula
+                  <MdEmojiEvents className="text-lg" /> Programación de Sustentación
                 </Link>
                 <Link 
-                  to="/tramites/grado" 
+                  to="/graduacion/preguntas-frecuentes" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdGavel className="text-lg" /> Trámites de Grado
+                  <MdHelpOutline className="text-lg" /> Preguntas Frecuentes
                 </Link>
               </div>
             )}
           </div>
-
-          {/* Plana Docente Mobile Submenu */}
-          
-<Link
-  to="/docentes"
-  onClick={() => setMenuOpen(false)}
-  className="flex items-center justify-between text-lg font-medium hover:text-gray-300 transition-colors"
->
-  <div className="flex items-center gap-2">
-    <MdPersonSearch className="text-xl" /> Plana Docente
-  </div>
-</Link>
-          <Link
-            to="/contacto"
-            onClick={() => setMenuOpen(false)}
-            className="flex items-center justify-between text-lg font-medium hover:text-gray-300 transition-colors"
-          >
-            <div className="flex items-center gap-2">
-              <MdPhone className="text-xl" /> Contacto
-            </div>
-          </Link>
 
           {/* Separador */}
           <div className="border-t border-white/20 my-4"></div>
 
-          {/* Logout en mobile - después de Contacto */}
+          {/* Logout en mobile */}
           <button
             onClick={handleLogout}
             className="w-full bg-red-600 hover:bg-red-700 px-4 py-3 rounded-lg text-base font-medium transition-colors flex items-center justify-between"
