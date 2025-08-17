@@ -173,7 +173,7 @@ const ProgramCarousel = () => {
                       {/* Button */}
                       <button
                         onClick={() => window.open(programa.url, '_blank')}
-                        className={`w-full bg-[#880E1F] text-white rounded-lg hover:bg-red-800 transition-colors font-medium ${
+                        className={`w-full bg-[#1C1B3B] text-white rounded-lg hover:bg-red-800 transition-colors font-medium ${
                           isCenter ? "py-3 text-sm" : "py-2 text-xs"
                         }`}
                       >
@@ -246,7 +246,7 @@ const ProgramCarousel = () => {
 
         {/* Ver todos
         <div className="text-center mt-10">
-          <button className="border border-[#880E1F] text-[#880E1F] hover:bg-[#880E1F] hover:text-white px-8 py-3 rounded-lg font-medium transition-all duration-300">
+          <button className="border border-[#1C1B3B] text-[#880E1F] hover:bg-[#880E1F] hover:text-white px-8 py-3 rounded-lg font-medium transition-all duration-300">
             Ver Todos los Programas
           </button>
         </div> */}

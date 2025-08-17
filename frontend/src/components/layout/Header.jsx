@@ -119,7 +119,7 @@ function Header() {
       <header
         className={`fixed top-0 w-full z-50 text-white transition-all duration-300 ease-in-out ${
           isScrolled
-            ? "bg-[#880E1F] shadow-lg backdrop-blur-md"
+            ? "bg-[#1C1B3B] shadow-lg backdrop-blur-md"
             : "bg-transparent"
         }`}
       >
@@ -183,14 +183,14 @@ function Header() {
                         Cronograma de Pagos
                       </Link>
                       <Link 
-                        to="/matricula/proceso" 
+                        to="/matricula/proceso-matricula" 
                         className="block px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         Proceso de Matrícula
                       </Link>
                       <Link 
-                        to="/matricula/horarios" 
+                        to="/matricula/horario-cursos" 
                         className="block px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
@@ -419,8 +419,8 @@ function Header() {
           menuOpen ? "translate-x-0" : "-translate-x-full"
         } ${
           isScrolled
-            ? "bg-[#880E1F]"
-            : "bg-[#880E1F] bg-opacity-95 backdrop-blur-md"
+            ? "bg-[#1C1B3B]"
+            : "bg-[#1C1B3B] bg-opacity-95 backdrop-blur-md"
         }`}
       >
         <div className="p-6 flex flex-col gap-4 overflow-y-auto h-full" data-mobile-menu="true">
@@ -468,14 +468,14 @@ function Header() {
                   <MdPayment className="text-lg" /> Cronograma de Pagos
                 </Link>
                 <Link 
-                  to="/matricula/proceso" 
+                  to="/matricula/proceso-matricula" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
                   <MdEdit className="text-lg" /> Proceso de Matrícula
                 </Link>
                 <Link 
-                  to="/matricula/horarios" 
+                  to="/matricula/horario-cursos" 
                   onClick={() => setMenuOpen(false)} 
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >

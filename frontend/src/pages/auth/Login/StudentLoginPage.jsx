@@ -74,7 +74,7 @@ const handleSubmit = async (e) => {
             }}
           />
           <div
-            className="h-24 w-24 mx-auto mb-6 rounded-full border-4 border-blue-500 bg-[#880E1F] items-center justify-center text-4xl"
+            className="h-24 w-24 mx-auto mb-6 rounded-full border-4 border-blue-500 bg-[#1C1B3B] items-center justify-center text-4xl"
             style={{ display: "none" }}
           >
             🎓
