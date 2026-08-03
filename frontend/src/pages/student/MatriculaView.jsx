@@ -39,25 +39,25 @@ const MatriculaView = () => {
       id: "cronograma-academico",
       title: "Cronograma Académico",
       icon: MdSchedule,
-      color: "#4E8440",
+      color: "#081B42",
     },
     {
       id: "cronograma-pagos",
       title: "Cronograma de Pagos",
       icon: MdPayment,
-      color: "#4E8440",
+      color: "#081B42",
     },
     {
       id: "proceso-matricula",
       title: "Proceso de Matrícula",
       icon: MdEdit,
-      color: "#4E8440",
+      color: "#081B42",
     },
     {
       id: "horario-cursos",
       title: "Horario de Cursos",
       icon: MdAccessTime,
-      color: "#4E8440",
+      color: "#081B42",
     },
   ];
 
@@ -135,28 +135,28 @@ const MatriculaView = () => {
       titulo: "Verificar Requisitos",
       descripcion: "Confirmar pagos al día y documentos actualizados",
       icono: MdCheckCircle,
-      color: "#4E8440",
+      color: "#081B42",
     },
     {
       paso: 2,
       titulo: "Acceder al SUM",
       descripcion: "Ingresar con usuario y contraseña al sistema",
       icono: MdPerson,
-      color: "#1B253C",
+      color: "#1B2945",
     },
     {
       paso: 3,
       titulo: "Seleccionar Cursos",
       descripcion: "Elegir asignaturas según programa académico",
       icono: MdBook,
-      color: "#1C1B3B",
+      color: "#2E4676",
     },
     {
       paso: 4,
       titulo: "Confirmar Matrícula",
       descripcion: "Revisar y confirmar la selección de cursos",
       icono: MdEdit,
-      color: "#B48E0C",
+      color: "#07A852",
     },
   ];
 
@@ -167,76 +167,114 @@ const MatriculaView = () => {
         clave: "didactica-matematica",
         cursos: [
           // CICLO 1
+          // plan 2023 - semipresencial
           {
-            curso: "Fundamentos de Didáctica Matemática",
-            horario: "Lunes 17:00 - 19:00",
-            docente: "Dr. Luis Mendoza",
-            aula: "A-101",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Epistemología de la Matemática",
-            horario: "Miércoles 17:00 - 19:00",
-            docente: "Dr. Carlos Ramírez",
-            aula: "A-102",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Metodología de la Investigación Educativa",
-            horario: "Viernes 17:00 - 19:00",
-            docente: "Dra. María González",
-            aula: "A-103",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Psicología del Aprendizaje Matemático",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Roberto Silva",
-            aula: "A-104",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
+          "curso": "Introducción a la Didáctica de las Matemáticas",
+          "horario": "Domingo 08:00 - 10:30",
+          "docente": "Carlos Díaz Serruche",
+          "aula": "13C",
+          "credito": 3,
+          "seccion": 1,
+          "ciclo": 1
+        },
+        {
+          "curso": "Didáctica del Álgebra y Aritmética",
+          "horario": "Domingo 10:30 - 13:30",
+          "docente": "Ángel Salvatierra Melgar",
+          "aula": "13C",
+          "credito": 4,
+          "seccion": 1,
+          "ciclo": 1
+        },
+        {
+          "curso": "Didáctica de la Geometría y Trigonometría",
+          "horario": "Sábado 16:00 - 19:00",
+          "docente": "Alex Molina Sotomayor",
+          "aula": "13C",
+          "credito": 4,
+          "seccion": 1,
+          "ciclo": 1
+        },
+        {
+          "curso": "Tecnologías en la Enseñanza de las Matemáticas",
+          "horario": "Sábado 13:00 - 16:00",
+          "docente": "Iván Ángel Encalada Díaz",
+          "aula": "13C",
+          "credito": 4,
+          "seccion": 1,
+          "ciclo": 1
+        },
+        {
+          "curso": "Tópicos de Cálculo I",
+          "horario": "Domingo 14:30 - 17:30",
+          "docente": "Luis Alberto Gómez Robles",
+          "aula": "13C",
+          "credito": 4,
+          "seccion": 1,
+          "ciclo": 1
+        },
+        {
+          "curso": "Seminario de Investigación en Educación Matemática",
+          "horario": "Sábado 08:00 - 12:00",
+          "docente": "Fidel Antonio Chauca Vidal",
+          "aula": "13C",
+          "credito": 5,
+          "seccion": 1,
+          "ciclo": 1
+        },
           // CICLO 2
+          //plan 2023 - semipresencial
           {
-            curso: "Tecnologías en la Enseñanza de Matemáticas",
-            horario: "Martes 17:00 - 19:00",
-            docente: "Dra. Elena Rojas",
-            aula: "Lab-01",
+            curso: "Didáctica de la Estadística y ...",
+            horario: "Domingo 11:00 - 14:00",
+            docente: "Jose Olivera Espinoza",
+            aula: "14C",
             credito: 4,
             seccion: 1,
             ciclo: 2,
           },
           {
-            curso: "Evaluación del Aprendizaje Matemático",
-            horario: "Jueves 17:00 - 19:00",
-            docente: "Dr. Jorge Martínez",
-            aula: "A-105",
+            curso: "Didáctica de la Matemática",
+            horario: "Domingo 15:00 - 17:30",
+            docente: "Angel Salvatierra Melgar",
+            aula: "14C",
             credito: 3,
             seccion: 1,
             ciclo: 2,
           },
           {
-            curso: "Diseño Curricular en Matemáticas",
-            horario: "Viernes 17:00 - 19:00",
-            docente: "Dra. Patricia Vargas",
-            aula: "A-106",
-            credito: 3,
+            curso: "Evaluación del Aprendizaje en ...",
+            horario: "Sábado 8:00 - 11:00",
+            docente: "Ivn Angel Encalada Diáz",
+            aula: "14C",
+            credito: 4,
             seccion: 1,
             ciclo: 2,
           },
           {
-            curso: "Trabajo de Investigación",
-            horario: "Sábado 14:00 - 18:00",
-            docente: "Dr. Luis Mendoza",
-            aula: "A-107",
-            credito: 6,
+            curso: "Casuística en la Didáctica de la Matemática",
+            horario: "Domingo 8:00 - 11:00",
+            docente: "Luis Alberto Gomez Robles",
+            aula: "14C",
+            credito: 4,
+            seccion: 1,
+            ciclo: 2,
+          },
+          {
+            curso: "Tópicos de Cálculo II",
+            horario: "Sábado 11:00 - 14:00",
+            docente: "Maxedgar Cantoral",
+            aula: "14C",
+            credito: 4,
+            seccion: 1,
+            ciclo: 2,
+          },
+          {
+            curso: "Seminario de Investigación en Educación",
+            horario: "Sábado 15:00 - 19:00",
+            docente: "Jose Olivera Espinoza",
+            aula: "14C",
+            credito: 5,
             seccion: 1,
             ciclo: 2,
           },
@@ -248,78 +286,98 @@ const MatriculaView = () => {
         clave: "didactica-comunicacion",
         cursos: [
           // CICLO 1
+          // plan 2023 - semipresencial
           {
-            curso: "Teorías de la Comunicación en el Aula",
-            horario: "Lunes 18:00 - 20:00",
-            docente: "Dra. Ana Flores",
-            aula: "B-101",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
+            "curso": "Sociolingüística",
+            "horario": "Domingo 08:00 - 12:00",
+            "docente": "Milagritos Josefina Saavedra Jaramillo de Sedamano",
+            "aula": "Lab. de Inglés",
+            "credito": 5,
+            "seccion": 1,
+            "ciclo": 1
           },
           {
-            curso: "Lingüística Aplicada a la Educación",
-            horario: "Miércoles 18:00 - 20:00",
-            docente: "Dr. Fernando Torres",
-            aula: "B-102",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
+            "curso": "Del Texto a Escena",
+            "horario": "Sábado 13:00 - 17:00",
+            "docente": "Eliana Vásquez Colichón",
+            "aula": "Lab. de Inglés",
+            "credito": 5,
+            "seccion": 1,
+            "ciclo": 1
           },
           {
-            curso: "Metodología de la Investigación en Comunicación",
-            horario: "Viernes 18:00 - 20:00",
-            docente: "Dra. Carmen López",
-            aula: "B-103",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
+            "curso": "Storytelling Educactivo",
+            "horario": "Domingo 13:00 - 16:00",
+            "docente": "Dante Rafael Aguinaga Villegas",
+            "aula": "Lab. de Inglés",
+            "credito": 4,
+            "seccion": 1,
+            "ciclo": 1
           },
           {
-            curso: "Psicología de la Comunicación Educativa",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Miguel Herrera",
-            aula: "B-104",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
+            "curso": "Literatura y Culturas Amazónicas",
+            "horario": "Sábado 17:00 - 20:00",
+            "docente": "Manuel Alberto Sedamano Ballesteros",
+            "aula": "Lab. de Inglés",
+            "credito": 4,
+            "seccion": 1,
+            "ciclo": 1
+          },
+          {
+            "curso": "Metodología de Investigación",
+            "horario": "Sábado 08:00 - 12:30",
+            "docente": "Fidel Antonio Chauca Vidal",
+            "aula": "Lab. de Inglés",
+            "credito": 6,
+            "seccion": 1,
+            "ciclo": 1
           },
           // CICLO 2
+          // plan 2023 - semipresencial
           {
-            curso: "Innovación Pedagógica",
-            horario: "Martes 18:00 - 20:00",
-            docente: "Dr. Roberto Díaz",
-            aula: "B-105",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
+            "curso": "Procesos Pedagógicos",
+            "horario": "Sábado 08:00 - 12:30",
+            "docente": "Dante Rafael Aguinaga Villegas",
+            "aula": "3B",
+            "credito": 6,
+            "seccion": 1,
+            "ciclo": 2
           },
           {
-            curso: "Medios Digitales en la Educación",
-            horario: "Jueves 18:00 - 20:00",
-            docente: "Dra. Sofía Morales",
-            aula: "Lab-02",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
+            "curso": "Procesos Didácticos de la Oralidad",
+            "horario": "Domingo 14:00 - 17:00",
+            "docente": "Eliana Vásquez Colichón",
+            "aula": "3B",
+            "credito": 4,
+            "seccion": 1,
+            "ciclo": 2
           },
           {
-            curso: "Evaluación de la Comunicación Educativa",
-            horario: "Viernes 18:00 - 20:00",
-            docente: "Dr. Andrés Castillo",
-            aula: "B-106",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
+            "curso": "Inteligencia Artificial y Comunicación Educativa",
+            "horario": "Sábado 14:00 - 17:00",
+            "docente": "Manuel Alberto Sedamano Ballesteros",
+            "aula": "3B",
+            "credito": 4,
+            "seccion": 1,
+            "ciclo": 2
           },
           {
-            curso: "Proyecto de Innovación Educativa",
-            horario: "Sábado 14:00 - 18:00",
-            docente: "Dra. Ana Flores",
-            aula: "B-107",
-            credito: 5,
-            seccion: 1,
-            ciclo: 2,
+            "curso": "Procesos Didácticos de la Lectura",
+            "horario": "Sábado 17:00 - 20:00",
+            "docente": "Milagritos Josefina Saavedra Jaramillo de Sedamano",
+            "aula": "3B",
+            "credito": 4,
+            "seccion": 1,
+            "ciclo": 2
+          },
+          {
+            "curso": "Elaboración de Artículos",
+            "horario": "Sábado 08:00 - 12:30",
+            "docente": "Doris Elida Fuster Guillén",
+            "aula": "3B",
+            "credito": 5,
+            "seccion": 1,
+            "ciclo": 2
           },
         ],
       },
@@ -328,411 +386,18 @@ const MatriculaView = () => {
       {
         nombre: "Maestría en Educación con mención en Gestión de la Educación",
         clave: "gestion-educacion",
-        cursos: [
-          // CICLO 1
-          {
-            curso: "Políticas Educativas",
-            horario: "Lunes 19:00 - 21:00",
-            docente: "Dr. Carlos Ruiz",
-            aula: "C-201",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Teorías de la Administración Educativa",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dra. Isabel García",
-            aula: "C-202",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Metodología de la Investigación I",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dr. José Gómez",
-            aula: "C-203",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Estadística Aplicada a la Educación",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Ricardo Mendoza",
-            aula: "Lab-03",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          // CICLO 2
-          {
-            curso: "Liderazgo Directivo",
-            horario: "Martes 19:00 - 21:00",
-            docente: "Dra. Patricia Mendoza",
-            aula: "C-204",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Planeamiento Estratégico Educativo",
-            horario: "Jueves 19:00 - 21:00",
-            docente: "Dr. Manuel Torres",
-            aula: "C-205",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Metodología de la Investigación II",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dr. José Gómez",
-            aula: "C-206",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Gestión de Recursos Humanos en Educación",
-            horario: "Sábado 14:00 - 18:00",
-            docente: "Dra. Carmen Vásquez",
-            aula: "C-207",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
-          },
-          // CICLO 3
-          {
-            curso: "Evaluación Institucional",
-            horario: "Lunes 19:00 - 21:00",
-            docente: "Dr. Raúl Jiménez",
-            aula: "C-208",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Gestión Financiera en Instituciones Educativas",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dra. Mónica Salazar",
-            aula: "C-209",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Seminario de Tesis I",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dr. Carlos Ruiz",
-            aula: "C-210",
-            credito: 4,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Gestión de la Calidad Educativa",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Alberto Ramos",
-            aula: "C-211",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          // CICLO 4
-          {
-            curso: "Seminario de Tesis II",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dr. Carlos Ruiz",
-            aula: "C-212",
-            credito: 6,
-            seccion: 1,
-            ciclo: 4,
-          },
-          {
-            curso: "Tesis de Maestría",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. José Gómez",
-            aula: "C-213",
-            credito: 8,
-            seccion: 1,
-            ciclo: 4,
-          },
-        ],
+        cursos: [],
       },
       {
         nombre: "Maestría en Educación con mención en Docencia Universitaria",
         clave: "docencia-universitaria",
-        cursos: [
-          // CICLO 1
-          {
-            curso: "Pedagogía Universitaria",
-            horario: "Lunes 19:00 - 21:00",
-            docente: "Dra. María López",
-            aula: "D-301",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Epistemología de la Educación Superior",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dr. Francisco Herrera",
-            aula: "D-302",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Metodología de la Investigación I",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dr. Alejandro Vega",
-            aula: "D-303",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Psicología del Adulto y Aprendizaje",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dra. Gloria Paredes",
-            aula: "D-304",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
-          // CICLO 2
-          {
-            curso: "Metodología del Aprendizaje Universitario",
-            horario: "Martes 19:00 - 21:00",
-            docente: "Dr. Jorge Alvarado",
-            aula: "D-305",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Diseño Curricular Universitario",
-            horario: "Jueves 19:00 - 21:00",
-            docente: "Dra. Susana Flores",
-            aula: "D-306",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Metodología de la Investigación II",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dr. Alejandro Vega",
-            aula: "D-307",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Tecnología Educativa en Educación Superior",
-            horario: "Sábado 14:00 - 18:00",
-            docente: "Dr. Diego Moreno",
-            aula: "Lab-04",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
-          },
-          // CICLO 3
-          {
-            curso: "Evaluación del Aprendizaje Universitario",
-            horario: "Lunes 19:00 - 21:00",
-            docente: "Dr. Hugo Castañeda",
-            aula: "D-308",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Gestión Universitaria",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dra. Beatriz Román",
-            aula: "D-309",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Seminario de Tesis I",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dra. María López",
-            aula: "D-310",
-            credito: 4,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Ética Profesional y Responsabilidad Social",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Ernesto Silva",
-            aula: "D-311",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          // CICLO 4
-          {
-            curso: "Seminario de Tesis II",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dra. María López",
-            aula: "D-312",
-            credito: 6,
-            seccion: 1,
-            ciclo: 4,
-          },
-          {
-            curso: "Tesis de Maestría",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Jorge Alvarado",
-            aula: "D-313",
-            credito: 8,
-            seccion: 1,
-            ciclo: 4,
-          },
-        ],
+        cursos: [],
       },
       {
         nombre:
           "Maestría en Educación con mención en Evaluación y Acreditación de la Calidad",
         clave: "evaluacion-calidad",
-        cursos: [
-          // CICLO 1
-          {
-            curso: "Fundamentos de la Calidad Educativa",
-            horario: "Lunes 19:00 - 21:00",
-            docente: "Dr. José Gómez",
-            aula: "E-401",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Teorías de la Evaluación Educativa",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dra. Pilar Mendoza",
-            aula: "E-402",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Metodología de la Investigación I",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dr. Fernando Castro",
-            aula: "E-403",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Estadística para la Investigación Educativa",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Mario Delgado",
-            aula: "Lab-05",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
-          // CICLO 2
-          {
-            curso: "Sistemas de Acreditación",
-            horario: "Martes 19:00 - 21:00",
-            docente: "Dra. Lucía Ríos",
-            aula: "E-404",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Modelos de Evaluación Institucional",
-            horario: "Jueves 19:00 - 21:00",
-            docente: "Dr. Víctor Heredia",
-            aula: "E-405",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Metodología de la Investigación II",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dr. Fernando Castro",
-            aula: "E-406",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
-          },
-          {
-            curso: "Auditoría Académica",
-            horario: "Sábado 14:00 - 18:00",
-            docente: "Dra. Rosa Campos",
-            aula: "E-407",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
-          },
-          // CICLO 3
-          {
-            curso: "Indicadores de Calidad Educativa",
-            horario: "Lunes 19:00 - 21:00",
-            docente: "Dr. Enrique Vargas",
-            aula: "E-408",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Mejora Continua en Educación",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dra. Claudia Torres",
-            aula: "E-409",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Seminario de Tesis I",
-            horario: "Viernes 19:00 - 21:00",
-            docente: "Dr. José Gómez",
-            aula: "E-410",
-            credito: 4,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Certificación y Normalización Educativa",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Ramiro Espinoza",
-            aula: "E-411",
-            credito: 3,
-            seccion: 1,
-            ciclo: 3,
-          },
-          // CICLO 4
-          {
-            curso: "Seminario de Tesis II",
-            horario: "Miércoles 19:00 - 21:00",
-            docente: "Dr. José Gómez",
-            aula: "E-412",
-            credito: 6,
-            seccion: 1,
-            ciclo: 4,
-          },
-          {
-            curso: "Tesis de Maestría",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dra. Lucía Ríos",
-            aula: "E-413",
-            credito: 8,
-            seccion: 1,
-            ciclo: 4,
-          },
-        ],
+        cursos: [],
       },
     ],
     doctorado: [
@@ -740,191 +405,103 @@ const MatriculaView = () => {
         nombre: "Doctorado en Educación y Docencia Universitaria",
         clave: "doctorado-educacion",
         cursos: [
-          // CICLO 1
-          {
-            curso: "Epistemología de la Educación",
-            horario: "Lunes 19:00 - 22:00",
-            docente: "Dr. Herrera Mejía",
-            aula: "F-501",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Teorías Contemporáneas de la Educación",
-            horario: "Miércoles 19:00 - 22:00",
-            docente: "Dr. Campos Ruiz",
-            aula: "F-502",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Metodología de Investigación Avanzada I",
-            horario: "Viernes 19:00 - 22:00",
-            docente: "Dr. Morales Pérez",
-            aula: "F-503",
-            credito: 4,
-            seccion: 1,
-            ciclo: 1,
-          },
-          {
-            curso: "Seminario Doctoral I",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Luis Mendoza",
-            aula: "F-504",
-            credito: 3,
-            seccion: 1,
-            ciclo: 1,
-          },
           // CICLO 2
+          // PLAN 2023 - PRESENCIAL
           {
-            curso: "Filosofía de la Educación",
-            horario: "Martes 19:00 - 22:00",
-            docente: "Dr. Jiménez Castro",
-            aula: "F-505",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
+            "curso": "EDUCACIÓN SOCIO-AFECTIVA",
+            "horario": "Domingo 8:00 - 11:00",
+            "docente": "ESTHER MARIZA VELARDE CONSOLI",
+            "aula": "2 (EPEF)",
+            "credito": 4,
+            "seccion": 1,
+            "ciclo": 2
           },
           {
-            curso: "Investigación Avanzada en Educación",
-            horario: "Jueves 19:00 - 22:00",
-            docente: "Dr. Carlos Ruiz",
-            aula: "F-506",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
+            "curso": "CALIDAD DE LAS ORGANIZACIONES EDUCATIVAS",
+            "horario": "Sábado 8:00 - 11:00",
+            "docente": "HERNANDO DIAZ ANDIA",
+            "aula": "2 (EPEF)",
+            "credito": 4,
+            "seccion": 1,
+            "ciclo": 2
           },
           {
-            curso: "Metodología de Investigación Avanzada II",
-            horario: "Viernes 19:00 - 22:00",
-            docente: "Dr. Morales Pérez",
-            aula: "F-507",
-            credito: 4,
-            seccion: 1,
-            ciclo: 2,
+            "curso": "GESTIÓN DE LA EDUCACIÓN VIRTUAL",
+            "horario": "Sábado 11:00 - 14:00",
+            "docente": "JIMMY DÍAZ MANRIQUE",
+            "aula": "2 (EPEF)",
+            "credito": 4,
+            "seccion": 1,
+            "ciclo": 2
           },
           {
-            curso: "Seminario Doctoral II",
-            horario: "Sábado 14:00 - 18:00",
-            docente: "Dr. Herrera Mejía",
-            aula: "F-508",
-            credito: 3,
-            seccion: 1,
-            ciclo: 2,
+            "curso": "FUNDAMENTOS DE LA INVESTIGACIÓN CIENTÍFICA: METODOLOGÍA DE LA INVESTIGACIÓN. PRODUCTO: DISEÑO DEL PROYECTO DE INVESTIGACIÓN",
+            "horario": "Sábado 15:00 - 19:30",
+            "docente": "DULIO OSEDA GAGO",
+            "aula": "2 (EPEF)",
+            "credito": 6,
+            "seccion": 1,
+            "ciclo": 2
           },
           // CICLO 3
+          // PLAN 2023 - PRESENCIAL
           {
-            curso: "Metodología Cualitativa Avanzada",
-            horario: "Lunes 19:00 - 22:00",
-            docente: "Dr. Andrés Villareal",
-            aula: "F-509",
-            credito: 4,
-            seccion: 1,
-            ciclo: 3,
+            "curso": "DESARROLLO DE LA INVESTIGACIÓN II: ASPECTOS METODOLÓGICOS. PRODUCTO: INFORME DE TRABAJO DE CAMPO",
+            "horario": "Sab 13:30 - 16:30 | Dom 11:00 - 14:00",
+            "docente": "JESSICA PAOLA PALACIOS GARAY",
+            "aula": "3 (EPEF)",
+            "credito": 8,
+            "seccion": 1,
+            "ciclo": 4
           },
           {
-            curso: "Metodología Cuantitativa Avanzada",
-            horario: "Miércoles 19:00 - 22:00",
-            docente: "Dr. Roberto Sánchez",
-            aula: "Lab-06",
-            credito: 4,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Seminario Doctoral III",
-            horario: "Viernes 19:00 - 22:00",
-            docente: "Dr. Campos Ruiz",
-            aula: "F-510",
-            credito: 4,
-            seccion: 1,
-            ciclo: 3,
-          },
-          {
-            curso: "Proyecto de Tesis Doctoral I",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Luis Mendoza",
-            aula: "F-511",
-            credito: 4,
-            seccion: 1,
-            ciclo: 3,
-          },
-          // CICLO 4
-          {
-            curso: "Análisis de Datos Avanzado",
-            horario: "Martes 19:00 - 22:00",
-            docente: "Dr. Miguel Herrera",
-            aula: "Lab-07",
-            credito: 3,
-            seccion: 1,
-            ciclo: 4,
-          },
-          {
-            curso: "Seminario Doctoral IV",
-            horario: "Jueves 19:00 - 22:00",
-            docente: "Dr. Jiménez Castro",
-            aula: "F-512",
-            credito: 4,
-            seccion: 1,
-            ciclo: 4,
-          },
-          {
-            curso: "Proyecto de Tesis Doctoral II",
-            horario: "Sábado 14:00 - 18:00",
-            docente: "Dr. Carlos Ruiz",
-            aula: "F-513",
-            credito: 6,
-            seccion: 1,
-            ciclo: 4,
+            "curso": "ASESORÍA DE TESIS II: RETROALIMENTACIÓN SOBRE EL DESARROLLO DE LA TESIS",
+            "horario": "Sab 8:00 - 12:30 | Dom 8:00 - 11:00",
+            "docente": "ELÍA MEJÍA MEJÍA",
+            "aula": "3 (EPEF)",
+            "credito": 10,
+            "seccion": 1,
+            "ciclo": 4
           },
           // CICLO 5
+          // PLAN 2023 - PRESENCIAL
           {
-            curso: "Seminario Doctoral V",
-            horario: "Miércoles 19:00 - 22:00",
-            docente: "Dr. Morales Pérez",
-            aula: "F-514",
-            credito: 4,
-            seccion: 1,
-            ciclo: 5,
+            "curso": "DESARROLLO DE LA INVESTIGACIÓN III: REDACCIÓN DE TESIS. PRODUCTO: INFORME PRELIMINAR DE TESIS",
+            "horario": "Sab 13:30 - 16:30 | Dom 12:30 - 15:30",
+            "docente": "DORIS ELIDA FUSTER GUILLEN",
+            "aula": "4 (EPEF)",
+            "credito": 8,
+            "seccion": 1,
+            "ciclo": 5
           },
           {
-            curso: "Desarrollo de Tesis Doctoral I",
-            horario: "Viernes 19:00 - 22:00",
-            docente: "Dr. Herrera Mejía",
-            aula: "F-515",
-            credito: 8,
-            seccion: 1,
-            ciclo: 5,
-          },
-          {
-            curso: "Publicación Científica",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Dr. Fernando Castro",
-            aula: "F-516",
-            credito: 3,
-            seccion: 1,
-            ciclo: 5,
+            "curso": "ASESORÍA DE TESIS III: RETROALIMENTACIÓN SOBRE LA REDACCIÓN DE TESIS",
+            "horario": "Sab 8:00 - 12:30 | Dom 8:00 - 11:00",
+            "docente": "JESSICA PAOLA PALACIOS GARAY",
+            "aula": "4 (EPEF)",
+            "credito": 10,
+            "seccion": 1,
+            "ciclo": 5
           },
           // CICLO 6
+          // PLAN 2023 - PRESENCIAL
           {
-            curso: "Desarrollo de Tesis Doctoral II",
-            horario: "Miércoles 19:00 - 22:00",
-            docente: "Dr. Luis Mendoza",
-            aula: "F-517",
-            credito: 10,
-            seccion: 1,
-            ciclo: 6,
+            "curso": "DESARROLLO DE LA INVESTIGACIÓN IV: INFORME Y SUSTENTACIÓN DE TESIS. PRODUCTO: INFORME DE TESIS DOCTORAL TERMINADA.",
+            "horario": "Sab 13:00 - 16:30 | Dom 8:00 - 11:00",
+            "docente": "YOLVI JAVIER OCAÑA FERNÁNDEZ",
+            "aula": "10B",
+            "credito": 8,
+            "seccion": 1,
+            "ciclo": 6
           },
           {
-            curso: "Sustentación de Tesis Doctoral",
-            horario: "Sábado 08:00 - 12:00",
-            docente: "Comité Doctoral",
-            aula: "Auditorio",
-            credito: 4,
-            seccion: 1,
-            ciclo: 6,
+            "curso": "ASESORÍA DE TESIS IV: RETROALIMENTACIÓN PARA ELABORAR EL INFORME Y SUSTENTACIÓN DE TESIS.",
+            "horario": "Sab 8:00 - 12:00 | Dom 11:00 - 13:00",
+            "docente": "LUIS ALBERTO NÚÑEZ LIRA",
+            "aula": "10B",
+            "credito": 10,
+            "seccion": 1,
+            "ciclo": 6
           },
         ],
       },
@@ -962,13 +539,13 @@ const MatriculaView = () => {
   const getStatusColor = (estado) => {
     switch (estado) {
       case "activo":
-        return "#4E8440";
+        return "#07A852";
       case "proximo":
-        return "#B48E0C";
+        return "#7E899E";
       case "pendiente":
-        return "#93BBA4";
+        return "#959595";
       default:
-        return "#F6F7F8";
+        return "#EFEFEF";
     }
   };
 
@@ -988,14 +565,14 @@ const MatriculaView = () => {
   // --- Render funciones ---
   const renderCronogramaAcademico = () => (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6  rounded-r-lg">
+      <div className="bg-unmsm-blue/5 border-l-4 border-unmsm-blue p-6  rounded-r-lg">
         <div className="flex items-start">
-          <MdInfo className="text-blue-600 text-2xl mt-1 mr-3" />
+          <MdInfo className="text-unmsm-blue text-2xl mt-1 mr-3" />
           <div>
-            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+            <h3 className="text-lg font-semibold text-unmsm-navy mb-2">
               Período Académico 2025-II
             </h3>
-            <p className="text-blue-700">
+            <p className="text-unmsm-muted">
               Consulta las fechas importantes del semestre académico actual.
             </p>
           </div>
@@ -1053,15 +630,15 @@ const MatriculaView = () => {
 
   const renderCronogramaPagos = () => (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6 rounded-r-lg">
-        <div className="flex items-start justify-between">
+      <div className="bg-unmsm-blue/5 border-l-4 border-unmsm-blue p-6 rounded-r-lg">
+        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
           <div className="flex items-start">
-            <MdPayment className="text-blue-600 text-2xl mt-1 mr-3" />
+            <MdPayment className="text-unmsm-blue text-2xl mt-1 mr-3" />
             <div>
-              <h3 className="text-lg font-semibold text-blue-800 mb-2">
+              <h3 className="text-lg font-semibold text-unmsm-navy mb-2">
                 Cronograma de Pagos 2025-II
               </h3>
-              <p className="text-blue-700">
+              <p className="text-unmsm-muted">
                 Montos y fechas de pago según tu programa de estudios.
               </p>
             </div>
@@ -1071,8 +648,8 @@ const MatriculaView = () => {
               onClick={() => setSelectedProgram("maestria")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 selectedProgram === "maestria"
-                  ? "bg-[#4E8440] text-white"
-                  : "bg-white text-[#4E8440] border border-[#93BBA4] hover:bg-blue-50"
+                  ? "bg-unmsm-blue text-white"
+                  : "bg-white text-unmsm-navy border border-unmsm-line hover:bg-unmsm-bg"
               }`}
             >
               Maestría
@@ -1081,8 +658,8 @@ const MatriculaView = () => {
               onClick={() => setSelectedProgram("doctorado")}
               className={`px-4 py-2 rounded-lg font-medium transition-colors ${
                 selectedProgram === "doctorado"
-                  ? "bg-[#4E8440] text-white"
-                  : "bg-white text-[#4E8440] border border-[#93BBA4] hover:bg-blue-50"
+                  ? "bg-unmsm-blue text-white"
+                  : "bg-white text-unmsm-navy border border-unmsm-line hover:bg-unmsm-bg"
               }`}
             >
               Doctorado
@@ -1094,7 +671,7 @@ const MatriculaView = () => {
       {/* Selección de antigüedad */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
         <div className="flex items-center mb-4">
-          <MdInfo className="text-yellow-500 text-xl mr-2" />
+          <MdInfo className="text-unmsm-green text-xl mr-2" />
           <h4 className="font-semibold text-gray-800">¿Cuándo ingresaste?</h4>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -1102,7 +679,7 @@ const MatriculaView = () => {
             onClick={() => setIsAnterior(false)}
             className={`p-4 rounded-lg border-2 transition-colors ${
               !isAnterior
-                ? "border-[#4E8440] bg-blue-50 text-[#4E8440]"
+                ? "border-unmsm-navy bg-unmsm-bg text-unmsm-navy"
                 : "border-gray-200 text-gray-700 hover:border-gray-300"
             }`}
           >
@@ -1113,7 +690,7 @@ const MatriculaView = () => {
             onClick={() => setIsAnterior(true)}
             className={`p-4 rounded-lg border-2 transition-colors ${
               isAnterior
-                ? "border-[#4E8440] bg-blue-50 text-[#4E8440]"
+                ? "border-unmsm-navy bg-unmsm-bg text-unmsm-navy"
                 : "border-gray-200 text-gray-700 hover:border-gray-300"
             }`}
           >
@@ -1128,8 +705,8 @@ const MatriculaView = () => {
         {/* Matrícula */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center mb-4">
-            <div className="p-3 bg-red-100 rounded-full mr-4">
-              <MdSchool className="text-red-600 text-xl" />
+            <div className="p-3 bg-unmsm-blue/10 rounded-full mr-4">
+              <MdSchool className="text-unmsm-blue text-xl" />
             </div>
             <div>
               <h4 className="text-lg font-semibold text-gray-800">Matrícula</h4>
@@ -1160,8 +737,8 @@ const MatriculaView = () => {
         {/* Pensiones */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center mb-4">
-            <div className="p-3 bg-green-100 rounded-full mr-4">
-              <MdCalendarToday className="text-green-600 text-xl" />
+            <div className="p-3 bg-unmsm-green/15 rounded-full mr-4">
+              <MdCalendarToday className="text-unmsm-green text-xl" />
             </div>
             <div>
               <h4 className="text-lg font-semibold text-gray-800">Pensiones</h4>
@@ -1191,24 +768,24 @@ const MatriculaView = () => {
       </div>
 
       {/* Información importante */}
-      <div className="bg-yellow-50 border border-yellow-200 rounded-xl p-6">
-        <h4 className="font-semibold text-yellow-800 mb-3 flex items-center">
+      <div className="bg-unmsm-green/10 border border-unmsm-green/30 rounded-xl p-6">
+        <h4 className="font-semibold text-unmsm-blue mb-3 flex items-center">
           <MdWarning className="mr-2" />
           Información Importante
         </h4>
-        <div className="space-y-2 text-yellow-700">
+        <div className="space-y-2 text-unmsm-text">
           <p>
             • Plataforma de pago: <strong>San Market UNMSM</strong>
           </p>
           <p>
             • Enviar comprobante a:{" "}
-            <strong>controldepagosupg.fe@unmsm.edu.pe</strong>
+            <strong className="break-all">controldepagosupg.fe@unmsm.edu.pe</strong>
           </p>
           <p>
-            • Con copia a: <strong>upg.educacion@unmsm.edu.pe</strong>
+            • Con copia a: <strong className="break-all">upg.educacion@unmsm.edu.pe</strong>
           </p>
         </div>
-        <button className="mt-4 bg-yellow-600 text-white px-6 py-2 rounded-lg hover:bg-yellow-700 transition-colors flex items-center">
+        <button className="mt-4 bg-unmsm-green text-white font-semibold px-6 py-2 rounded-lg hover:bg-unmsm-green-800 transition-colors flex items-center">
           <MdDownload className="mr-2" />
           <a href="https://sanmarket.unmsm.edu.pe/" target="_blank" rel="noopener noreferrer" >Ir a San Market</a>
           
@@ -1219,14 +796,14 @@ const MatriculaView = () => {
 
   const renderProcesoMatricula = () => (
     <div className="space-y-6">
-      <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6  rounded-r-lg">
+      <div className="bg-unmsm-blue/5 border-l-4 border-unmsm-blue p-6  rounded-r-lg">
         <div className="flex items-start">
-          <MdEdit className="text-blue-600 text-2xl mt-1 mr-3" />
+          <MdEdit className="text-unmsm-blue text-2xl mt-1 mr-3" />
           <div>
-            <h3 className="text-lg font-semibold text-blue-800 mb-2">
+            <h3 className="text-lg font-semibold text-unmsm-navy mb-2">
               Proceso de Matrícula Virtual
             </h3>
-            <p className="text-blue-700">
+            <p className="text-unmsm-muted">
               Guía paso a paso para completar tu matrícula en el SUM.
             </p>
           </div>
@@ -1276,14 +853,14 @@ const MatriculaView = () => {
           <div className="space-y-3">
             <a
               href="https://sum.unmsm.edu.pe/alumnoWebSum/v2/inicio" target="_blank" rel="noopener noreferrer"
-              className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+              className="flex items-center text-unmsm-navy hover:text-unmsm-blue transition-colors"
             >
               <MdClass className="mr-2" />
               Acceder al SUM
             </a>
             <a
               href="https://manual-de-usuario.pdf" target="_blank" rel="noopener noreferrer"
-              className="flex items-center text-blue-600 hover:text-blue-800 transition-colors"
+              className="flex items-center text-unmsm-navy hover:text-unmsm-blue transition-colors"
             >
               <MdDownload className="mr-2" />
               Descargar Manual de Usuario
@@ -1344,14 +921,14 @@ const MatriculaView = () => {
     return (
       <div className="space-y-6">
         {/* Encabezado */}
-        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 border-l-4 border-blue-500 p-6  rounded-r-lg">
+        <div className="bg-unmsm-blue/5 border-l-4 border-unmsm-blue p-6  rounded-r-lg">
           <div className="flex items-start">
-            <MdAccessTime className="text-blue-600 text-2xl mt-1 mr-3" />
+            <MdAccessTime className="text-unmsm-blue text-2xl mt-1 mr-3" />
             <div>
-              <h3 className="text-lg font-semibold text-blue-800 mb-2">
+              <h3 className="text-lg font-semibold text-unmsm-navy mb-2">
                 Horarios de Cursos 2025-II
               </h3>
-              <p className="text-blue-700">
+              <p className="text-unmsm-muted">
                 Selecciona tu tipo de programa y luego el programa específico.
               </p>
             </div>
@@ -1366,8 +943,8 @@ const MatriculaView = () => {
               onClick={() => setTipoPrograma("maestria")}
               className={`px-6 py-4 rounded-xl font-medium transition-colors text-center ${
                 tipoPrograma === "maestria"
-                  ? "bg-[#4E8440] text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-unmsm-blue text-white"
+                  : "bg-unmsm-gray text-unmsm-text hover:bg-unmsm-line"
               }`}
             >
               Maestría
@@ -1376,8 +953,8 @@ const MatriculaView = () => {
               onClick={() => setTipoPrograma("doctorado")}
               className={`px-6 py-4 rounded-xl font-medium transition-colors text-center ${
                 tipoPrograma === "doctorado"
-                  ? "bg-[#4E8440] text-white"
-                  : "bg-gray-100 text-gray-700 hover:bg-gray-200"
+                  ? "bg-unmsm-blue text-white"
+                  : "bg-unmsm-gray text-unmsm-text hover:bg-unmsm-line"
               }`}
             >
               Doctorado
@@ -1391,19 +968,19 @@ const MatriculaView = () => {
             Selecciona tu Programa
           </h4>
           <div className="space-y-3">
-            {/* {programasPorTipo.map((prog) => (
+            {programasPorTipo.map((prog) => (
               <button
                 key={prog.clave}
                 onClick={() => setSelectedPrograma(prog.clave)}
                 className={`w-full text-left p-4 rounded-lg border-2 transition-colors text-sm ${
                   selectedPrograma === prog.clave
-                    ? "border-[#93BBA4] bg-[#F6F7F8] text-[#93BBA4]"
+                    ? "border-unmsm-navy bg-unmsm-bg text-unmsm-navy"
                     : "border-gray-200 text-gray-700 hover:border-gray-300"
                 }`}
               >
                 {prog.nombre}
               </button>
-            ))} */}
+            ))}
           </div>
         </div>
 
@@ -1418,7 +995,7 @@ const MatriculaView = () => {
               placeholder="Buscar curso, docente, aula o horario..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              className="block w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-unmsm-navy focus:border-transparent"
             />
           </div>
 
@@ -1460,7 +1037,7 @@ const MatriculaView = () => {
                         <tr>
                           <td
                             colSpan={6}
-                            className="px-6 py-2 text-center text-sm font-semibold text-gray-700 bg-[#F6F7F8] border-t-2 border-gray-200"
+                            className="px-6 py-2 text-center text-sm font-semibold text-gray-700 bg-unmsm-bg border-t-2 border-gray-200"
                           >
                             {getCicloNombre(ciclo)}
                           </td>
@@ -1476,19 +1053,19 @@ const MatriculaView = () => {
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                               <div className="flex items-center">
-                                <MdAccessTime className="mr-1 text-amber-500" />
+                                <MdAccessTime className="mr-1 text-unmsm-muted" />
                                 {curso.horario}
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                               <div className="flex items-center">
-                                <MdPerson className="mr-1 text-blue-500" />
+                                <MdPerson className="mr-1 text-unmsm-muted" />
                                 {curso.docente}
                               </div>
                             </td>
                             <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                               <div className="flex items-center">
-                                <MdClass className="mr-1 text-green-500" />
+                                <MdClass className="mr-1 text-unmsm-muted" />
                                 {curso.aula}
                               </div>
                             </td>
@@ -1519,12 +1096,12 @@ const MatriculaView = () => {
         </div>
 
         {/* Nota informativa */}
-        <div className="bg-blue-50 border border-blue-200 rounded-xl p-6">
-          <h4 className="font-semibold text-blue-800 mb-3 flex items-center">
+        <div className="bg-unmsm-blue/5 border border-unmsm-blue/20 rounded-xl p-6">
+          <h4 className="font-semibold text-unmsm-navy mb-3 flex items-center">
             <MdInfo className="mr-2" />
             Información Adicional
           </h4>
-          <div className="space-y-2 text-blue-700 text-sm">
+          <div className="space-y-2 text-unmsm-muted text-sm">
             <p>
               • Los horarios pueden estar sujetos a cambios según disponibilidad
               de aulas y docentes
@@ -1560,9 +1137,9 @@ const MatriculaView = () => {
 
   return (
     
-    <div className="min-h-screen bg-gray-50 ">
-      <div className="bg-gradient-to-r from-[#1C1B3B] to-[#1C1B3B] text-white py-30">
-        <div className="max-w-6xl mx-auto px- text-center">
+    <div className="min-h-screen bg-unmsm-bg ">
+      <div className="bg-gradient-to-r from-unmsm-blue to-unmsm-navy text-white py-30">
+        <div className="max-w-6xl mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">
             Matrícula 2025-II
           </h1>
@@ -1598,8 +1175,8 @@ const MatriculaView = () => {
                       onClick={() => setActiveSection(section.id)}
                       className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg text-left transition-colors ${
                         activeSection === section.id
-                          ? "bg-gray-100 text-gray-800 border-l-4"
-                          : "text-gray-600 hover:bg-gray-50 hover:text-gray-800"
+                          ? "bg-unmsm-bg text-unmsm-navy border-l-4"
+                          : "text-gray-600 hover:bg-unmsm-bg hover:text-unmsm-navy"
                       }`}
                       style={
                         activeSection === section.id

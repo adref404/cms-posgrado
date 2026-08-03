@@ -1,5 +1,99 @@
 @import "tailwindcss";
 
+@theme {
+  /* Paleta oficial Posgrado Educación UNMSM (piezas de marketing institucionales) */
+
+  /* Azul fuerte — color dominante: fondos, headers, botones/estados primarios */
+  --color-unmsm-blue-50: #E8EFFC;
+  --color-unmsm-blue-100: #BFD2F7;
+  --color-unmsm-blue-200: #97B5F2;
+  --color-unmsm-blue-300: #6E98ED;
+  --color-unmsm-blue-400: #457BE8;
+  --color-unmsm-blue-500: #1C5EE3;
+  --color-unmsm-blue-600: #174DBA;
+  --color-unmsm-blue-700: #123C91;
+  --color-unmsm-blue-800: #0D2B68;
+  --color-unmsm-blue-900: #081B42;
+  --color-unmsm-blue-950: #030917;
+  --color-unmsm-blue: #081B42;
+
+  /* Azul grisáceo — secundario: textos/íconos/bordes de acento sobre blanco */
+  --color-unmsm-navy-50: #EDF0F8;
+  --color-unmsm-navy-100: #CCD6EB;
+  --color-unmsm-navy-200: #ABBCDE;
+  --color-unmsm-navy-300: #89A1D1;
+  --color-unmsm-navy-400: #6887C4;
+  --color-unmsm-navy-500: #476DB8;
+  --color-unmsm-navy-600: #3B5997;
+  --color-unmsm-navy-700: #2E4676;
+  --color-unmsm-navy-800: #1B2945;
+  --color-unmsm-navy-900: #141E33;
+  --color-unmsm-navy-950: #070B12;
+  --color-unmsm-navy: #1B2945;
+
+  /* Verde fuerte — acento principal: énfasis, botones secundarios, "en curso" */
+  --color-unmsm-green-50: #E7FEF1;
+  --color-unmsm-green-100: #BAFCD9;
+  --color-unmsm-green-200: #8EFAC1;
+  --color-unmsm-green-300: #62F8A8;
+  --color-unmsm-green-400: #36F790;
+  --color-unmsm-green-500: #0AF578;
+  --color-unmsm-green-600: #08C962;
+  --color-unmsm-green-700: #07A852;
+  --color-unmsm-green-800: #057137;
+  --color-unmsm-green-900: #034522;
+  --color-unmsm-green-950: #01180C;
+  --color-unmsm-green: #07A852;
+
+  /* Verde suave — acento secundario: resaltes, hover, detalles */
+  --color-unmsm-mint-50: #EDF8F1;
+  --color-unmsm-mint-100: #CBEBD6;
+  --color-unmsm-mint-200: #AADFBC;
+  --color-unmsm-mint-300: #89D2A2;
+  --color-unmsm-mint-400: #67C588;
+  --color-unmsm-mint-500: #50BD77;
+  --color-unmsm-mint-600: #3A985A;
+  --color-unmsm-mint-700: #2D7647;
+  --color-unmsm-mint-800: #205533;
+  --color-unmsm-mint-900: #14341F;
+  --color-unmsm-mint-950: #07120B;
+  --color-unmsm-mint: #50BD77;
+
+  /* Gris fuerte (azulado) — texto e íconos secundarios/neutros */
+  --color-unmsm-slate-50: #F0F2F4;
+  --color-unmsm-slate-100: #D6DAE0;
+  --color-unmsm-slate-200: #BCC2CD;
+  --color-unmsm-slate-300: #A2AAB9;
+  --color-unmsm-slate-400: #7E899E;
+  --color-unmsm-slate-500: #6E7A91;
+  --color-unmsm-slate-600: #5A6477;
+  --color-unmsm-slate-700: #464E5D;
+  --color-unmsm-slate-800: #323843;
+  --color-unmsm-slate-900: #1F2229;
+  --color-unmsm-slate-950: #0B0C0F;
+  --color-unmsm-slate: #7E899E;
+
+  /* Gris suave — fondos y líneas neutras */
+  --color-unmsm-gray-50: #EFEFEF;
+  --color-unmsm-gray-100: #D9D9D9;
+  --color-unmsm-gray-200: #C2C2C2;
+  --color-unmsm-gray-300: #ACACAC;
+  --color-unmsm-gray-400: #959595;
+  --color-unmsm-gray-500: #7E7E7E;
+  --color-unmsm-gray-600: #686868;
+  --color-unmsm-gray-700: #515151;
+  --color-unmsm-gray-800: #3A3A3A;
+  --color-unmsm-gray-900: #232323;
+  --color-unmsm-gray-950: #0D0D0D;
+  --color-unmsm-gray: #EFEFEF;
+
+  /* Alias semánticos de uso frecuente */
+  --color-unmsm-bg: #EFEFEF;
+  --color-unmsm-line: #D9D9D9;
+  --color-unmsm-muted: #7E899E;
+  --color-unmsm-text: #141E33;
+}
+
 /* Animaciones para toast */
 .animate-enter {
   transform: translateX(0px);

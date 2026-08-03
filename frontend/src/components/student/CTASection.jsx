@@ -43,7 +43,7 @@ const CTASection = () => {
               <span className="text-2xl">✉️</span>
               <div>
                 <div className="text-sm">Escríbenos</div>
-                <div className="font-semibold">posgrado@unmsm.edu.pe</div>
+                <div className="font-semibold break-all">posgrado@unmsm.edu.pe</div>
               </div>
             </div>
             <div className="flex items-center justify-center gap-3">

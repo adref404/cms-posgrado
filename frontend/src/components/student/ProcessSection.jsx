@@ -140,7 +140,7 @@ const ProcessSection = () => {
         </div>
 
         {/* Leyenda de estados */}
-        <div className="flex justify-center space-x-8 mt-16 mb-8">
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mt-16 mb-8">
           <div className="flex items-center space-x-2">
             <div className="w-3 h-3 bg-green-500 rounded-full"></div>
             <span className="text-sm text-green-600">Completado</span>

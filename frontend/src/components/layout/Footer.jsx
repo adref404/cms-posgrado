@@ -53,8 +53,8 @@ const Footer = () => {
               <p className="flex items-center gap-2">
                 <MdPhone className="text-lg" /> Central: (01) 619-7000
               </p>
-              <p className="flex items-center gap-2">
-                <MdMailOutline className="text-lg" /> posgrado.educacion@unmsm.edu.pe
+              <p className="flex items-center gap-2 break-all">
+                <MdMailOutline className="text-lg flex-shrink-0" /> posgrado.educacion@unmsm.edu.pe
               </p>
               <p className="text-xs pt-2 text-gray-400">
                 Portal desarrollado para estudiantes de posgrado
@@ -65,7 +65,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-600 mt-6 pt-4 text-center">
           <p className="text-gray-400 text-sm">
-            © 2025 UNMSM - Facultad de Educación. Portal del Estudiantede Posgrado - Semestre {new Date().getFullYear()}-II
+            © 2026 UNMSM - Facultad de Educación. Portal del Estudiantede Posgrado - Semestre {new Date().getFullYear()}-II
           </p>
         </div>
       </div>

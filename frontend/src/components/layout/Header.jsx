@@ -1,10 +1,9 @@
 import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { useAuth } from "../../context/AuthContext";
-import { 
-  MdHome, 
-  MdSchool, 
-  MdPeople, 
+import { Link } from "react-router-dom";
+import {
+  MdHome,
+  MdSchool,
+  MdPeople,
   MdPhone,
   MdSchedule,
   MdLibraryBooks,
@@ -18,25 +17,23 @@ import {
   MdGavel,
   MdRateReview,
   MdPersonSearch,
-  MdExitToApp,
-  MdHelpOutline
+  MdHelpOutline,
+  MdInfo,
+  MdBadge,
+  MdDescription
 } from "react-icons/md";
 import { MdVerifiedUser as MdCertificate } from "react-icons/md";
 import universidadLogo from "../../assets/logo-upg.webp";
-import LogoutConfirmModal from "../modals/LogoutConfirmModal";
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [showLogoutModal, setShowLogoutModal] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState({
+    nosotros: false,
     matricula: false,
     informacion: false,
     graduacion: false
   });
-
-  const { isAuthenticated, userType, user, logout } = useAuth();
-  const navigate = useNavigate();
 
   useEffect(() => {
     const handleResize = () => {
@@ -74,21 +71,6 @@ function Header() {
     };
   }, []);
 
-  const handleLogout = () => {
-    setShowLogoutModal(true);
-  };
-
-  const confirmLogout = async () => {
-    setShowLogoutModal(false);
-    await logout();
-    navigate("/login");
-    setMenuOpen(false);
-  };
-
-  const cancelLogout = () => {
-    setShowLogoutModal(false);
-  };
-
   const toggleDropdown = (menu) => {
     setDropdownOpen(prev => ({
       ...Object.keys(prev).reduce((acc, key) => ({ ...acc, [key]: false }), {}),
@@ -104,22 +86,19 @@ function Header() {
 
   const closeAllDropdowns = () => {
     setDropdownOpen({
+      nosotros: false,
       matricula: false,
       informacion: false,
       graduacion: false
     });
   };
 
-  if (!isAuthenticated) {
-    return null;
-  }
-
   return (
     <>
       <header
         className={`fixed top-0 w-full z-50 text-white transition-all duration-300 ease-in-out ${
           isScrolled
-            ? "bg-[#1C1B3B] shadow-lg backdrop-blur-md"
+            ? "bg-unmsm-blue shadow-lg backdrop-blur-md"
             : "bg-transparent"
         }`}
       >
@@ -146,6 +125,60 @@ function Header() {
               <Link to="/home" className="hover:text-gray-300 transition-colors">
                 Inicio
               </Link>
+
+              {/* Nosotros Dropdown */}
+              <div className="relative">
+                <button
+                  onClick={() => toggleDropdown('nosotros')}
+                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  aria-expanded={dropdownOpen.nosotros}
+                  aria-haspopup="true"
+                >
+                  Nosotros
+                  <svg
+                    className={`w-4 h-4 transition-transform ${dropdownOpen.nosotros ? 'rotate-180' : ''}`}
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                  </svg>
+                </button>
+                {dropdownOpen.nosotros && (
+                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
+                    <div className="py-2">
+                      <Link
+                        to="/nosotros/quienes-somos"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdInfo className="text-unmsm-navy" /> Quiénes somos
+                      </Link>
+                      <Link
+                        to="/nosotros/directorio-flch"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdBadge className="text-unmsm-navy" /> Directorio FFEE
+                      </Link>
+                      <Link
+                        to="/nosotros/directorio-posgrado"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdPeople className="text-unmsm-navy" /> Directorio Posgrado
+                      </Link>
+                      <Link
+                        to="/nosotros/documentos-recursos"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdDescription className="text-unmsm-navy" /> Documentos y Recursos
+                      </Link>
+                    </div>
+                  </div>
+                )}
+              </div>
 
               {/* Matrícula Dropdown */}
               <div className="relative">
@@ -349,38 +382,7 @@ function Header() {
             </div>
           </nav>
 
-          {/* Usuario logueado y logout */}
           <div className="flex items-center gap-4 text-sm">
-            <div className="hidden xl:flex items-center gap-2">
-              <MdPeople className="text-lg" />
-              <span className="text-sm">
-                {userType === "admin"
-                  ? user?.username || "Admin"
-                  : "Estudiante"}
-              </span>
-              <button
-                onClick={handleLogout}
-                className="flex items-center gap-2 bg-gradient-to-r from-red-500 to-red-700 hover:from-red-600 hover:to-red-800 text-white px-4 py-1.5 rounded-full shadow-md transition-all duration-200 font-semibold focus:outline-none focus:ring-2 focus:ring-red-400"
-                aria-label="Cerrar sesión"
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-4 w-4"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h4a2 2 0 012 2v1"
-                  />
-                </svg>
-                Cerrar Sesión
-              </button>
-            </div>
-            
             {/* Botón hamburguesa en mobile */}
             <button
               className={`flex flex-col justify-center items-center w-10 h-10 transition-all duration-300 md:hidden ${
@@ -419,8 +421,8 @@ function Header() {
           menuOpen ? "translate-x-0" : "-translate-x-full"
         } ${
           isScrolled
-            ? "bg-[#1C1B3B]"
-            : "bg-[#1C1B3B] bg-opacity-95 backdrop-blur-md"
+            ? "bg-unmsm-blue"
+            : "bg-unmsm-blue bg-opacity-95 backdrop-blur-md"
         }`}
       >
         <div className="p-6 flex flex-col gap-4 overflow-y-auto h-full" data-mobile-menu="true">
@@ -433,6 +435,57 @@ function Header() {
               <MdHome className="text-xl" /> Inicio
             </div>
           </Link>
+
+          {/* Nosotros Mobile Submenu */}
+          <div>
+            <button
+              onClick={(e) => toggleMobileDropdown('nosotros', e)}
+              className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
+              aria-expanded={dropdownOpen.nosotros}
+            >
+              Nosotros
+              <svg
+                className={`w-5 h-5 transition-transform ${dropdownOpen.nosotros ? 'rotate-180' : ''}`}
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+              </svg>
+            </button>
+            {dropdownOpen.nosotros && (
+              <div className="mt-2 ml-4 space-y-2">
+                <Link
+                  to="/nosotros/quienes-somos"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+                >
+                  <MdInfo className="text-lg" /> Quiénes somos
+                </Link>
+                <Link
+                  to="/nosotros/directorio-flch"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+                >
+                  <MdBadge className="text-lg" /> Directorio FFEE
+                </Link>
+                <Link
+                  to="/nosotros/directorio-posgrado"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+                >
+                  <MdPeople className="text-lg" /> Directorio Posgrado
+                </Link>
+                <Link
+                  to="/nosotros/documentos-recursos"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+                >
+                  <MdDescription className="text-lg" /> Documentos y Recursos
+                </Link>
+              </div>
+            )}
+          </div>
 
           {/* Matrícula Mobile Submenu */}
           <div>
@@ -608,34 +661,8 @@ function Header() {
             )}
           </div>
 
-          {/* Separador */}
-          <div className="border-t border-white/20 my-4"></div>
-
-          {/* Logout en mobile */}
-          <button
-            onClick={handleLogout}
-            className="w-full bg-red-600 hover:bg-red-700 px-4 py-3 rounded-lg text-base font-medium transition-colors flex items-center justify-between"
-            aria-label="Cerrar sesión"
-          >
-            <div className="flex items-center gap-2">
-              <MdPeople className="text-lg" />
-              <span>
-                {userType === "admin" ? user?.username || "Admin" : "Estudiante"}
-              </span>
-            </div>
-            <div className="flex items-center gap-1">
-              <MdExitToApp className="text-sm" />
-              <span className="text-sm">Cerrar Sesión</span>
-            </div>
-          </button>
         </div>
       </div>
-      
-      <LogoutConfirmModal
-        isOpen={showLogoutModal}
-        onConfirm={confirmLogout}
-        onCancel={cancelLogout}
-      />
     </>
   );
 }
