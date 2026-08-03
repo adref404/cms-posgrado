@@ -201,33 +201,33 @@ function Header() {
                 {dropdownOpen.matricula && (
                   <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
                     <div className="py-2">
-                      <Link 
-                        to="/matricula/cronograma-academico" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/matricula/cronograma-academico"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Cronograma Académico
+                        <MdSchedule className="text-unmsm-navy" /> Cronograma Académico
                       </Link>
-                      <Link 
-                        to="/matricula/cronograma-pagos" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/matricula/cronograma-pagos"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Cronograma de Pagos
+                        <MdPayment className="text-unmsm-navy" /> Cronograma de Pagos
                       </Link>
-                      <Link 
-                        to="/matricula/proceso-matricula" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/matricula/proceso-matricula"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Proceso de Matrícula
+                        <MdEdit className="text-unmsm-navy" /> Proceso de Matrícula
                       </Link>
-                      <Link 
-                        to="/matricula/horario-cursos" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/matricula/horario-cursos"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Horario de Cursos
+                        <MdSchedule className="text-unmsm-navy" /> Horario de Cursos
                       </Link>
                     </div>
                   </div>
@@ -272,54 +272,54 @@ function Header() {
                 {dropdownOpen.informacion && (
                   <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
                     <div className="py-2">
-                      <Link 
-                        to="/informacion-academica/direccion" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/informacion-academica/direccion"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Dirección Académica
-                      </Link>
-                      <Link 
-                        to="/informacion-academica/comite-directivo" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        Comité Directivo
-                      </Link>
-                      <Link 
-                        to="/informacion-academica/coordinadores" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        Coordinadores Académicos
-                      </Link>
-                      <Link 
-                        to="/informacion-academica/docentes" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        Plana Docente
-                      </Link>
-                      <Link 
-                        to="/informacion-academica/plan-estudios" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        Plan de Estudios
+                        <MdSchool className="text-unmsm-navy" /> Dirección Académica
                       </Link>
                       <Link
-                        to="/informacion-academica/reglamento" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                        to="/informacion-academica/comite-directivo"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Reglamento de Estudios
+                        <MdPeople className="text-unmsm-navy" /> Comité Directivo
                       </Link>
-                      <Link 
-                        to="/informacion-academica/preguntas-frecuentes"
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/informacion-academica/coordinadores"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Preguntas Frecuentes
+                        <MdPersonSearch className="text-unmsm-navy" /> Coordinadores Académicos
+                      </Link>
+                      <Link
+                        to="/informacion-academica/docentes"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdPersonSearch className="text-unmsm-navy" /> Plana Docente
+                      </Link>
+                      <Link
+                        to="/informacion-academica/plan-estudios"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdLibraryBooks className="text-unmsm-navy" /> Plan de Estudios
+                      </Link>
+                      <Link
+                        to="/informacion-academica/reglamento"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdGavel className="text-unmsm-navy" /> Reglamento de Estudios
+                      </Link>
+                      <Link
+                        to="/informacion-academica/preguntas-frecuentes"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdHelpOutline className="text-unmsm-navy" /> Preguntas Frecuentes
                       </Link>
                     </div>
                   </div>
@@ -347,33 +347,33 @@ function Header() {
                 {dropdownOpen.graduacion && (
                   <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
                     <div className="py-2">
-                      <Link 
-                        to="/graduacion/procesos-requisitos" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/graduacion/procesos-requisitos"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Procesos y Requisitos
+                        <MdLibraryBooks className="text-unmsm-navy" /> Procesos y Requisitos
                       </Link>
-                      <Link 
-                        to="/graduacion/guia" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/graduacion/guia"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Guía de Graduación
+                        <MdCertificate className="text-unmsm-navy" /> Guía de Graduación
                       </Link>
-                      <Link 
-                        to="/graduacion/sustentacion" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/graduacion/sustentacion"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Programación de Sustentación
+                        <MdEmojiEvents className="text-unmsm-navy" /> Programación de Sustentación
                       </Link>
-                      <Link 
-                        to="/graduacion/preguntas-frecuentes" 
-                        className="block px-4 py-2 hover:bg-gray-100 transition-colors"
+                      <Link
+                        to="/graduacion/preguntas-frecuentes"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        Preguntas Frecuentes
+                        <MdHelpOutline className="text-unmsm-navy" /> Preguntas Frecuentes
                       </Link>
                     </div>
                   </div>

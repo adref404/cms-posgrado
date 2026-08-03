@@ -73,6 +73,20 @@
   --color-unmsm-slate-950: #0B0C0F;
   --color-unmsm-slate: #7E899E;
 
+  /* Guinda — importancia / advertencia / urgencia (fechas límite, pagos, avisos críticos) */
+  --color-unmsm-guinda-50: #FAEAEB;
+  --color-unmsm-guinda-100: #F2C4C6;
+  --color-unmsm-guinda-200: #EA9FA1;
+  --color-unmsm-guinda-300: #E2797D;
+  --color-unmsm-guinda-400: #D95458;
+  --color-unmsm-guinda-500: #D12E33;
+  --color-unmsm-guinda-600: #AB262A;
+  --color-unmsm-guinda-700: #861D21;
+  --color-unmsm-guinda-800: #70191C;
+  --color-unmsm-guinda-900: #3B0D0E;
+  --color-unmsm-guinda-950: #150505;
+  --color-unmsm-guinda: #70191C;
+
   /* Gris suave — fondos y líneas neutras */
   --color-unmsm-gray-50: #EFEFEF;
   --color-unmsm-gray-100: #D9D9D9;
