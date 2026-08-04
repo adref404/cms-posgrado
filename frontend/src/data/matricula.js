@@ -6,7 +6,103 @@ import {
   MdPerson,
   MdBook,
   MdEdit,
+  MdCampaign,
+  MdQuiz,
+  MdRecordVoiceOver,
+  MdEmojiEvents,
+  MdHowToReg,
 } from "react-icons/md";
+
+// Proceso de Admisión 2026-II (el que está en curso) — pasos relevantes
+// para un postulante; se omiten trámites internos (SISEVA, envíos a
+// DGEP/MINEDU-SUNEDU) que no le sirven a alguien fuera de la facultad.
+// Fuente: cronograma oficial de Admisión y Matrícula 2026.
+//
+// "fechaInicio"/"fechaFin" (ISO) son la fuente de verdad para calcular el
+// estado y el avance del timeline en vivo, comparando con la fecha del
+// dispositivo — ver calcularEstadoPaso/calcularProgresoProceso más abajo.
+// "fecha" es solo el texto que se muestra.
+export const procesoAdmision2026II = [
+  {
+    icono: MdCampaign,
+    evento: "Inscripción de postulantes",
+    fecha: "Hasta el 13 de agosto",
+    fechaInicio: "2026-05-04",
+    fechaFin: "2026-08-13",
+  },
+  {
+    icono: MdQuiz,
+    evento: "Examen de conocimientos",
+    fecha: "Hasta el 15 de agosto",
+    fechaInicio: "2026-08-14",
+    fechaFin: "2026-08-15",
+  },
+  {
+    icono: MdRecordVoiceOver,
+    evento: "Entrevista personal",
+    fecha: "Hasta el 18 de agosto",
+    fechaInicio: "2026-08-16",
+    fechaFin: "2026-08-18",
+  },
+  {
+    icono: MdEmojiEvents,
+    evento: "Publicación de resultados",
+    fecha: "20 de agosto",
+    fechaInicio: "2026-08-20",
+    fechaFin: "2026-08-20",
+  },
+  {
+    icono: MdHowToReg,
+    evento: "Matrícula de ingresantes",
+    fecha: "25 - 28 de agosto",
+    fechaInicio: "2026-08-25",
+    fechaFin: "2026-08-28",
+  },
+];
+
+// Estado de un paso comparando sus fechas contra "hoy" (la del dispositivo):
+// completado (ya pasó) · activo (hoy cae dentro del rango) · proximo (empieza
+// en 7 días o menos) · programado (todavía falta más de una semana).
+export const calcularEstadoPaso = (paso, hoy = new Date()) => {
+  const inicio = new Date(`${paso.fechaInicio}T00:00:00`);
+  const fin = new Date(`${paso.fechaFin}T23:59:59`);
+
+  if (hoy > fin) return "completado";
+  if (hoy >= inicio) return "activo";
+
+  const diasParaEmpezar = Math.ceil((inicio - hoy) / (1000 * 60 * 60 * 24));
+  return diasParaEmpezar <= 7 ? "proximo" : "programado";
+};
+
+// % de avance para ubicar el marcador "Hoy" en la línea del timeline.
+// Cada punto i (renderizado en `grid-cols-{n}`, centrado en su columna, en
+// (i + 0.5) / n * 100%) representa SU FECHA LÍMITE (fechaFin) — no su
+// inicio. El marcador debe quedar detrás de un punto mientras no se haya
+// cumplido esa fecha límite, y recién "cruzarlo" cuando se cumpla. Por eso
+// se interpola entre fechas límite consecutivas (fechaFin[i-1] -> fechaFin[i]),
+// usando el inicio del primer paso solo como ancla izquierda del primer tramo.
+export const calcularProgresoProceso = (pasos, hoy = new Date()) => {
+  const n = pasos.length;
+  const posicionPunto = (i) => ((i + 0.5) / n) * 100;
+
+  const inicioProceso = new Date(`${pasos[0].fechaInicio}T00:00:00`);
+  const limites = pasos.map((p) => new Date(`${p.fechaFin}T23:59:59`));
+  const anclas = [inicioProceso, ...limites]; // n + 1 anclas
+
+  if (hoy <= anclas[0]) return 0;
+  if (hoy >= anclas[n]) return 100;
+
+  for (let i = 0; i < n; i++) {
+    if (hoy < anclas[i + 1]) {
+      const posIzquierda = i === 0 ? 0 : posicionPunto(i - 1);
+      const posDerecha = posicionPunto(i);
+      const frac = (hoy - anclas[i]) / (anclas[i + 1] - anclas[i]);
+      return posIzquierda + frac * (posDerecha - posIzquierda);
+    }
+  }
+
+  return 100;
+};
 
 export const cronogramaAcademico = [
   {
@@ -41,9 +137,11 @@ export const cronogramaAcademico = [
   },
 ];
 
-// activo = en curso ahora (verde) · proximo = requiere atención pronto (guinda)
-// programado = a futuro, sin urgencia (gris) · pendiente = a definir (gris claro)
+// completado = ya pasó (verde) · activo = en curso ahora (verde)
+// proximo = requiere atención pronto (guinda) · programado = a futuro, sin
+// urgencia (gris) · pendiente = a definir (gris claro)
 export const ESTADO_CONFIG = {
+  completado: { color: "#07A852", label: "Completado", icon: MdCheckCircle },
   activo: { color: "#07A852", label: "En Curso", icon: MdCheckCircle },
   proximo: { color: "#861D21", label: "Próximo", icon: MdWarning },
   programado: { color: "#7E899E", label: "Programado", icon: MdSchedule },

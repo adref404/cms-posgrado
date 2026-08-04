@@ -1,76 +1,164 @@
+import { Link } from "react-router-dom";
 import {
   MdLocationOn,
   MdLink,
   MdEmail,
   MdPhone,
-  MdMailOutline
+  MdOpenInNew,
 } from "react-icons/md";
+import { FaWhatsapp } from "react-icons/fa";
+import universidadLogo from "../../assets/logo-upg.webp";
+
+const ENLACES = [
+  { to: "/nosotros/quienes-somos", label: "Nosotros" },
+  { to: "/programas/maestria", label: "Programas" },
+  { to: "/matricula/cronograma-academico", label: "Matrícula" },
+  { to: "/noticias", label: "Novedades" },
+  { to: "/tramites", label: "Trámites" },
+];
+
+// Ubicación real: Facultad de Educación, Ciudad Universitaria UNMSM.
+const MAPS_QUERY = "Facultad de Educación UNMSM, Av. Germán Amézaga, Lima, Perú";
+const MAPS_EMBED_URL = `https://www.google.com/maps?q=${encodeURIComponent(MAPS_QUERY)}&output=embed`;
+const MAPS_LINK_URL = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(MAPS_QUERY)}`;
 
 const Footer = () => {
+  const anio = new Date().getFullYear();
+
   return (
-    <footer className="bg-[#1C1B3B] text-white py-8">
-      <div className="container mx-auto px-4">
-        <div className="grid md:grid-cols-3 gap-6">
-          
-          {/* Info institucional */}
-          <div>
-            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-              <MdLocationOn className="text-xl" /> Ubicación
-            </h3>
-            <p className="text-gray-300 text-sm">
-              Universidad Nacional Mayor de San Marcos<br />
-              Facultad de Educación - Posgrado<br />
-              Lima, Perú
+    <footer className="bg-unmsm-navy text-white">
+      <div className="max-w-6xl mx-auto px-4 py-12">
+        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10">
+          {/* Identidad */}
+          <div className="lg:col-span-1">
+            <Link to="/home" className="flex items-center gap-3 mb-4 w-fit">
+              <img
+                src={universidadLogo}
+                alt="Logo Universidad"
+                className="h-12 w-12 rounded-full object-cover bg-white p-1 flex-shrink-0"
+              />
+              <div className="leading-tight">
+                <p className="font-bold">Posgrado</p>
+                <p className="text-xs text-gray-300">Facultad de Educación</p>
+              </div>
+            </Link>
+            <p className="flex items-start gap-2 text-gray-300 text-sm">
+              <MdLocationOn className="text-lg flex-shrink-0 mt-0.5" />
+              <span>
+                Universidad Nacional Mayor de San Marcos
+                <br />
+                Facultad de Educación · Ciudad Universitaria, Lima
+              </span>
             </p>
+            <a
+              href={MAPS_LINK_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-1 text-unmsm-mint-300 text-sm font-medium hover:underline mt-2"
+            >
+              Cómo llegar <MdOpenInNew className="text-xs" />
+            </a>
           </div>
 
           {/* Enlaces rápidos */}
           <div>
-            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-              <MdLink className="text-xl" /> Enlaces
+            <h3 className="font-bold mb-3 flex items-center gap-2">
+              <MdLink className="text-lg" /> Enlaces
             </h3>
             <div className="space-y-2 text-sm">
-              <a href="https://unmsm.edu.pe" target="_blank" rel="noopener noreferrer" 
-                 className="text-gray-300 hover:text-blue-300 transition block">
-                Página Principal UNMSM
-              </a>
-              <a href="https://posgradounmsm.edu.pe/home" target="_blank" rel="noopener noreferrer"
-                 className="text-gray-300 hover:text-blue-300 transition block">
-                Portal Posgrado
-              </a>
-              <a href="/calendario" className="text-gray-300 hover:text-blue-300 transition block">
-                Calendario Académico
+              {ENLACES.map((enlace) => (
+                <Link
+                  key={enlace.to}
+                  to={enlace.to}
+                  className="text-gray-300 hover:text-unmsm-mint-300 transition-colors block"
+                >
+                  {enlace.label}
+                </Link>
+              ))}
+              <a
+                href="https://unmsm.edu.pe"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1 text-gray-300 hover:text-unmsm-mint-300 transition-colors"
+              >
+                Página Principal UNMSM <MdOpenInNew className="text-xs" />
               </a>
             </div>
           </div>
 
           {/* Contacto */}
           <div>
-            <h3 className="font-bold text-lg mb-3 flex items-center gap-2">
-              <MdEmail className="text-xl" /> Contacto
+            <h3 className="font-bold mb-3 flex items-center gap-2">
+              <MdEmail className="text-lg" /> Contacto
             </h3>
-            <div className="text-gray-300 text-sm space-y-1">
+            <div className="text-gray-300 text-sm space-y-2">
               <p className="flex items-center gap-2">
-                <MdPhone className="text-lg" /> Central: (01) 619-7000
+                <MdPhone className="text-base flex-shrink-0" /> Central: (01) 619-7000
               </p>
-              <p className="flex items-center gap-2 break-all">
-                <MdMailOutline className="text-lg flex-shrink-0" /> posgrado.educacion@unmsm.edu.pe
-              </p>
-              <p className="text-xs pt-2 text-gray-400">
-                Portal desarrollado para estudiantes de posgrado
-              </p>
+              <a
+                href="mailto:upg.educacion@unmsm.edu.pe"
+                className="flex items-center gap-2 hover:text-unmsm-mint-300 transition-colors break-all"
+              >
+                <MdEmail className="text-base flex-shrink-0" /> upg.educacion@unmsm.edu.pe
+              </a>
+              <a
+                href="https://wa.me/51965229338"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-2 hover:text-unmsm-mint-300 transition-colors"
+              >
+                <FaWhatsapp className="text-base flex-shrink-0" /> WhatsApp
+              </a>
+            </div>
+          </div>
+
+          {/* Secciones (columna extra en desktop, refuerza el mapa del sitio) */}
+          <div className="hidden lg:block">
+            <h3 className="font-bold mb-3">Información Académica</h3>
+            <div className="space-y-2 text-sm">
+              <Link
+                to="/informacion-academica/docentes"
+                className="text-gray-300 hover:text-unmsm-mint-300 transition-colors block"
+              >
+                Plana Docente
+              </Link>
+              <Link
+                to="/informacion-academica/preguntas-frecuentes"
+                className="text-gray-300 hover:text-unmsm-mint-300 transition-colors block"
+              >
+                Preguntas Frecuentes
+              </Link>
+              <Link
+                to="/comunicados"
+                className="text-gray-300 hover:text-unmsm-mint-300 transition-colors block"
+              >
+                Comunicados
+              </Link>
             </div>
           </div>
         </div>
 
-        <div className="border-t border-gray-600 mt-6 pt-4 text-center">
+        {/* Mapa — ubicación real de la Facultad en Ciudad Universitaria */}
+        <div className="mt-10 rounded-xl overflow-hidden border border-white/10">
+          <iframe
+            title="Ubicación de la Facultad de Educación - UNMSM"
+            src={MAPS_EMBED_URL}
+            width="100%"
+            height="220"
+            style={{ border: 0 }}
+            loading="lazy"
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+
+        <div className="border-t border-white/10 mt-10 pt-6 text-center">
           <p className="text-gray-400 text-sm">
-            © 2026 UNMSM - Facultad de Educación. Página Web de Posgrado - Semestre {new Date().getFullYear()}-II
+            © {anio} UNMSM — Facultad de Educación. Portal de Posgrado.
           </p>
         </div>
       </div>
     </footer>
-  )
-}
+  );
+};
 
-export default Footer
+export default Footer;

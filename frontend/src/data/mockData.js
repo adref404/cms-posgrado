@@ -144,52 +144,6 @@ export const validateStudentCode = (code) => {
 }
 
 
-// Datos mock para funcionalidades del sistema
-export const systemFeatures = [
-  {
-    id: 1,
-    icon: "📊",
-    title: "Gestión de Expedientes",
-    description: "Control completo de expedientes académicos, historial de calificaciones y seguimiento del progreso estudiantil.",
-    category: "academico"
-  },
-  {
-    id: 2,
-    icon: "📅",
-    title: "Planificación Académica",
-    description: "Herramientas para programar cursos, asignar profesores y gestionar horarios de manera eficiente.",
-    category: "planificacion"
-  },
-  {
-    id: 3,
-    icon: "💰",
-    title: "Control Financiero",
-    description: "Seguimiento de pagos, becas, y control financiero integral de estudiantes y programas.",
-    category: "financiero"
-  },
-  {
-    id: 4,
-    icon: "📝",
-    title: "Gestión de Tesis",
-    description: "Seguimiento completo del proceso de tesis desde la propuesta hasta la defensa final.",
-    category: "academico"
-  },
-  {
-    id: 5,
-    icon: "📈",
-    title: "Reportes y Análisis",
-    description: "Generación de reportes detallados y análisis estadísticos para la toma de decisiones.",
-    category: "reportes"
-  },
-  {
-    id: 6,
-    icon: "🔐",
-    title: "Seguridad y Permisos",
-    description: "Sistema robusto de seguridad con roles y permisos personalizables para cada usuario.",
-    category: "seguridad"
-  }
-]
-
 // Datos mock para cronograma de admisión 2025-II (basado en info real UNMSM)
 export const enrollmentProcess = [
   {

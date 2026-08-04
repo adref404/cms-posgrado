@@ -4,6 +4,7 @@ import HomeStudent from './pages/student/HomeStudent';
 import ToasterProvider from './components/ui/ToasterProvider';
 import ScrollToTop from './components/common/ScrollToTop';
 import AvisoContenidoEjemplo from './components/common/AvisoContenidoEjemplo';
+import BackToTopButton from './components/common/BackToTopButton';
 
 import QuienesSomosPage from './pages/student/nosotros/QuienesSomosPage';
 import DirectorioFEPage from './pages/student/nosotros/DirectorioFEPage';
@@ -39,6 +40,7 @@ function App() {
     <BrowserRouter>
       <ScrollToTop />
       <AvisoContenidoEjemplo />
+      <BackToTopButton />
       <ToasterProvider />
 
       <Routes>
