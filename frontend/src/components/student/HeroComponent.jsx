@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from "react";
+import { useNavigate } from "react-router-dom";
 
 // Datos del carrusel con diferentes slides académicos
 const heroSlides = [
@@ -26,7 +27,7 @@ const heroSlides = [
     accent: "Maestría",
     buttonText: "Conoce Más",
     // aqui se redirigijira a la vista de progrmas de maestria, que es la misma vista de programas pero con un filtro de tipo de programa
-    url: "programas/maestria",
+    url: "/programas/maestria",
   },
   {
     id: 3,
@@ -38,7 +39,7 @@ const heroSlides = [
       "https://scontent.flim39-1.fna.fbcdn.net/v/t39.30808-6/495192968_1239964188131324_1072186976237851937_n.jpg?stp=dst-jpg_tt6&cstp=mx1280x853&ctp=s1280x853&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=o8By0XWduXQQ7kNvwGJERYQ&_nc_oc=Adpzz3DMVh85uCSyUxhV0nq1atjBuBKau3SHwiHasUtlUTruSwlL0Uo3qcazIRyNMXo&_nc_zt=23&_nc_ht=scontent.flim39-1.fna&_nc_gid=vNvuzbQRnwFOln0OcVMYNg&_nc_ss=7b289&oh=00_AQGddM0wHpXWFHgYCGVTqxjjooxwG1I7KiDq1w3hmhBIFQ&oe=6A771985",
     accent: "Doctorado",
     buttonText: "Explora Más",
-    url: "programas/doctorado",
+    url: "/programas/doctorado",
   },
   // {
   //   id: 4,
@@ -55,6 +56,7 @@ const heroSlides = [
 ];
 
 function AcademicHeroCarousel() {
+  const navigate = useNavigate();
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [scrollY, setScrollY] = useState(0);
@@ -392,12 +394,12 @@ function AcademicHeroCarousel() {
                       {/* Botón CTA */}
                       {slide.buttonText && slide.buttonText.trim() !== "" && (
                         <div className={`${index === currentSlide ? 'slide-button-enter' : ''}`}>
-                          <button 
-                            onClick={() => window.open(slide.url, '_blank')}
-                            className="group relative inline-flex items-center gap-3 bg-[#A41E22] text-white px-8 py-4 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all duration-500 hover:bg-[#8A1A1D] hover:-translate-y-2 hover:scale-105 transform-gpu overflow-hidden cursor-pointer"
+                          <button
+                            onClick={() => navigate(slide.url)}
+                            className="group relative inline-flex items-center gap-3 bg-unmsm-green text-white px-8 py-4 rounded-lg text-sm font-semibold uppercase tracking-wider transition-all duration-500 hover:bg-unmsm-green-700 hover:-translate-y-2 hover:scale-105 transform-gpu overflow-hidden cursor-pointer"
                           >
                             {/* Efecto de onda al hover */}
-                            <div className="absolute inset-0 bg-gradient-to-r from-[#A41E22] to-[#8A1A1D] opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                            <div className="absolute inset-0 bg-gradient-to-r from-unmsm-green to-unmsm-green-700 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
                             {/* Texto del botón */}
                             <span className="relative z-10 transition-transform duration-300">
@@ -547,7 +549,7 @@ function AcademicHeroCarousel() {
         <div className="absolute top-0 left-0 right-0 z-20">
           <div className="h-1 bg-white/20">
             <div
-              className="h-full bg-[#A41E22] transition-all duration-100 ease-linear"
+              className="h-full bg-unmsm-green transition-all duration-100 ease-linear"
               style={{
                 width: `${((currentSlide + 1) / heroSlides.length) * 100}%`,
               }}

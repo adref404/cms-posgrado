@@ -1,21 +1,13 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import {
   MdHome,
   MdSchool,
   MdPeople,
-  MdPhone,
   MdSchedule,
   MdLibraryBooks,
   MdEdit,
-  MdQuiz,
-  MdEmojiEvents,
-  MdAccountBalance,
   MdPayment,
-  MdCardGiftcard,
-  MdCalendarToday,
-  MdGavel,
-  MdRateReview,
   MdPersonSearch,
   MdHelpOutline,
   MdInfo,
@@ -27,10 +19,20 @@ import {
   MdWorkspacePremium,
   MdCardMembership
 } from "react-icons/md";
-import { MdVerifiedUser as MdCertificate } from "react-icons/md";
 import universidadLogo from "../../assets/logo-upg.webp";
 
+// Prefijos de ruta por grupo del menú, para resaltar la sección activa.
+const RUTAS_ACTIVAS = {
+  nosotros: ["/nosotros"],
+  programas: ["/programas"],
+  noticias: ["/noticias", "/eventos", "/comunicados"],
+  matricula: ["/matricula"],
+  informacion: ["/informacion-academica"],
+  tramites: ["/tramites"],
+};
+
 function Header() {
+  const { pathname } = useLocation();
   const [menuOpen, setMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState({
@@ -85,6 +87,20 @@ function Header() {
     }));
   };
 
+  // Solo desktop (mouse): abrir al pasar por encima, sin esperar un clic.
+  const openDropdownOnHover = (menu) => {
+    if (window.innerWidth < 768) return;
+    setDropdownOpen(prev => ({
+      ...Object.keys(prev).reduce((acc, key) => ({ ...acc, [key]: false }), {}),
+      [menu]: true
+    }));
+  };
+
+  const closeDropdownOnLeave = () => {
+    if (window.innerWidth < 768) return;
+    closeAllDropdowns();
+  };
+
   const toggleMobileDropdown = (menu, event) => {
     event.stopPropagation();
     event.preventDefault();
@@ -101,6 +117,18 @@ function Header() {
       tramites: false
     });
   };
+
+  // Un grupo del menú está activo si la ruta actual empieza con alguno de sus prefijos.
+  const isActive = (grupo) =>
+    RUTAS_ACTIVAS[grupo].some((prefijo) => pathname === prefijo || pathname.startsWith(`${prefijo}/`));
+
+  const navLinkClass = (activo) =>
+    `flex items-center gap-1 transition-colors ${activo ? "text-unmsm-mint-300" : "hover:text-gray-300"}`;
+
+  const mobileNavLinkClass = (activo) =>
+    `w-full flex justify-between items-center text-lg font-medium transition-colors ${
+      activo ? "text-unmsm-mint-300" : "hover:text-gray-300"
+    }`;
 
   return (
     <>
@@ -134,15 +162,22 @@ function Header() {
           <nav className="hidden md:flex gap-6 items-center select-none font-bold relative w-full justify-center">
             {/* Sección izquierda */}
             <div className="flex gap-6 items-center">
-              <Link to="/home" className="hover:text-gray-300 transition-colors">
+              <Link
+                to="/home"
+                className={`transition-colors ${pathname === "/home" ? "text-unmsm-mint-300" : "hover:text-gray-300"}`}
+              >
                 Inicio
               </Link>
 
               {/* Nosotros Dropdown */}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseEnter={() => openDropdownOnHover('nosotros')}
+                onMouseLeave={closeDropdownOnLeave}
+              >
                 <button
                   onClick={() => toggleDropdown('nosotros')}
-                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  className={navLinkClass(isActive("nosotros"))}
                   aria-expanded={dropdownOpen.nosotros}
                   aria-haspopup="true"
                 >
@@ -157,8 +192,9 @@ function Header() {
                   </svg>
                 </button>
                 {dropdownOpen.nosotros && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                    <div className="py-2">
+                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
+                      <div className="py-2">
                       <Link
                         to="/nosotros/quienes-somos"
                         className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
@@ -188,15 +224,20 @@ function Header() {
                         <MdDescription className="text-unmsm-navy" /> Documentos y Recursos
                       </Link>
                     </div>
+                    </div>
                   </div>
                 )}
               </div>
 
               {/* Programas Dropdown */}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseEnter={() => openDropdownOnHover('programas')}
+                onMouseLeave={closeDropdownOnLeave}
+              >
                 <button
                   onClick={() => toggleDropdown('programas')}
-                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  className={navLinkClass(isActive("programas"))}
                   aria-expanded={dropdownOpen.programas}
                   aria-haspopup="true"
                 >
@@ -211,8 +252,9 @@ function Header() {
                   </svg>
                 </button>
                 {dropdownOpen.programas && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                    <div className="py-2">
+                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
+                      <div className="py-2">
                       <Link
                         to="/programas/maestria"
                         className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
@@ -235,15 +277,20 @@ function Header() {
                         <MdCardMembership className="text-unmsm-navy" /> Diplomado
                       </Link>
                     </div>
+                    </div>
                   </div>
                 )}
               </div>
 
               {/* Noticias Dropdown */}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseEnter={() => openDropdownOnHover('noticias')}
+                onMouseLeave={closeDropdownOnLeave}
+              >
                 <button
                   onClick={() => toggleDropdown('noticias')}
-                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  className={navLinkClass(isActive("noticias"))}
                   aria-expanded={dropdownOpen.noticias}
                   aria-haspopup="true"
                 >
@@ -258,29 +305,31 @@ function Header() {
                   </svg>
                 </button>
                 {dropdownOpen.noticias && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                    <div className="py-2">
+                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
+                      <div className="py-2">
                       <Link
                         to="/noticias"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdArticle className="text-unmsm-navy" /> Noticias
                       </Link>
                       <Link
                         to="/eventos"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdEvent className="text-unmsm-navy" /> Eventos
                       </Link>
                       <Link
                         to="/comunicados"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdCampaign className="text-unmsm-navy" /> Comunicados
                       </Link>
+                    </div>
                     </div>
                   </div>
                 )}
@@ -304,10 +353,14 @@ function Header() {
             {/* Sección derecha */}
             <div className="flex gap-6 items-center">
               {/* Matrícula Dropdown */}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseEnter={() => openDropdownOnHover('matricula')}
+                onMouseLeave={closeDropdownOnLeave}
+              >
                 <button
                   onClick={() => toggleDropdown('matricula')}
-                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  className={navLinkClass(isActive("matricula"))}
                   aria-expanded={dropdownOpen.matricula}
                   aria-haspopup="true"
                 >
@@ -322,46 +375,52 @@ function Header() {
                   </svg>
                 </button>
                 {dropdownOpen.matricula && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                    <div className="py-2">
+                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
+                      <div className="py-2">
                       <Link
                         to="/matricula/cronograma-academico"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdSchedule className="text-unmsm-navy" /> Cronograma Académico
                       </Link>
                       <Link
                         to="/matricula/cronograma-pagos"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdPayment className="text-unmsm-navy" /> Cronograma de Pagos
                       </Link>
                       <Link
                         to="/matricula/proceso-matricula"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdEdit className="text-unmsm-navy" /> Proceso de Matrícula
                       </Link>
                       <Link
                         to="/matricula/horario-cursos"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdSchedule className="text-unmsm-navy" /> Horario de Cursos
                       </Link>
+                    </div>
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Información Académica Dropdown */}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseEnter={() => openDropdownOnHover('informacion')}
+                onMouseLeave={closeDropdownOnLeave}
+              >
                 <button
                   onClick={() => toggleDropdown('informacion')}
-                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  className={navLinkClass(isActive("informacion"))}
                   aria-expanded={dropdownOpen.informacion}
                   aria-haspopup="true"
                 >
@@ -376,39 +435,45 @@ function Header() {
                   </svg>
                 </button>
                 {dropdownOpen.informacion && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                    <div className="py-2">
+                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
+                      <div className="py-2">
                       <Link
                         to="/informacion-academica/docentes"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdPersonSearch className="text-unmsm-navy" /> Plana Docente
                       </Link>
                       <Link
                         to="/informacion-academica/plan-estudios"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdLibraryBooks className="text-unmsm-navy" /> Plan de Estudios
                       </Link>
                       <Link
                         to="/informacion-academica/preguntas-frecuentes"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdHelpOutline className="text-unmsm-navy" /> Preguntas Frecuentes
                       </Link>
+                    </div>
                     </div>
                   </div>
                 )}
               </div>
 
               {/* Trámites Dropdown */}
-              <div className="relative">
+              <div
+                className="relative"
+                onMouseEnter={() => openDropdownOnHover('tramites')}
+                onMouseLeave={closeDropdownOnLeave}
+              >
                 <button
                   onClick={() => toggleDropdown('tramites')}
-                  className="flex items-center gap-1 hover:text-gray-300 transition-colors"
+                  className={navLinkClass(isActive("tramites"))}
                   aria-expanded={dropdownOpen.tramites}
                   aria-haspopup="true"
                 >
@@ -423,22 +488,24 @@ function Header() {
                   </svg>
                 </button>
                 {dropdownOpen.tramites && (
-                  <div className="absolute top-full left-0 mt-2 w-64 bg-white rounded-lg shadow-xl z-50 text-gray-800 font-normal">
-                    <div className="py-2">
+                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
+                      <div className="py-2">
                       <Link
                         to="/tramites/maestria"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdSchool className="text-unmsm-navy" /> Grado de Magister
                       </Link>
                       <Link
                         to="/tramites/doctorado"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-gray-100 transition-colors"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
                         <MdWorkspacePremium className="text-unmsm-navy" /> Grado de Doctor
                       </Link>
+                    </div>
                     </div>
                   </div>
                 )}
@@ -494,7 +561,9 @@ function Header() {
           <Link
             to="/home"
             onClick={() => setMenuOpen(false)}
-            className="flex items-center justify-between text-lg font-medium hover:text-gray-300 transition-colors"
+            className={`flex items-center justify-between text-lg font-medium transition-colors ${
+              pathname === "/home" ? "text-unmsm-mint-300" : "hover:text-gray-300"
+            }`}
           >
             <div className="flex items-center gap-2">
               <MdHome className="text-xl" /> Inicio
@@ -505,7 +574,7 @@ function Header() {
           <div>
             <button
               onClick={(e) => toggleMobileDropdown('nosotros', e)}
-              className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
+              className={mobileNavLinkClass(isActive("nosotros"))}
               aria-expanded={dropdownOpen.nosotros}
             >
               Nosotros
@@ -556,7 +625,7 @@ function Header() {
           <div>
             <button
               onClick={(e) => toggleMobileDropdown('programas', e)}
-              className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
+              className={mobileNavLinkClass(isActive("programas"))}
               aria-expanded={dropdownOpen.programas}
             >
               Programas
@@ -600,7 +669,7 @@ function Header() {
           <div>
             <button
               onClick={(e) => toggleMobileDropdown('noticias', e)}
-              className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
+              className={mobileNavLinkClass(isActive("noticias"))}
               aria-expanded={dropdownOpen.noticias}
             >
               Novedades
@@ -644,7 +713,7 @@ function Header() {
           <div>
             <button
               onClick={(e) => toggleMobileDropdown('matricula', e)}
-              className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
+              className={mobileNavLinkClass(isActive("matricula"))}
               aria-expanded={dropdownOpen.matricula}
             >
               Matrícula
@@ -695,7 +764,7 @@ function Header() {
           <div>
             <button
               onClick={(e) => toggleMobileDropdown('informacion', e)}
-              className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
+              className={mobileNavLinkClass(isActive("informacion"))}
               aria-expanded={dropdownOpen.informacion}
             >
               Información Académica
@@ -739,7 +808,7 @@ function Header() {
           <div>
             <button
               onClick={(e) => toggleMobileDropdown('tramites', e)}
-              className="w-full flex justify-between items-center text-lg font-medium hover:text-gray-300 transition-colors"
+              className={mobileNavLinkClass(isActive("tramites"))}
               aria-expanded={dropdownOpen.tramites}
             >
               Trámites
