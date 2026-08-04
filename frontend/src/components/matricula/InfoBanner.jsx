@@ -28,7 +28,7 @@ const InfoBanner = ({ icon: Icon, title, children, tone = "blue" }) => {
         {Icon && (
           <Icon className={`${t.icon} text-2xl mt-1 mr-3 flex-shrink-0`} />
         )}
-        <div>
+        <div className="min-w-0 flex-1">
           {title && (
             <h3 className={`text-lg font-semibold ${t.title} mb-2`}>{title}</h3>
           )}

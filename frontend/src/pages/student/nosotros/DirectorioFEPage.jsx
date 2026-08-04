@@ -4,12 +4,12 @@ import DirectoryTable from "../../../components/nosotros/DirectoryTable";
 import { directorioFFEE, programasNoVigentes } from "../../../data/directorioFFEE";
 import { NOSOTROS_HERO_IMAGE } from "../../../utils/constants";
 
-const DirectorioFFEEPage = () => {
+const DirectorioFEPage = () => {
   return (
     <div className="min-h-screen bg-unmsm-bg">
       <PageHero
         eyebrow="Nosotros"
-        title="Directorio FFEE"
+        title="Directorio Facultad Educación"
         subtitle="Autoridades, unidades y oficinas de la Facultad de Educación"
         image={NOSOTROS_HERO_IMAGE}
       />
@@ -34,4 +34,4 @@ const DirectorioFFEEPage = () => {
   );
 };
 
-export default DirectorioFFEEPage;
+export default DirectorioFEPage;

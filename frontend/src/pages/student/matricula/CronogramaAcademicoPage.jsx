@@ -19,38 +19,36 @@ const CronogramaAcademicoPage = () => {
           Consulta las fechas importantes del semestre académico actual.
         </InfoBanner>
 
-        <div className="grid gap-4">
+        <div className="grid grid-cols-1 gap-4">
           {cronogramaAcademico.map((item, index) => {
             const { color, label, icon: StatusIcon } = getEstadoConfig(item.estado);
             return (
               <div
                 key={index}
-                className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow"
+                className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition-shadow min-w-0"
               >
-                <div className="flex items-center justify-between gap-4">
-                  <div className="flex items-center space-x-4">
-                    <div
-                      className="p-3 rounded-full flex-shrink-0"
-                      style={{ backgroundColor: `${color}20` }}
-                    >
-                      <StatusIcon className="text-xl" style={{ color }} />
-                    </div>
-                    <div>
-                      <h4 className="text-lg font-semibold text-gray-800">
-                        {item.evento}
-                      </h4>
-                      <p className="text-gray-600 flex items-center mt-1">
-                        <MdCalendarToday className="text-sm mr-1" />
-                        {item.fecha}
-                      </p>
-                    </div>
-                  </div>
-                  <span
-                    className="px-3 py-1 rounded-full text-sm font-medium text-white flex-shrink-0"
-                    style={{ backgroundColor: color }}
+                <div className="flex items-start gap-4">
+                  <div
+                    className="p-3 rounded-full flex-shrink-0"
+                    style={{ backgroundColor: `${color}20` }}
                   >
-                    {label}
-                  </span>
+                    <StatusIcon className="text-xl" style={{ color }} />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center justify-between gap-x-4 gap-y-2">
+                      <h4 className="text-lg font-semibold text-gray-800">{item.evento}</h4>
+                      <span
+                        className="px-3 py-1 rounded-full text-sm font-medium text-white flex-shrink-0"
+                        style={{ backgroundColor: color }}
+                      >
+                        {label}
+                      </span>
+                    </div>
+                    <p className="text-gray-600 flex items-center gap-1 mt-1">
+                      <MdCalendarToday className="text-sm flex-shrink-0" />
+                      {item.fecha}
+                    </p>
+                  </div>
                 </div>
               </div>
             );

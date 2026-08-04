@@ -7,7 +7,8 @@ const heroSlides = [
     title: "Posgrado de",
     subtitle: "Educación",
     description:
-      "La mayor felicidad de un docente es el reconocimiento que le brindan sus estudiantes y la huella que dejas en ellos.",
+      ["La mayor felicidad de un docente es el reconocimiento que le brindan sus estudiantes y la huella que dejas en ellos.", 
+        "Miguel Inga"].join("\n"),
     backgroundImage:
       "https://elcomercio-diariocorreo-prod.web.arc-cdn.net/resizer/v2/GFHCCM5GE5CNRHIPQLK5EQ5PJE.jpg?auth=7f5cb4b5bd661025807b4deab4a9e88919d54b6b6a04fa2f6cf722818268dec2&width=1200&height=800&smart=true&quality=75",
     accent: "Educación",
@@ -21,10 +22,11 @@ const heroSlides = [
     description:
       "Impulsa tu carrera docente con nuestros programas de maestría profesional en nuestros distintos campos de la educación.",
     backgroundImage:
-      "https://posgradoeducacion.unmsm.edu.pe/_next/image?url=https%3A%2F%2Funmsm-static-files.s3.us-east-2.amazonaws.com%2Feducacion%2Fbackgroundinicio%2Fsustentacion-posgrado-educacion-3.jpg&w=3840&q=100",
+      "https://posgradoeducacion.unmsm.edu.pe/assets/facultad-educacion.jpg",
     accent: "Maestría",
     buttonText: "Conoce Más",
-    url: "https://posgradoeducacion.unmsm.edu.pe/programas/maestrias",
+    // aqui se redirigijira a la vista de progrmas de maestria, que es la misma vista de programas pero con un filtro de tipo de programa
+    url: "programas/maestria",
   },
   {
     id: 3,
@@ -33,10 +35,10 @@ const heroSlides = [
     description:
       "Alcanza el más alto nivel académico con nuestros programas de doctorado en educación.",
     backgroundImage:
-      "https://posgradoeducacion.unmsm.edu.pe/_next/image?url=https%3A%2F%2Fposgrado-unmsm.s3.sa-east-1.amazonaws.com%2Fdoctorado_en_educacion_y_docencia_universitaria_df26a7e521.png&w=3840&q=75",
+      "https://scontent.flim39-1.fna.fbcdn.net/v/t39.30808-6/495192968_1239964188131324_1072186976237851937_n.jpg?stp=dst-jpg_tt6&cstp=mx1280x853&ctp=s1280x853&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=o8By0XWduXQQ7kNvwGJERYQ&_nc_oc=Adpzz3DMVh85uCSyUxhV0nq1atjBuBKau3SHwiHasUtlUTruSwlL0Uo3qcazIRyNMXo&_nc_zt=23&_nc_ht=scontent.flim39-1.fna&_nc_gid=vNvuzbQRnwFOln0OcVMYNg&_nc_ss=7b289&oh=00_AQGddM0wHpXWFHgYCGVTqxjjooxwG1I7KiDq1w3hmhBIFQ&oe=6A771985",
     accent: "Doctorado",
     buttonText: "Explora Más",
-    url: "https://posgradoeducacion.unmsm.edu.pe/programas/doctorado",
+    url: "programas/doctorado",
   },
   // {
   //   id: 4,
@@ -360,10 +362,32 @@ function AcademicHeroCarousel() {
                         </span>
                       </h1>
 
-                      {/* Descripción */}
-                      <p className={`text-white/90 text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl leading-relaxed font-light text-shadow-strong ${index === currentSlide ? 'slide-description-enter' : ''}`}>
-                        {slide.description}
-                      </p>
+                      {/* Descripción (si trae "\n" es una cita con autor; si no, texto normal) */}
+                      {(() => {
+                        const [texto, autor] = slide.description.split("\n");
+                        const animClass = index === currentSlide ? 'slide-description-enter' : '';
+
+                        if (autor) {
+                          return (
+                            <blockquote
+                              className={`mb-8 max-w-2xl border-l-4 border-white/40 pl-4 text-shadow-strong ${animClass}`}
+                            >
+                              <p className="text-white/90 text-lg md:text-xl lg:text-2xl italic font-light leading-relaxed">
+                                &ldquo;{texto}&rdquo;
+                              </p>
+                              <footer className="not-italic text-white/70 text-base md:text-lg mt-3">
+                                — {autor}
+                              </footer>
+                            </blockquote>
+                          );
+                        }
+
+                        return (
+                          <p className={`text-white/90 text-lg md:text-xl lg:text-2xl mb-8 max-w-2xl leading-relaxed font-light text-shadow-strong ${animClass}`}>
+                            {texto}
+                          </p>
+                        );
+                      })()}
 
                       {/* Botón CTA */}
                       {slide.buttonText && slide.buttonText.trim() !== "" && (

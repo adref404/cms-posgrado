@@ -36,10 +36,10 @@ const ProcesoMatriculaPage = () => {
                       {paso.paso}
                     </div>
                   </div>
-                  <div className="flex-grow">
+                  <div className="flex-grow min-w-0">
                     <div className="flex items-center mb-2">
                       <IconComponent
-                        className="text-xl mr-2"
+                        className="text-xl mr-2 flex-shrink-0"
                         style={{ color: paso.color }}
                       />
                       <h4 className="text-lg font-semibold text-gray-800">
@@ -66,7 +66,7 @@ const ProcesoMatriculaPage = () => {
                 rel="noopener noreferrer"
                 className="flex items-center text-unmsm-navy hover:text-unmsm-blue transition-colors"
               >
-                <MdClass className="mr-2" />
+                <MdClass className="mr-2 flex-shrink-0" />
                 Acceder al SUM
               </a>
               <a
@@ -75,17 +75,17 @@ const ProcesoMatriculaPage = () => {
                 rel="noopener noreferrer"
                 className="flex items-center text-unmsm-navy hover:text-unmsm-blue transition-colors"
               >
-                <MdDownload className="mr-2" />
+                <MdDownload className="mr-2 flex-shrink-0" />
                 Descargar Manual de Usuario
               </a>
             </div>
             <div className="space-y-3">
               <div className="flex items-center text-gray-600">
-                <MdEmail className="mr-2" />
-                upg.educacion@unmsm.edu.pe
+                <MdEmail className="mr-2 flex-shrink-0" />
+                <span className="break-all">upg.educacion@unmsm.edu.pe</span>
               </div>
               <div className="flex items-center text-gray-600">
-                <MdPhone className="mr-2" />
+                <MdPhone className="mr-2 flex-shrink-0" />
                 Mesa de Partes - Trámites
               </div>
             </div>

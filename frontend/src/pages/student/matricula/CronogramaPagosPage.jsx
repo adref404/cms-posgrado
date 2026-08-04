@@ -31,7 +31,7 @@ const CronogramaPagosPage = () => {
           <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
             <div className="flex items-start">
               <MdInfo className="text-unmsm-blue text-2xl mt-1 mr-3 flex-shrink-0" />
-              <div>
+              <div className="min-w-0 flex-1">
                 <h3 className="text-lg font-semibold text-unmsm-navy mb-2">
                   Montos y Fechas de Pago
                 </h3>
@@ -105,7 +105,7 @@ const CronogramaPagosPage = () => {
               <div className="p-3 bg-unmsm-guinda/10 rounded-full mr-4">
                 <MdSchool className="text-unmsm-guinda text-xl" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h4 className="text-lg font-semibold text-gray-800">Matrícula</h4>
                 <p className="text-gray-600 text-sm">Pago único por semestre</p>
               </div>
@@ -128,7 +128,7 @@ const CronogramaPagosPage = () => {
               <div className="p-3 bg-unmsm-green/15 rounded-full mr-4">
                 <MdCalendarToday className="text-unmsm-green text-xl" />
               </div>
-              <div>
+              <div className="min-w-0 flex-1">
                 <h4 className="text-lg font-semibold text-gray-800">Pensiones</h4>
                 <p className="text-gray-600 text-sm">Pagos mensuales</p>
               </div>

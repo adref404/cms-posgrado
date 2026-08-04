@@ -34,7 +34,7 @@ const Footer = () => {
                  className="text-gray-300 hover:text-blue-300 transition block">
                 Página Principal UNMSM
               </a>
-              <a href="https://posgradounmsm.edu.pe" target="_blank" rel="noopener noreferrer"
+              <a href="https://posgradounmsm.edu.pe/home" target="_blank" rel="noopener noreferrer"
                  className="text-gray-300 hover:text-blue-300 transition block">
                 Portal Posgrado
               </a>
@@ -65,7 +65,7 @@ const Footer = () => {
 
         <div className="border-t border-gray-600 mt-6 pt-4 text-center">
           <p className="text-gray-400 text-sm">
-            © 2026 UNMSM - Facultad de Educación. Portal del Estudiantede Posgrado - Semestre {new Date().getFullYear()}-II
+            © 2026 UNMSM - Facultad de Educación. Página Web de Posgrado - Semestre {new Date().getFullYear()}-II
           </p>
         </div>
       </div>
