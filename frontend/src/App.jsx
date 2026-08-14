@@ -28,6 +28,7 @@ import ComunicadoDetallePage from './pages/student/comunicados/ComunicadoDetalle
 
 import TramitesLandingPage from './pages/student/tramites/TramitesLandingPage';
 import TramitesPage from './pages/student/tramites/TramitesPage';
+import TramiteDoctorPage from './pages/student/tramites/TramiteDoctorPage';
 
 import ProgramasPage from './pages/student/programas/ProgramasPage';
 import ProgramaDetallePage from './pages/student/programas/ProgramaDetallePage';
@@ -103,7 +104,7 @@ function App() {
           {/* 📋 Trámites (absorbe lo que antes era la sección Graduación) */}
           <Route path="/tramites" element={<TramitesLandingPage />} />
           <Route path="/tramites/maestria" element={<TramitesPage programa="Maestría" />} />
-          <Route path="/tramites/doctorado" element={<TramitesPage programa="Doctorado" />} />
+          <Route path="/tramites/doctorado" element={<TramiteDoctorPage />} />
 
           {/* Otras secciones futuras... */}
         </Route>
