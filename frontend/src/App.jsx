@@ -27,7 +27,7 @@ import ComunicadosPage from './pages/student/comunicados/ComunicadosPage';
 import ComunicadoDetallePage from './pages/student/comunicados/ComunicadoDetallePage';
 
 import TramitesLandingPage from './pages/student/tramites/TramitesLandingPage';
-import TramitesPage from './pages/student/tramites/TramitesPage';
+import TramiteMaestria2AniosPage from './pages/student/tramites/TramiteMaestria2AniosPage';
 import TramiteDoctorPage from './pages/student/tramites/TramiteDoctorPage';
 import TramiteMaestria1AnioPage from './pages/student/tramites/TramiteMaestria1AnioPage';
 
@@ -105,7 +105,7 @@ function App() {
           {/* 📋 Trámites (absorbe lo que antes era la sección Graduación) */}
           <Route path="/tramites" element={<TramitesLandingPage />} />
           <Route path="/tramites/maestria-1-anio" element={<TramiteMaestria1AnioPage />} />
-          <Route path="/tramites/maestria-2-anios" element={<TramitesPage programa="Maestría · 2 Años" />} />
+          <Route path="/tramites/maestria-2-anios" element={<TramiteMaestria2AniosPage />} />
           <Route path="/tramites/doctorado" element={<TramiteDoctorPage />} />
 
           {/* Otras secciones futuras... */}
