@@ -49,7 +49,7 @@ export const documentosRecursos = [
         titulo: "MAT",
         descripcion: "Módulo de Atención de Trámites y Documentaciones",
         tipo: "enlace",
-        url: "https://tramiteonline.unmsm.edu.pe/sgdfd/mat/",
+        url: "https://tramiteonline.unmsm.edu.pe/sgdfd/mat/tramites/solicitud",
       },
     ],
   },

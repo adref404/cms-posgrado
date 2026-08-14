@@ -74,10 +74,11 @@ export const pasosMaestria1Anio = [
       },
     ],
     formatos: [
-      { nombre: "FUT - Solicitud", tipo: "pdf", url: null },
-      { nombre: "Carta de Aceptación de Asesoría", tipo: "word", url: null },
-      { nombre: "Declaración Jurada - Datos", tipo: "word", url: null },
-      { nombre: "Ficha de Inscripción - Formato", tipo: "word", url: null },
+      { nombre: "FUT - Solicitud", tipo: "pdf", url: 'https://drive.google.com/file/d/12cGr1Kj23GbTii6dgFGSjwavL7m9Ynur/view?usp=drive_link' },
+      { nombre: "Carta de Aceptación de Asesoría", tipo: "word", url: 'https://docs.google.com/document/d/1fCreuoh9oljnwKw3DHmPVcIP_CRRXDtc/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Declaración Jurada - Datos", tipo: "word", url: 'https://docs.google.com/document/d/1D4_BltJaqfvwmWe-3uXVZFAoJbni-jU9/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Ficha de Inscripción - Formato", tipo: "word", url: 'https://docs.google.com/document/d/1GdGjFa8OsuA5xUUxyLHfx1UsmPOQ5ZqH/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Informe de Asesoría Virtual - Formato", tipo: "word", url: 'https://docs.google.com/document/d/1Y_V801qf-oUOYiNP-Ek4n0BgotTBB9f1/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
     ],
   },
   {
@@ -146,11 +147,12 @@ export const pasosMaestria1Anio = [
       },
     ],
     formatos: [
-      { nombre: "Declaración Jurada de no adeudar dinero", tipo: "word", url: null },
-      { nombre: "Declaración Jurada de no adeudar libros", tipo: "word", url: null },
-      { nombre: "Declaración Jurada de veracidad documentaria", tipo: "word", url: null },
-      { nombre: "Formato de similitud (Turnitin)", tipo: "word", url: null },
-      { nombre: "Formato de verificación de indexación", tipo: "word", url: null },
+      { nombre: "FUT - Solicitud", tipo: "pdf", url: 'https://drive.google.com/file/d/15CdpkoCahaSBVedv2Y-UXGem3FuuVJNM/view?usp=drive_link' },
+      { nombre: "Declaración Jurada de no adeudar dinero", tipo: "word", url: 'https://docs.google.com/document/d/1P3cLhQvBT1VRf2O8wPHnRV10iR1yjIFX/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Declaración Jurada de no adeudar libros", tipo: "word", url: 'https://docs.google.com/document/d/1kOR9Cg_QqpIUn2S7aUxroNXq_nl3rUQ9/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Declaración Jurada de veracidad documentaria", tipo: "word", url: 'https://docs.google.com/document/d/1qanUI3gP4BozgIEYNp8rZ-JQNvgjCOXk/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Formato de similitud (Turnitin)", tipo: "word", url: 'https://docs.google.com/document/d/1t9Q5VXZIGNRbEKGIfR2-ye0VgukhzQaN/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Formato de verificación de indexación", tipo: "word", url: 'https://docs.google.com/document/d/1cRk5BvPxpkduNt7PyoDQvwRC-5dK_nI-/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
     ],
   },
   {
@@ -210,7 +212,7 @@ export const pasosMaestria1Anio = [
         },
       ],
     },
-    formatos: [{ nombre: "FUT - Solicitud sustentación", tipo: "pdf", url: null }],
+    formatos: [{ nombre: "FUT - Solicitud sustentación", tipo: "pdf", url: 'https://drive.google.com/file/d/1qQmemMa5vNTs-aersGWi2tlicsawR5HD/view?usp=drive_link' }],
   },
   {
     id: 4,
@@ -268,10 +270,10 @@ export const pasosMaestria1Anio = [
       },
     ],
     formatos: [
-      { nombre: "Autorización Cybertesis", tipo: "word", url: null },
-      { nombre: "Declaración Jurada - Datos étnicos", tipo: "word", url: null },
-      { nombre: "Indicaciones para fotos de grados", tipo: "pdf", url: null },
-      { nombre: "R.R. N.° 00017 - Líneas de investigación", tipo: "pdf", url: null },
+      { nombre: "Autorización Cybertesis", tipo: "word", url: 'https://docs.google.com/document/d/1aHtV20UTx_YlkULHuy2FIHWTKzrtmqs1/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Declaración Jurada - Datos étnicos", tipo: "word", url: 'https://docs.google.com/document/d/1kCpMDzFeSI1aCA9xY3K9IZunwCgFhdJK/edit?usp=drive_link&ouid=108179070105779258111&rtpof=true&sd=true' },
+      { nombre: "Indicaciones para fotos de grados", tipo: "pdf", url: 'https://drive.google.com/file/d/1InOP2ysNrsG0WYXzqOQIq0F6i7nuy1eu/view?usp=drive_link' },
+      { nombre: "R.R. N.° 00017-14 - Líneas de investigación", tipo: "pdf", url: 'https://drive.google.com/file/d/1bfOf4LbenLQ1QmINHWo-Ly3kkJhdY1OX/view?usp=drive_link' },
     ],
   },
 ];

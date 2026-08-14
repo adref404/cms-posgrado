@@ -16,7 +16,7 @@ export const portalMat = {
   nombre: "Módulo de Atención Trámite (MAT)",
   descripcion:
     "Toda la documentación debe presentarse consolidada en formato PDF a través de la plataforma virtual.",
-  url: "https://tramiteonline.unmsm.edu.pe/sgdfd/mat/",
+  url: "https://tramiteonline.unmsm.edu.pe/sgdfd/mat/tramites/solicitud",
 };
 
 export const pasosDoctor = [
