@@ -42,7 +42,8 @@ const BREADCRUMB_MAP = {
   // Trámites sí tiene vista propia ("/tramites"), por eso "seccion" es
   // clickeable (seccionTo) en vez de texto plano.
   "/tramites": { seccion: null, subseccion: "Trámites" },
-  "/tramites/maestria": { seccion: "Trámites", seccionTo: "/tramites", subseccion: "Grado de Magister" },
+  "/tramites/maestria-1-anio": { seccion: "Trámites", seccionTo: "/tramites", subseccion: "Grado de Magíster · Maestría 1 Año" },
+  "/tramites/maestria-2-anios": { seccion: "Trámites", seccionTo: "/tramites", subseccion: "Grado de Magíster · Maestría 2 Años" },
   "/tramites/doctorado": { seccion: "Trámites", seccionTo: "/tramites", subseccion: "Grado de Doctor" },
 };
 

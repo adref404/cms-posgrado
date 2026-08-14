@@ -22,7 +22,7 @@ const CustomToast = ({ type, title, message, icon }) => (
 // 🔔 Funciones específicas para cada caso
 export const notifications = {
   // ✅ Login exitoso
-  loginSuccess: (userType = 'estudiante') => {
+  loginSuccess: () => {
     toast.custom(
       (t) => (
         <div className={`${t.visible ? 'animate-enter' : 'animate-leave'} transform transition-all duration-500 ease-out`}>

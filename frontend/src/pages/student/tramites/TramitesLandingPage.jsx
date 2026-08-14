@@ -8,10 +8,16 @@ import { MATRICULA_HERO_IMAGE } from "../../../utils/constants";
 // Absorbe conceptualmente lo que antes era la sección "Graduación".
 const TRAMITES = [
   {
-    to: "/tramites/maestria",
+    to: "/tramites/maestria-1-anio",
     icon: MdSchool,
-    titulo: "Grado de Magister",
-    descripcion: "Procesos, requisitos y solicitudes para optar el grado de Magister.",
+    titulo: "Grado de Magíster · Maestría 1 Año",
+    descripcion: "Procesos, requisitos y solicitudes para optar el grado en las maestrías profesionales de 1 año.",
+  },
+  {
+    to: "/tramites/maestria-2-anios",
+    icon: MdSchool,
+    titulo: "Grado de Magíster · Maestría 2 Años",
+    descripcion: "Procesos, requisitos y solicitudes para optar el grado en las maestrías de 2 años.",
   },
   {
     to: "/tramites/doctorado",
@@ -31,7 +37,7 @@ const TramitesLandingPage = () => (
     />
 
     <div className="max-w-6xl mx-auto px-4 py-12">
-      <div className="grid sm:grid-cols-2 gap-6">
+      <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
         {TRAMITES.map(({ to, icon: Icon, titulo, descripcion }) => (
           <Link
             key={to}

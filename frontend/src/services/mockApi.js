@@ -1,7 +1,6 @@
 import {
   mockDatabase,
   generateMockId,
-  findUserByCredentials,
   validateStudentCode
 } from '../data/mockData.js'
 
@@ -194,7 +193,7 @@ export const mockApi = {
       }
     },
 
-    async delete(fileId) {
+    async delete() {
       await networkDelay(300)
       return { success: true }
     }
@@ -246,7 +245,7 @@ export const mockApi = {
       const userIndex = mockDatabase.users.findIndex(user => user.id === parseInt(id))
 
       if (userIndex !== -1) {
-        const deleted = mockDatabase.users.splice(userIndex, 1)
+        mockDatabase.users.splice(userIndex, 1)
         return { success: true }
       }
 

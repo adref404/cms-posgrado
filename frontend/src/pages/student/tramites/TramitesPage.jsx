@@ -1,8 +1,9 @@
 import EnDesarrolloPage from "../../../components/common/EnDesarrolloPage";
 import { MATRICULA_HERO_IMAGE } from "../../../utils/constants";
 
-// Una sola página para "/tramites/maestria" y "/tramites/doctorado";
-// el programa se pasa como prop desde App.jsx.
+// Placeholder "en desarrollo" para trámites que aún no tienen contenido
+// propio (por ahora, "/tramites/maestria-2-anios"); el programa se pasa
+// como prop desde App.jsx.
 const TramitesPage = ({ programa }) => (
   <EnDesarrolloPage
     eyebrow="Trámites"

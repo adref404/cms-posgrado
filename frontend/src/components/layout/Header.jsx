@@ -488,15 +488,22 @@ function Header() {
                   </svg>
                 </button>
                 {dropdownOpen.tramites && (
-                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
+                  <div className="absolute top-full left-0 pt-2 w-72 z-50">
                     <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
                       <div className="py-2">
                       <Link
-                        to="/tramites/maestria"
+                        to="/tramites/maestria-1-anio"
                         className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
                         onClick={closeAllDropdowns}
                       >
-                        <MdSchool className="text-unmsm-navy" /> Grado de Magister
+                        <MdSchool className="text-unmsm-navy" /> Grado de Magíster · 1 Año
+                      </Link>
+                      <Link
+                        to="/tramites/maestria-2-anios"
+                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
+                        onClick={closeAllDropdowns}
+                      >
+                        <MdSchool className="text-unmsm-navy" /> Grado de Magíster · 2 Años
                       </Link>
                       <Link
                         to="/tramites/doctorado"
@@ -824,11 +831,18 @@ function Header() {
             {dropdownOpen.tramites && (
               <div className="mt-2 ml-4 space-y-2">
                 <Link
-                  to="/tramites/maestria"
+                  to="/tramites/maestria-1-anio"
                   onClick={() => setMenuOpen(false)}
                   className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
                 >
-                  <MdSchool className="text-lg" /> Grado de Magister
+                  <MdSchool className="text-lg" /> Grado de Magíster · 1 Año
+                </Link>
+                <Link
+                  to="/tramites/maestria-2-anios"
+                  onClick={() => setMenuOpen(false)}
+                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+                >
+                  <MdSchool className="text-lg" /> Grado de Magíster · 2 Años
                 </Link>
                 <Link
                   to="/tramites/doctorado"
