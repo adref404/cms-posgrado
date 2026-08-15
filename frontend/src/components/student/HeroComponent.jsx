@@ -36,7 +36,7 @@ const heroSlides = [
     description:
       "Alcanza el más alto nivel académico con nuestros programas de doctorado en educación.",
     backgroundImage:
-      "https://scontent.flim39-1.fna.fbcdn.net/v/t39.30808-6/495192968_1239964188131324_1072186976237851937_n.jpg?stp=dst-jpg_tt6&cstp=mx1280x853&ctp=s1280x853&_nc_cat=101&ccb=1-7&_nc_sid=127cfc&_nc_ohc=o8By0XWduXQQ7kNvwGJERYQ&_nc_oc=Adpzz3DMVh85uCSyUxhV0nq1atjBuBKau3SHwiHasUtlUTruSwlL0Uo3qcazIRyNMXo&_nc_zt=23&_nc_ht=scontent.flim39-1.fna&_nc_gid=vNvuzbQRnwFOln0OcVMYNg&_nc_ss=7b289&oh=00_AQGddM0wHpXWFHgYCGVTqxjjooxwG1I7KiDq1w3hmhBIFQ&oe=6A771985",
+      "https://biologia-web-unmsm.s3.us-east-2.amazonaws.com/unmsm_invita_a_profesionales_a_estudiar_maestrias_y_doctorados_en_educacion_4e4efcf186.jpg",
     accent: "Doctorado",
     buttonText: "Explora Más",
     url: "/programas/doctorado",

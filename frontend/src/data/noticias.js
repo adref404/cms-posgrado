@@ -17,6 +17,20 @@
 
 export const noticias = [
   {
+    id: "magister-gestion-educativa-2026",
+    titulo: "Magister en Gestión Educativa 2026",
+    resumen:
+      "Karla Huamaní se sacó grado de Magister en Gestión Educativa y nos cuenta su experiencia en el programa. ¡Conoce su historia y cómo este programa transformó su carrera profesional! ",
+    fecha: "2026-07-27",
+    imagen: "/karla-maestria.png",
+    cuerpo: [
+      " Karla H., graduada del Magister en Gestión Educativa, comparte su experiencia y cómo este programa ha impactado positivamente en su carrera profesional. A través de su testimonio, nos brinda una visión de los beneficios y oportunidades que ofrece el programa para aquellos interesados en avanzar en el campo de la educación.",
+      "El Magister en Gestión Educativa proporciona a los estudiantes las herramientas y conocimientos necesarios para liderar y gestionar instituciones educativas de manera efectiva. Los graduados del programa, como Karla, están equipados para enfrentar los desafíos del sector educativo y contribuir al desarrollo de políticas y prácticas innovadoras.",
+      "Si estás considerando avanzar en tu carrera en el ámbito educativo, el Magister en Gestión Educativa es una excelente opción para adquirir habilidades avanzadas y ampliar tus perspectivas profesionales.",
+    ],
+    url: "",
+  },
+  {
     id: "nuevo-sitio-web-facultad-educacion",
     titulo: "Facultad de Educación estrena nuevo sitio web para sus usuarios",
     resumen:
