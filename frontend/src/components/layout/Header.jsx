@@ -19,7 +19,7 @@ import {
   MdWorkspacePremium,
   MdCardMembership
 } from "react-icons/md";
-import universidadLogo from "../../assets/logo-upg.webp";
+import universidadLogo from "../../assets/UNMSM - Logo UPG 2024 04.png";
 
 // Prefijos de ruta por grupo del menú, para resaltar la sección activa.
 const RUTAS_ACTIVAS = {
@@ -148,11 +148,11 @@ function Header() {
             <img
               src={universidadLogo}
               alt="Logo Universidad"
-              className="h-14 w-14 rounded-full object-cover bg-white p-1"
+              className="h-14 w-14 object-contain"
             />
-            <div className="flex flex-col leading-tight ml-3">
-              <span className="text-2xl font-bold">Posgrado</span>
-              <span className="text-xs font-medium text-gray-200">Facultad de Educación</span>
+            <div className="flex flex-col leading-none ml-3">
+              <span className="text-2xl font-serif font-bold uppercase text-white">Posgrado</span>
+              <span className="text-[22px] font-serif font-bold uppercase text-white">Educación</span>
             </div>
           </Link>
         </div>
@@ -345,7 +345,7 @@ function Header() {
                 <img
                   src={universidadLogo}
                   alt="Logo Universidad"
-                  className="h-16 w-16 rounded-full object-cover bg-white p-1"
+                  className="h-20 w-20 object-contain"
                 />
               </Link>
             </div>

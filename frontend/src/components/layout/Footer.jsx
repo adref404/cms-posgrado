@@ -7,7 +7,7 @@ import {
   MdOpenInNew,
 } from "react-icons/md";
 import { FaWhatsapp } from "react-icons/fa";
-import universidadLogo from "../../assets/logo-upg.webp";
+import universidadLogo from "../../assets/UNMSM - Logo UPG 2024 04.png";
 
 const ENLACES = [
   { to: "/nosotros/quienes-somos", label: "Nosotros" },
@@ -52,11 +52,11 @@ const Footer = () => {
                 <img
                   src={universidadLogo}
                   alt="Logo Universidad"
-                  className="h-12 w-12 rounded-full object-cover bg-white p-1 flex-shrink-0"
+                  className="h-12 w-12 object-contain flex-shrink-0"
                 />
-                <div className="leading-tight">
-                  <p className="font-bold">Posgrado</p>
-                  <p className="text-xs text-gray-300">Facultad de Educación</p>
+                <div className="leading-none">
+                  <p className="text-lg font-serif font-bold uppercase text-white">Posgrado</p>
+                  <p className="text-base font-serif font-bold uppercase text-white">Educación</p>
                 </div>
               </Link>
               <p className="flex items-start gap-2 text-gray-300 text-sm">

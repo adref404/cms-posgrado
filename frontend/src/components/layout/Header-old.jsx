@@ -25,7 +25,7 @@ import {
 } from "react-icons/md";
 // Importar MdCertificate por separado o usar un ícono alternativo
 import { MdVerifiedUser as MdCertificate } from "react-icons/md";
-import universidadLogo from "../../assets/logo-upg.webp";
+import universidadLogo from "../../assets/UNMSM - Logo UPG 2024 04.png";
 import LogoutConfirmModal from "../modals/LogoutConfirmModal";
 
 function Header() {

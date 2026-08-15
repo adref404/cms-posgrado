@@ -5,8 +5,14 @@
 export const mision =
   "Formar integralmente profesionales y especialistas en educación en los niveles de pre y posgrado. Fomentar el pensamiento crítico y la generación de conocimiento basado en la investigación científica y el uso de las herramientas tecnológicas más actuales. Asimismo, promover el respeto a la interculturalidad e inclusión, la responsabilidad social y la identidad nacional.";
 
+export const misionImagen =
+  "https://us.123rf.com/450wm/perkmeup/perkmeup0702/perkmeup070200123/765607-a-pile-of-open-books-and-a-notebook-ready-to-start-studying.jpg?ver=6";
+
 export const vision =
   "Ser referente nacional e internacional en la formación de profesionales e investigadores en pre y posgrado en Educación, ofreciendo una educación integral de calidad.";
+
+export const visionImagen =
+  "https://imgcomercial.glr.pe/1000x590/comercial/original/2026/03/23/69c131ac9e47f60d3f02d60b.webp";
 
 export const valoresIntro =
   "Los valores en la Facultad de Educación corresponden a características que poseen los miembros de nuestra comunidad y que les permiten desenvolverse y desarrollarse en un entorno que agrupa aspectos éticos y capacidades, que guían su comportamiento, para el logro de objetivos. Estos valores son:";

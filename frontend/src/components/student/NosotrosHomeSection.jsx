@@ -2,17 +2,17 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdFlag, MdVisibility, MdArrowForward, MdSync } from "react-icons/md";
 import Reveal from "../common/Reveal";
-import { mision, vision } from "../../data/nosotros";
+import { mision, misionImagen, vision, visionImagen } from "../../data/nosotros";
 
-// Tarjeta que gira en 3D: adelante solo el ícono + título; al tocarla, gira
-// y muestra la descripción atrás. Usa perspective/backface-visibility (CSS),
-// no una librería nueva.
-const FlipCard = ({ icon: Icon, tono, titulo, texto }) => {
+// Tarjeta que gira en 3D: adelante foto de fondo + ícono + título; al
+// tocarla, gira y muestra la descripción atrás. Usa perspective/backface-
+// visibility (CSS), no una librería nueva.
+const FlipCard = ({ icon: Icon, tono, titulo, texto, imagen }) => {
   const [volteada, setVolteada] = useState(false);
 
   const tonos = {
-    blue: { bgIcon: "bg-unmsm-blue/10", icon: "text-unmsm-blue", bgAtras: "bg-unmsm-blue" },
-    green: { bgIcon: "bg-unmsm-green/10", icon: "text-unmsm-green", bgAtras: "bg-unmsm-green" },
+    blue: { bgIcon: "bg-white/20", icon: "text-white", bgAtras: "bg-unmsm-blue", overlay: "from-unmsm-blue/90 via-unmsm-blue/60 to-unmsm-navy/80" },
+    green: { bgIcon: "bg-white/20", icon: "text-white", bgAtras: "bg-unmsm-green", overlay: "from-unmsm-green/90 via-unmsm-green/50 to-unmsm-navy/80" },
   }[tono];
 
   return (
@@ -26,17 +26,25 @@ const FlipCard = ({ icon: Icon, tono, titulo, texto }) => {
           volteada ? "[transform:rotateY(180deg)]" : ""
         }`}
       >
-        {/* Adelante: ícono + título */}
-        <div className="absolute inset-0 [backface-visibility:hidden] bg-unmsm-bg rounded-2xl shadow-sm group-hover:shadow-md transition-shadow flex flex-col items-center justify-center text-center p-6">
-          <div
-            className={`w-16 h-16 rounded-full ${tonos.bgIcon} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
-          >
-            <Icon className={`${tonos.icon} text-3xl`} />
+        {/* Adelante: foto de fondo + ícono + título */}
+        <div className="absolute inset-0 [backface-visibility:hidden] rounded-2xl shadow-sm group-hover:shadow-md transition-shadow overflow-hidden">
+          <img
+            src={imagen}
+            alt=""
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+          />
+          <div className={`absolute inset-0 bg-gradient-to-b ${tonos.overlay}`} />
+          <div className="relative z-10 h-full flex flex-col items-center justify-center text-center p-6">
+            <div
+              className={`w-16 h-16 rounded-full ${tonos.bgIcon} backdrop-blur-sm flex items-center justify-center mb-4 group-hover:scale-110 transition-transform duration-300`}
+            >
+              <Icon className={`${tonos.icon} text-3xl`} />
+            </div>
+            <h3 className="font-bold text-white text-2xl">{titulo}</h3>
+            <span className="flex items-center gap-1.5 text-white/80 text-xs mt-4">
+              <MdSync className="text-sm" /> Toca para leer más
+            </span>
           </div>
-          <h3 className="font-bold text-unmsm-navy text-2xl">{titulo}</h3>
-          <span className="flex items-center gap-1.5 text-unmsm-muted text-xs mt-4">
-            <MdSync className="text-sm" /> Toca para leer más
-          </span>
         </div>
 
         {/* Atrás: descripción */}
@@ -65,10 +73,10 @@ const NosotrosHomeSection = () => (
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
         <Reveal direction="left">
-          <FlipCard icon={MdFlag} tono="blue" titulo="Misión" texto={mision} />
+          <FlipCard icon={MdFlag} tono="blue" titulo="Misión" texto={mision} imagen={misionImagen} />
         </Reveal>
         <Reveal direction="right" delay={100}>
-          <FlipCard icon={MdVisibility} tono="green" titulo="Visión" texto={vision} />
+          <FlipCard icon={MdVisibility} tono="green" titulo="Visión" texto={vision} imagen={visionImagen} />
         </Reveal>
       </div>
 
