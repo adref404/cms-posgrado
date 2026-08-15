@@ -3,10 +3,11 @@ import NoticiaCard from "../../../components/noticias/NoticiaCard";
 import ListToolbar from "../../../components/common/ListToolbar";
 import Pagination from "../../../components/common/Pagination";
 import { useFilteredList } from "../../../hooks/useFilteredList";
-import { noticias } from "../../../data/noticias";
+import { useSupabaseCollection } from "../../../hooks/useSupabaseCollection";
 import { NOSOTROS_HERO_IMAGE } from "../../../utils/constants";
 
 const NoticiasPage = () => {
+  const { data: noticias, loading } = useSupabaseCollection("noticias");
   const {
     searchTerm,
     setSearchTerm,
@@ -56,7 +57,9 @@ const NoticiasPage = () => {
           />
         </div>
 
-        {paginated.length > 0 ? (
+        {loading ? (
+          <p className="text-center text-unmsm-muted py-12">Cargando noticias...</p>
+        ) : paginated.length > 0 ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {paginated.map((noticia) => (
               <NoticiaCard key={noticia.id} {...noticia} />

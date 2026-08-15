@@ -3,10 +3,11 @@ import EventoCard from "../../../components/noticias/EventoCard";
 import ListToolbar from "../../../components/common/ListToolbar";
 import Pagination from "../../../components/common/Pagination";
 import { useFilteredList } from "../../../hooks/useFilteredList";
-import { eventos } from "../../../data/eventos";
+import { useSupabaseCollection } from "../../../hooks/useSupabaseCollection";
 import { NOSOTROS_HERO_IMAGE } from "../../../utils/constants";
 
 const EventosPage = () => {
+  const { data: eventos, loading } = useSupabaseCollection("eventos");
   const {
     searchTerm,
     setSearchTerm,
@@ -56,7 +57,9 @@ const EventosPage = () => {
           />
         </div>
 
-        {paginated.length > 0 ? (
+        {loading ? (
+          <p className="text-center text-unmsm-muted py-12">Cargando eventos...</p>
+        ) : paginated.length > 0 ? (
           <div className="space-y-4">
             {paginated.map((evento) => (
               <EventoCard key={evento.id} {...evento} />

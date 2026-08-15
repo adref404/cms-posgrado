@@ -3,10 +3,11 @@ import ComunicadoCard from "../../../components/comunicados/ComunicadoCard";
 import ListToolbar from "../../../components/common/ListToolbar";
 import Pagination from "../../../components/common/Pagination";
 import { useFilteredList } from "../../../hooks/useFilteredList";
-import { comunicados } from "../../../data/comunicados";
+import { useSupabaseCollection } from "../../../hooks/useSupabaseCollection";
 import { NOSOTROS_HERO_IMAGE } from "../../../utils/constants";
 
 const ComunicadosPage = () => {
+  const { data: comunicados, loading } = useSupabaseCollection("comunicados");
   const {
     searchTerm,
     setSearchTerm,
@@ -62,7 +63,9 @@ const ComunicadosPage = () => {
           />
         </div>
 
-        {ordenados.length > 0 ? (
+        {loading ? (
+          <p className="text-center text-unmsm-muted py-12">Cargando comunicados...</p>
+        ) : ordenados.length > 0 ? (
           <div className="space-y-4">
             {ordenados.map((comunicado) => (
               <ComunicadoCard key={comunicado.id} {...comunicado} />

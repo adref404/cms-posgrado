@@ -1,13 +1,14 @@
 import { Navigate, useParams } from "react-router-dom";
 import { MdAccessTime, MdLocationOn, MdArrowForward } from "react-icons/md";
-import { eventos } from "../../../data/eventos";
+import { useSupabaseItem } from "../../../hooks/useSupabaseItem";
 import { formatFechaLarga, getDiaMes } from "../../../utils/dateFormat";
 import BreadcrumbBar from "../../../components/common/BreadcrumbBar";
 
 const EventoDetallePage = () => {
   const { id } = useParams();
-  const evento = eventos.find((e) => e.id === id);
+  const evento = useSupabaseItem("eventos", id);
 
+  if (evento === undefined) return null; // cargando
   if (!evento) return <Navigate to="/eventos" replace />;
 
   const { dia, mes } = getDiaMes(evento.fecha);

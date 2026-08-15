@@ -5,6 +5,11 @@ import ToasterProvider from './components/ui/ToasterProvider';
 import ScrollToTop from './components/common/ScrollToTop';
 import AvisoContenidoEjemplo from './components/common/AvisoContenidoEjemplo';
 import BackToTopButton from './components/common/BackToTopButton';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/admin/ProtectedRoute';
+import AdminLoginPage from './pages/admin/AdminLoginPage';
+import AdminHomePage from './pages/admin/AdminHomePage';
+import AdminNovedadesPage from './pages/admin/AdminNovedadesPage';
 
 import QuienesSomosPage from './pages/student/nosotros/QuienesSomosPage';
 import DirectorioFEPage from './pages/student/nosotros/DirectorioFEPage';
@@ -40,12 +45,18 @@ import { NOSOTROS_HERO_IMAGE } from './utils/constants';
 function App() {
   return (
     <BrowserRouter>
+      <AuthProvider>
       <ScrollToTop />
       <AvisoContenidoEjemplo />
       <BackToTopButton />
       <ToasterProvider />
 
       <Routes>
+        {/* 🔐 Panel de Administración (sin Header/Footer públicos) */}
+        <Route path="/admin/login" element={<AdminLoginPage />} />
+        <Route path="/admin" element={<ProtectedRoute><AdminHomePage /></ProtectedRoute>} />
+        <Route path="/admin/:tipo" element={<ProtectedRoute><AdminNovedadesPage /></ProtectedRoute>} />
+
         <Route element={<Layout />}>
           <Route path="/home" element={<HomeStudent />} />
 
@@ -114,6 +125,7 @@ function App() {
         <Route path="/" element={<Navigate to="/home" replace />} />
         <Route path="*" element={<Navigate to="/home" replace />} />
       </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }

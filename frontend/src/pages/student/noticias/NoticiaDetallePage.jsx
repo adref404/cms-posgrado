@@ -1,13 +1,16 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { MdArrowForward, MdArticle } from "react-icons/md";
-import { noticias } from "../../../data/noticias";
+import { useSupabaseItem } from "../../../hooks/useSupabaseItem";
+import { useSupabaseCollection } from "../../../hooks/useSupabaseCollection";
 import { formatFechaLarga } from "../../../utils/dateFormat";
 import BreadcrumbBar from "../../../components/common/BreadcrumbBar";
 
 const NoticiaDetallePage = () => {
   const { id } = useParams();
-  const noticia = noticias.find((n) => n.id === id);
+  const noticia = useSupabaseItem("noticias", id);
+  const { data: noticias } = useSupabaseCollection("noticias");
 
+  if (noticia === undefined) return null; // cargando
   if (!noticia) return <Navigate to="/noticias" replace />;
 
   const relacionadas = noticias.filter((n) => n.id !== noticia.id).slice(0, 3);

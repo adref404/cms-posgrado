@@ -1,13 +1,14 @@
 import { Navigate, useParams } from "react-router-dom";
 import { MdCampaign, MdDescription } from "react-icons/md";
-import { comunicados } from "../../../data/comunicados";
+import { useSupabaseItem } from "../../../hooks/useSupabaseItem";
 import { formatFechaLarga } from "../../../utils/dateFormat";
 import BreadcrumbBar from "../../../components/common/BreadcrumbBar";
 
 const ComunicadoDetallePage = () => {
   const { id } = useParams();
-  const comunicado = comunicados.find((c) => c.id === id);
+  const comunicado = useSupabaseItem("comunicados", id);
 
+  if (comunicado === undefined) return null; // cargando
   if (!comunicado) return <Navigate to="/comunicados" replace />;
 
   return (

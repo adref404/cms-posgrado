@@ -1,6 +1,4 @@
-import { noticias } from "../data/noticias";
-import { eventos } from "../data/eventos";
-import { comunicados } from "../data/comunicados";
+import { novedadesCache } from "../data/novedadesCache";
 import programasPosgrado from "../data/programas";
 
 // A qué lista ("/programas/maestria", etc.) vuelve el breadcrumb de un
@@ -50,9 +48,9 @@ const BREADCRUMB_MAP = {
 // Rutas de detalle (/noticias/:id, etc.): heredan el breadcrumb de su lista
 // y agregan el título del ítem como último segmento (no clickeable).
 const DETAIL_LOOKUPS = [
-  { prefix: "/noticias/", listPath: "/noticias", items: noticias },
-  { prefix: "/eventos/", listPath: "/eventos", items: eventos },
-  { prefix: "/comunicados/", listPath: "/comunicados", items: comunicados },
+  { prefix: "/noticias/", listPath: "/noticias", tipo: "noticias" },
+  { prefix: "/eventos/", listPath: "/eventos", tipo: "eventos" },
+  { prefix: "/comunicados/", listPath: "/comunicados", tipo: "comunicados" },
 ];
 
 // Devuelve { seccion, subseccion, subseccionTo, detalle } o null si la ruta
@@ -77,7 +75,7 @@ export const getBreadcrumb = (pathname) => {
   const match = DETAIL_LOOKUPS.find(({ prefix }) => pathname.startsWith(prefix));
   if (match) {
     const id = pathname.slice(match.prefix.length);
-    const item = match.items.find((i) => i.id === id);
+    const item = novedadesCache[match.tipo].find((i) => i.id === id);
     const base = BREADCRUMB_MAP[match.listPath];
     return {
       ...base,

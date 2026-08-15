@@ -3,13 +3,15 @@ import { MdArrowForward } from "react-icons/md";
 import Reveal from "../common/Reveal";
 import NoticiaCard from "../noticias/NoticiaCard";
 import EventoCard from "../noticias/EventoCard";
-import { noticias } from "../../data/noticias";
-import { eventos } from "../../data/eventos";
+import { useSupabaseCollection } from "../../hooks/useSupabaseCollection";
 
 // Teaser de Novedades: últimas noticias + próximos eventos. Reutiliza las
 // mismas tarjetas de /noticias y /eventos, así que ya respetan el criterio
 // de enlace interno/externo y el aviso de contenido de ejemplo de esa sección.
 const NovedadesHomeSection = () => {
+  const { data: noticias } = useSupabaseCollection("noticias");
+  const { data: eventos } = useSupabaseCollection("eventos");
+
   const ultimasNoticias = [...noticias]
     .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
     .slice(0, 2);
