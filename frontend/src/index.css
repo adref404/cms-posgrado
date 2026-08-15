@@ -1,6 +1,15 @@
 @import "tailwindcss";
 
 @theme {
+  /* Tipografía institucional: Inter (texto de uso — menús, párrafos, botones)
+     + Lora (títulos grandes y el logotipo "Posgrado Educación"). Cargadas
+     desde Google Fonts en index.html. Al redefinir --font-sans/--font-serif
+     acá, Tailwind aplica Inter como fuente por defecto de todo el sitio
+     (preflight usa este mismo token) y la utilidad font-serif pasa a usar
+     Lora donde ya se usa (Header/Footer). */
+  --font-sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-serif: "Lora", ui-serif, Georgia, "Times New Roman", serif;
+
   /* Paleta oficial Posgrado Educación UNMSM (piezas de marketing institucionales) */
 
   /* Azul fuerte — color dominante: fondos, headers, botones/estados primarios */

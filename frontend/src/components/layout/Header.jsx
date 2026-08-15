@@ -183,7 +183,7 @@ function Header() {
                 >
                   Nosotros
                   <svg
-                    className={`w-4 h-4 transition-transform ${dropdownOpen.nosotros ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.nosotros ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -243,7 +243,7 @@ function Header() {
                 >
                   Programas
                   <svg
-                    className={`w-4 h-4 transition-transform ${dropdownOpen.programas ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.programas ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -296,7 +296,7 @@ function Header() {
                 >
                   Novedades
                   <svg
-                    className={`w-4 h-4 transition-transform ${dropdownOpen.noticias ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.noticias ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -337,7 +337,7 @@ function Header() {
             </div>
 
             {/* Logo en el centro */}
-            <div className="flex items-center gap-3 px-8">
+            <div className="flex items-center gap-3 px-8 flex-shrink-0">
               <Link
                 to="/home"
                 className="flex items-center gap-3 cursor-pointer hover:text-gray-300 transition-colors"
@@ -345,7 +345,7 @@ function Header() {
                 <img
                   src={universidadLogo}
                   alt="Logo Universidad"
-                  className="h-20 w-20 object-contain"
+                  className="h-20 w-20 object-contain flex-shrink-0"
                 />
               </Link>
             </div>
@@ -366,7 +366,7 @@ function Header() {
                 >
                   Matrícula
                   <svg
-                    className={`w-4 h-4 transition-transform ${dropdownOpen.matricula ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.matricula ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
@@ -426,7 +426,7 @@ function Header() {
                 >
                   Información Académica
                   <svg 
-                    className={`w-4 h-4 transition-transform ${dropdownOpen.informacion ? 'rotate-180' : ''}`} 
+                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.informacion ? 'rotate-180' : ''}`}
                     fill="none" 
                     stroke="currentColor" 
                     viewBox="0 0 24 24"
@@ -479,7 +479,7 @@ function Header() {
                 >
                   Trámites
                   <svg
-                    className={`w-4 h-4 transition-transform ${dropdownOpen.tramites ? 'rotate-180' : ''}`}
+                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.tramites ? 'rotate-180' : ''}`}
                     fill="none"
                     stroke="currentColor"
                     viewBox="0 0 24 24"
