@@ -14,6 +14,7 @@ export const ADMIN_NOVEDADES_CONFIG = {
       { nombre: "imagen", etiqueta: "Imagen", tipo: "imagen" },
       { nombre: "cuerpo", etiqueta: "Cuerpo de la noticia (un párrafo por línea)", tipo: "parrafos" },
       { nombre: "url", etiqueta: "Link externo (opcional, si no hay cuerpo propio)", tipo: "texto" },
+      { nombre: "destacado", etiqueta: "Destacar en el Home (barra de aviso urgente)", tipo: "check" },
     ],
   },
   eventos: {
@@ -29,6 +30,7 @@ export const ADMIN_NOVEDADES_CONFIG = {
       { nombre: "imagen", etiqueta: "Imagen", tipo: "imagen" },
       { nombre: "cuerpo", etiqueta: "Cuerpo del evento (un párrafo por línea)", tipo: "parrafos" },
       { nombre: "url", etiqueta: "Link externo / inscripción (opcional)", tipo: "texto" },
+      { nombre: "destacado", etiqueta: "Destacar en el Home (barra de aviso urgente)", tipo: "check" },
     ],
   },
   comunicados: {
@@ -42,6 +44,7 @@ export const ADMIN_NOVEDADES_CONFIG = {
       { nombre: "cuerpo", etiqueta: "Cuerpo del comunicado (un párrafo por línea)", tipo: "parrafos" },
       { nombre: "documento", etiqueta: "Link a documento adjunto (Drive/PDF, opcional)", tipo: "texto" },
       { nombre: "urgente", etiqueta: "Marcar como urgente", tipo: "check" },
+      { nombre: "destacado", etiqueta: "Destacar en el Home (barra de aviso urgente)", tipo: "check" },
     ],
   },
 };

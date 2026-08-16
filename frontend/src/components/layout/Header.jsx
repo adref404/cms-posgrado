@@ -133,7 +133,8 @@ function Header() {
   return (
     <>
       <header
-        className={`fixed top-0 w-full z-50 text-white transition-all duration-300 ease-in-out ${
+        style={{ top: "var(--aviso-bar-height, 0px)" }}
+        className={`fixed w-full z-50 text-white transition-all duration-300 ease-in-out ${
           isScrolled || menuOpen
             ? "bg-unmsm-blue shadow-lg backdrop-blur-md"
             : "bg-transparent"
