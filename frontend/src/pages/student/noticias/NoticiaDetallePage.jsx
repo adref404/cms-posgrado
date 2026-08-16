@@ -33,7 +33,7 @@ const NoticiaDetallePage = () => {
               <img
                 src={noticia.imagen}
                 alt=""
-                className="w-full rounded-xl mt-6 object-cover max-h-96"
+                className="w-full aspect-video rounded-xl mt-6 object-cover"
               />
             ) : (
               <div className="w-full h-48 rounded-xl mt-6 bg-unmsm-blue/5 flex items-center justify-center">

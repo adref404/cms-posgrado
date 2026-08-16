@@ -1,6 +1,7 @@
 import PageHero from "../../../components/ui/PageHero";
 import EventoCard from "../../../components/noticias/EventoCard";
 import ListToolbar from "../../../components/common/ListToolbar";
+import ItemsPerPageSelect from "../../../components/common/ItemsPerPageSelect";
 import Pagination from "../../../components/common/Pagination";
 import { useFilteredList } from "../../../hooks/useFilteredList";
 import { useSupabaseCollection } from "../../../hooks/useSupabaseCollection";
@@ -41,20 +42,23 @@ const EventosPage = () => {
           onFechaDesdeChange={setFechaDesde}
           fechaHasta={fechaHasta}
           onFechaHastaChange={setFechaHasta}
-          itemsPerPage={itemsPerPage}
-          onItemsPerPageChange={setItemsPerPage}
           placeholder="Buscar evento..."
         />
 
-        <div className="flex items-center justify-between mb-4">
-          <p className="text-unmsm-muted text-sm">
-            {totalCount} {totalCount === 1 ? "evento" : "eventos"}
-          </p>
-          <Pagination
-            currentPage={currentPage}
-            totalPages={totalPages}
-            onPageChange={goToPage}
-          />
+        <div className="mb-4">
+          <div className="flex items-center justify-between">
+            <p className="text-unmsm-muted text-sm">
+              {totalCount} {totalCount === 1 ? "evento" : "eventos"}
+            </p>
+            <ItemsPerPageSelect value={itemsPerPage} onChange={setItemsPerPage} />
+          </div>
+          <div className="flex justify-end mt-2">
+            <Pagination
+              currentPage={currentPage}
+              totalPages={totalPages}
+              onPageChange={goToPage}
+            />
+          </div>
         </div>
 
         {loading ? (

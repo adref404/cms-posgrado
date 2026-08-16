@@ -21,7 +21,7 @@ const NoticiaCard = ({ id, titulo, resumen, fecha, imagen, cuerpo, url }) => {
       {...wrapperProps}
       className="group bg-white rounded-xl border border-gray-200 shadow-sm hover:shadow-md transition-shadow overflow-hidden flex flex-col h-full"
     >
-      <div className="h-36 bg-unmsm-blue/5 flex items-center justify-center overflow-hidden">
+      <div className="aspect-video bg-unmsm-blue/5 flex items-center justify-center overflow-hidden">
         {imagen ? (
           <img src={imagen} alt="" className="w-full h-full object-cover" />
         ) : (

@@ -35,7 +35,7 @@ const EventoDetallePage = () => {
           <img
             src={evento.imagen}
             alt=""
-            className="w-full rounded-xl mt-6 object-cover max-h-96"
+            className="w-full aspect-video rounded-xl mt-6 object-cover"
           />
         )}
 
