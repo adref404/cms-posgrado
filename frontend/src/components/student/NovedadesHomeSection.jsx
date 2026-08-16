@@ -3,20 +3,30 @@ import { MdArrowForward } from "react-icons/md";
 import Reveal from "../common/Reveal";
 import NoticiaCard from "../noticias/NoticiaCard";
 import EventoCard from "../noticias/EventoCard";
+import ComunicadoCard from "../comunicados/ComunicadoCard";
 import { useSupabaseCollection } from "../../hooks/useSupabaseCollection";
 
-// Teaser de Novedades: últimas noticias + próximos eventos. Reutiliza las
-// mismas tarjetas de /noticias y /eventos, así que ya respetan el criterio
-// de enlace interno/externo y el aviso de contenido de ejemplo de esa sección.
+// Teaser de Novedades: últimas noticias + próximos eventos + comunicados
+// recientes. Reutiliza las mismas tarjetas de /noticias, /eventos y
+// /comunicados, así que ya respetan el criterio de enlace interno/externo y
+// el aviso de contenido de ejemplo de esa sección.
 const NovedadesHomeSection = () => {
   const { data: noticias } = useSupabaseCollection("noticias");
   const { data: eventos } = useSupabaseCollection("eventos");
+  const { data: comunicados } = useSupabaseCollection("comunicados");
 
   const ultimasNoticias = [...noticias]
     .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
     .slice(0, 2);
   const proximosEventos = [...eventos]
     .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
+    .slice(0, 2);
+  // Comunicados urgentes primero, igual criterio que /comunicados.
+  const comunicadosRecientes = [...comunicados]
+    .sort((a, b) => {
+      if (a.urgente !== b.urgente) return a.urgente ? -1 : 1;
+      return new Date(b.fecha) - new Date(a.fecha);
+    })
     .slice(0, 2);
 
   return (
@@ -70,13 +80,21 @@ const NovedadesHomeSection = () => {
           </Reveal>
         </div>
 
-        <Reveal delay={200} className="text-center mt-8 md:mt-10">
-          <Link
-            to="/comunicados"
-            className="inline-flex items-center gap-2 text-unmsm-navy font-semibold hover:text-unmsm-blue transition-colors"
-          >
-            Ver también Comunicados <MdArrowForward className="text-lg" />
-          </Link>
+        <Reveal delay={200} className="mt-8 lg:mt-10">
+          <div className="flex items-center justify-between mb-4">
+            <h3 className="font-bold text-unmsm-navy">Comunicados recientes</h3>
+            <Link
+              to="/comunicados"
+              className="flex items-center gap-1 text-unmsm-green text-sm font-semibold hover:gap-2 transition-all"
+            >
+              Ver todos <MdArrowForward className="text-base" />
+            </Link>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {comunicadosRecientes.map((comunicado) => (
+              <ComunicadoCard key={comunicado.id} {...comunicado} />
+            ))}
+          </div>
         </Reveal>
       </div>
     </section>

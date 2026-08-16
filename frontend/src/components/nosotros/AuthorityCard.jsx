@@ -11,7 +11,7 @@ const getInitials = (name) =>
     .toUpperCase();
 
 const AuthorityCard = ({ name, role, unit, email, photo }) => (
-  <div className="bg-white rounded-xl shadow-sm border border-gray-200 border-l-4 border-l-unmsm-green p-5 flex gap-4 items-start">
+  <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-5 flex gap-4 items-start">
     <div className="w-16 h-16 rounded-full bg-unmsm-navy/10 flex items-center justify-center flex-shrink-0 overflow-hidden">
       {photo ? (
         <img src={photo} alt={name} className="w-full h-full object-cover" />

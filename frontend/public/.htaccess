@@ -1,6 +1,13 @@
 RewriteEngine On
 RewriteBase /
 
+# Vista previa (Open Graph) para robots de redes sociales al compartir un
+# link de noticia/evento/comunicado — les sirve og-preview.php en vez de la
+# app de React (que ellos no pueden ejecutar). Los visitantes reales nunca
+# entran por acá, siguen su camino normal más abajo.
+RewriteCond %{HTTP_USER_AGENT} (facebookexternalhit|WhatsApp|Twitterbot|LinkedInBot|Slackbot|TelegramBot|Discordbot|Pinterest|WhatsAppBot|SkypeUriPreview) [NC]
+RewriteRule ^(noticias|eventos|comunicados)/([^/]+)/?$ /og-preview.php?tabla=$1&slug=$2 [L,QSA]
+
 # Si el archivo o carpeta pedido existe de verdad (JS, CSS, imágenes...), se sirve tal cual.
 RewriteCond %{REQUEST_FILENAME} -f [OR]
 RewriteCond %{REQUEST_FILENAME} -d

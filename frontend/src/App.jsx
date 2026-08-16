@@ -3,7 +3,6 @@ import Layout from './components/layout/Layout';
 import HomeStudent from './pages/student/HomeStudent';
 import ToasterProvider from './components/ui/ToasterProvider';
 import ScrollToTop from './components/common/ScrollToTop';
-import AvisoContenidoEjemplo from './components/common/AvisoContenidoEjemplo';
 import BackToTopButton from './components/common/BackToTopButton';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/admin/ProtectedRoute';
@@ -47,7 +46,6 @@ function App() {
     <BrowserRouter>
       <AuthProvider>
       <ScrollToTop />
-      <AvisoContenidoEjemplo />
       <BackToTopButton />
       <ToasterProvider />
 

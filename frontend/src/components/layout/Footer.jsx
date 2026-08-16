@@ -157,7 +157,7 @@ const Footer = () => {
 
           <div className="border-t border-white/10 mt-4 pt-2">
             <p className="text-gray-400 text-xs sm:text-sm text-center lg:text-left">
-              © {anio} UNMSM — Facultad de Educación. Portal de Posgrado.
+              © {anio} UNMSM — Posgrado Educación.
             </p>
           </div>
         </div>

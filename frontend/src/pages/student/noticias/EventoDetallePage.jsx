@@ -31,6 +31,14 @@ const EventoDetallePage = () => {
           </div>
         </div>
 
+        {evento.imagen && (
+          <img
+            src={evento.imagen}
+            alt=""
+            className="w-full rounded-xl mt-6 object-cover max-h-96"
+          />
+        )}
+
         <div className="flex flex-wrap gap-x-6 gap-y-2 mt-6 bg-white border border-gray-200 rounded-xl p-4 text-sm text-unmsm-text">
           {evento.hora && (
             <span className="flex items-center gap-2">

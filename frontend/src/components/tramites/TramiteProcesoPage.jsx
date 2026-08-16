@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import {
   MdSearch,
   MdRestartAlt,
@@ -39,6 +39,20 @@ const TramiteProcesoPage = ({
   const [checked, setChecked] = useState(() => new Set());
   const [busqueda, setBusqueda] = useState("");
   const [mostrarAvisoFoto, setMostrarAvisoFoto] = useState(false);
+  const contenidoRef = useRef(null);
+
+  // Al elegir un paso, el contenido (checklist, avisos...) queda debajo del
+  // stepper y en mobile suele quedar fuera de pantalla — sin este scroll el
+  // usuario no nota que el clic sí funcionó. Se calcula la posición exacta
+  // (en vez de encadenar scrollIntoView + scrollBy) para evitar que dos
+  // animaciones de scroll se pisen entre sí; -96 compensa el header fijo.
+  const seleccionarPaso = (id) => {
+    setPasoActivo(id);
+    const el = contenidoRef.current;
+    if (!el) return;
+    const destino = el.getBoundingClientRect().top + window.scrollY - 96;
+    window.scrollTo({ top: destino, behavior: "smooth" });
+  };
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
@@ -122,7 +136,7 @@ const TramiteProcesoPage = ({
               return (
                 <button
                   key={p.id}
-                  onClick={() => setPasoActivo(p.id)}
+                  onClick={() => seleccionarPaso(p.id)}
                   className={`text-left p-3.5 rounded-xl border-2 transition-all ${
                     activo ? "border-unmsm-blue bg-unmsm-blue/5" : "border-gray-200 hover:border-gray-300"
                   }`}
@@ -173,7 +187,7 @@ const TramiteProcesoPage = ({
         </div>
 
         {/* Contenido del paso */}
-        <div className="grid lg:grid-cols-3 gap-6">
+        <div ref={contenidoRef} className="grid lg:grid-cols-3 gap-6 scroll-mt-24">
           <div className="lg:col-span-2 min-w-0 bg-white rounded-2xl border border-gray-200 shadow-sm p-6">
             <div className="border-b border-gray-100 pb-4 mb-5">
               <span className="text-xs font-bold text-unmsm-blue uppercase tracking-wide">{paso.etapa}</span>

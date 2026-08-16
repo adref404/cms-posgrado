@@ -5,8 +5,8 @@ import { testimonials } from "../../data/mockData";
 
 // Testimonios de ejemplo (nombres y citas ilustrativas) mientras se define
 // la integración real vía Google Form + Google Sheet. Se avisa explícito
-// en la sección porque, a diferencia de Noticias/Eventos, esta vive en el
-// Home y no pasa por el popup de aviso por ruta (ver AvisoContenidoEjemplo).
+// en la sección porque, a diferencia de Noticias/Eventos/Comunicados (que ya
+// tienen contenido real editable desde /admin), esto sigue siendo de ejemplo.
 //
 // El orden visual es SIEMPRE el mismo (cita arriba, datos de la persona
 // abajo, como el diseño de escritorio). En mobile la cita arranca oculta;
