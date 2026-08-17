@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   MdHome,
   MdSchool,
@@ -17,7 +17,8 @@ import {
   MdEvent,
   MdCampaign,
   MdWorkspacePremium,
-  MdCardMembership
+  MdCardMembership,
+  MdSearch,
 } from "react-icons/md";
 import universidadLogo from "../../assets/UNMSM - Logo UPG 2024 04.png";
 
@@ -31,9 +32,206 @@ const RUTAS_ACTIVAS = {
   tramites: ["/tramites"],
 };
 
+// Estructura única para todo el menú: la reutilizan la fila de escritorio,
+// la fila intermedia (tablet, dos filas) y el panel móvil, así cualquier
+// cambio de enlaces se hace en un solo lugar y los tres estados nunca
+// quedan desincronizados entre sí.
+const NAV_GROUPS_IZQUIERDA = [
+  {
+    key: "nosotros",
+    label: "Nosotros",
+    panelWidth: "w-64",
+    items: [
+      { to: "/nosotros/quienes-somos", icon: MdInfo, label: "Quiénes somos" },
+      { to: "/nosotros/directorio-flch", icon: MdBadge, label: "Directorio Facultad Educación" },
+      { to: "/nosotros/directorio-posgrado", icon: MdPeople, label: "Directorio Posgrado" },
+      { to: "/nosotros/documentos-recursos", icon: MdDescription, label: "Documentos y Recursos" },
+    ],
+  },
+  {
+    key: "programas",
+    label: "Programas",
+    panelWidth: "w-64",
+    items: [
+      { to: "/programas/maestria", icon: MdSchool, label: "Maestría" },
+      { to: "/programas/doctorado", icon: MdWorkspacePremium, label: "Doctorado" },
+      { to: "/programas/diplomado", icon: MdCardMembership, label: "Diplomado" },
+    ],
+  },
+  {
+    key: "noticias",
+    label: "Actualidad",
+    panelWidth: "w-64",
+    items: [
+      { to: "/noticias", icon: MdArticle, label: "Noticias" },
+      { to: "/eventos", icon: MdEvent, label: "Eventos" },
+      { to: "/comunicados", icon: MdCampaign, label: "Comunicados" },
+    ],
+  },
+];
+
+const NAV_GROUPS_DERECHA = [
+  {
+    key: "matricula",
+    label: "Matrícula",
+    panelWidth: "w-64",
+    items: [
+      { to: "/matricula/cronograma-academico", icon: MdSchedule, label: "Cronograma Académico" },
+      { to: "/matricula/cronograma-pagos", icon: MdPayment, label: "Cronograma de Pagos" },
+      { to: "/matricula/proceso-matricula", icon: MdEdit, label: "Proceso de Matrícula" },
+      { to: "/matricula/horario-cursos", icon: MdSchedule, label: "Horario de Cursos" },
+    ],
+  },
+  {
+    key: "informacion",
+    label: "Información Académica",
+    panelWidth: "w-64",
+    items: [
+      { to: "/informacion-academica/docentes", icon: MdPersonSearch, label: "Plana Docente" },
+      { to: "/informacion-academica/plan-estudios", icon: MdLibraryBooks, label: "Plan de Estudios" },
+      { to: "/informacion-academica/preguntas-frecuentes", icon: MdHelpOutline, label: "Preguntas Frecuentes" },
+    ],
+  },
+  {
+    key: "tramites",
+    label: "Trámites",
+    panelWidth: "w-72",
+    items: [
+      { to: "/tramites/maestria-1-anio", icon: MdSchool, label: "Grado de Magíster · 1 Año" },
+      { to: "/tramites/maestria-2-anios", icon: MdSchool, label: "Grado de Magíster · 2 Años" },
+      { to: "/tramites/doctorado", icon: MdWorkspacePremium, label: "Grado de Doctor" },
+    ],
+  },
+];
+
+const TODOS_LOS_GRUPOS = [...NAV_GROUPS_IZQUIERDA, ...NAV_GROUPS_DERECHA];
+
+const inicioLinkClass = (activo) =>
+  `pb-1 border-b-2 transition-colors ${
+    activo ? "text-unmsm-mint-300 border-unmsm-mint-300" : "border-transparent hover:text-gray-300"
+  }`;
+
+const navLinkClass = (activo) =>
+  `flex items-center gap-1 pb-1 border-b-2 whitespace-nowrap transition-colors ${
+    activo ? "text-unmsm-mint-300 border-unmsm-mint-300" : "border-transparent hover:text-gray-300"
+  }`;
+
+const mobileNavLinkClass = (activo) =>
+  `w-full flex justify-between items-center text-lg font-medium transition-colors ${
+    activo ? "text-unmsm-mint-300" : "hover:text-gray-300"
+  }`;
+
+// Dropdown de navegación reutilizado por igual en escritorio y en la fila
+// intermedia (tablet): mismo botón, mismo panel. El hover solo se activa en
+// escritorio real (lo deciden onHoverOpen/onHoverClose, que se autolimitan
+// por ancho de pantalla); en el resto siempre funciona por clic.
+function NavDropdown({ group, isOpen, isActiveGroup, onToggle, onHoverOpen, onHoverClose, onItemClick }) {
+  return (
+    <div className="relative" onMouseEnter={onHoverOpen} onMouseLeave={onHoverClose}>
+      <button
+        onClick={onToggle}
+        className={navLinkClass(isActiveGroup)}
+        aria-expanded={isOpen}
+        aria-haspopup="true"
+      >
+        {group.label}
+        <svg
+          className={`w-4 h-4 flex-shrink-0 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {isOpen && (
+        <div className={`absolute top-full left-0 pt-2 ${group.panelWidth} z-50`}>
+          <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
+            <div className="py-2">
+              {group.items.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
+                  onClick={onItemClick}
+                >
+                  <item.icon className="text-unmsm-navy" /> {item.label}
+                </Link>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Submenú de navegación para el panel móvil (acordeón vertical).
+function MobileNavGroup({ group, isOpen, isActiveGroup, onToggle, onItemClick }) {
+  return (
+    <div>
+      <button
+        onClick={onToggle}
+        className={mobileNavLinkClass(isActiveGroup)}
+        aria-expanded={isOpen}
+      >
+        {group.label}
+        <svg
+          className={`w-5 h-5 transition-transform ${isOpen ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+        </svg>
+      </button>
+      {isOpen && (
+        <div className="mt-2 ml-4 space-y-2">
+          {group.items.map((item) => (
+            <Link
+              key={item.to}
+              to={item.to}
+              onClick={onItemClick}
+              className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
+            >
+              <item.icon className="text-lg" /> {item.label}
+            </Link>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+// Buscador compartido por los tres estados del header. "variant" solo
+// cambia el fondo (sólido flotante vs. tenue sobre el panel móvil, que ya
+// tiene su propio fondo oscuro); nunca usa posicionamiento absoluto con
+// offsets negativos, así jamás puede quedar fuera de su contenedor.
+function SearchForm({ value, onChange, onSubmit, className = "", inputClassName = "", variant = "solid" }) {
+  const baseInput =
+    variant === "drawer"
+      ? "bg-white/10 border border-white/20"
+      : "bg-unmsm-navy/90 backdrop-blur-sm border border-white/25 shadow-sm";
+
+  return (
+    <form onSubmit={onSubmit} className={`relative ${className}`}>
+      <MdSearch className="absolute left-2.5 top-1/2 -translate-y-1/2 text-white/60 pointer-events-none" />
+      <input
+        type="text"
+        value={value}
+        onChange={onChange}
+        placeholder="Buscar..."
+        className={`rounded-lg text-white placeholder:text-white/50 focus:outline-none focus:ring-2 focus:ring-unmsm-mint-300 transition-colors ${baseInput} ${inputClassName}`}
+      />
+    </form>
+  );
+}
+
 function Header() {
   const { pathname } = useLocation();
+  const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [busqueda, setBusqueda] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState({
     nosotros: false,
@@ -46,7 +244,8 @@ function Header() {
 
   useEffect(() => {
     const handleResize = () => {
-      if (window.innerWidth > 768) {
+      // 768px = deja de existir el menú hamburguesa (pasa a fila inline).
+      if (window.innerWidth >= 768) {
         setMenuOpen(false);
         closeAllDropdowns();
       }
@@ -58,11 +257,13 @@ function Header() {
     };
 
     const handleClickOutside = (event) => {
-      const isDesktop = window.innerWidth >= 768;
+      // Aplica tanto al estado tablet (fila inline) como al de escritorio;
+      // el menú móvil maneja su propio cierre por separado.
+      const isNavInline = window.innerWidth >= 768;
       const clickedInsideNav = event.target.closest('nav');
       const clickedInsideMobileMenu = event.target.closest('[data-mobile-menu]');
-      
-      if (isDesktop && !clickedInsideNav && !clickedInsideMobileMenu) {
+
+      if (isNavInline && !clickedInsideNav && !clickedInsideMobileMenu) {
         closeAllDropdowns();
       }
     };
@@ -80,6 +281,15 @@ function Header() {
     };
   }, []);
 
+  const buscarEnSitio = (e) => {
+    e.preventDefault();
+    if (!busqueda.trim()) return;
+    navigate(`/buscar?q=${encodeURIComponent(busqueda.trim())}`);
+    setBusqueda("");
+    setMenuOpen(false);
+    closeAllDropdowns();
+  };
+
   const toggleDropdown = (menu) => {
     setDropdownOpen(prev => ({
       ...Object.keys(prev).reduce((acc, key) => ({ ...acc, [key]: false }), {}),
@@ -87,9 +297,10 @@ function Header() {
     }));
   };
 
-  // Solo desktop (mouse): abrir al pasar por encima, sin esperar un clic.
+  // Solo escritorio real (mouse, >=1280px): abrir al pasar por encima, sin
+  // esperar un clic. En la fila tablet y en móvil, el hover no hace nada.
   const openDropdownOnHover = (menu) => {
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < 1280) return;
     setDropdownOpen(prev => ({
       ...Object.keys(prev).reduce((acc, key) => ({ ...acc, [key]: false }), {}),
       [menu]: true
@@ -97,7 +308,7 @@ function Header() {
   };
 
   const closeDropdownOnLeave = () => {
-    if (window.innerWidth < 768) return;
+    if (window.innerWidth < 1280) return;
     closeAllDropdowns();
   };
 
@@ -122,16 +333,6 @@ function Header() {
   const isActive = (grupo) =>
     RUTAS_ACTIVAS[grupo].some((prefijo) => pathname === prefijo || pathname.startsWith(`${prefijo}/`));
 
-  const navLinkClass = (activo) =>
-    `flex items-center gap-1 pb-1 border-b-2 transition-colors ${
-      activo ? "text-unmsm-mint-300 border-unmsm-mint-300" : "border-transparent hover:text-gray-300"
-    }`;
-
-  const mobileNavLinkClass = (activo) =>
-    `w-full flex justify-between items-center text-lg font-medium transition-colors ${
-      activo ? "text-unmsm-mint-300" : "hover:text-gray-300"
-    }`;
-
   return (
     <>
       <header
@@ -142,209 +343,128 @@ function Header() {
             : "bg-transparent"
         }`}
       >
-        {/* Logo centrado para móvil */}
-        <div className="flex md:hidden justify-center items-center py-2 absolute left-0 right-0 mx-auto w-full pointer-events-none z-10">
-          <Link
-            to="/home"
-            className="flex items-center gap-3 px-6 cursor-pointer hover:text-gray-300 transition-colors pointer-events-auto"
+        {/* ESTADO 1 — MÓVIL (<768px): logo centrado + botón hamburguesa. */}
+        <div className="md:hidden relative flex items-center justify-end px-4 py-4">
+          <div className="absolute left-0 right-0 mx-auto flex justify-center items-center pointer-events-none">
+            <Link
+              to="/home"
+              className="flex items-center gap-3 px-6 cursor-pointer hover:text-gray-300 transition-colors pointer-events-auto"
+            >
+              <img
+                src={universidadLogo}
+                alt="Logo Universidad"
+                className="h-14 w-14 object-contain"
+              />
+              <div className="flex flex-col leading-none ml-3">
+                <span className="text-2xl font-serif font-bold uppercase text-white">Posgrado</span>
+                <span className="text-[22px] font-serif font-bold uppercase text-white">Educación</span>
+              </div>
+            </Link>
+          </div>
+          <button
+            className={`relative z-10 flex flex-col justify-center items-center w-10 h-10 transition-all duration-300 ${
+              menuOpen ? "gap-0" : "gap-1.5"
+            }`}
+            onClick={() => {
+              setMenuOpen(!menuOpen);
+              closeAllDropdowns();
+            }}
+            aria-label="Abrir menú de navegación"
+            aria-expanded={menuOpen}
           >
-            <img
-              src={universidadLogo}
-              alt="Logo Universidad"
-              className="h-14 w-14 object-contain"
+            <span
+              className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${
+                menuOpen ? "rotate-45 translate-y-0.5" : ""
+              }`}
             />
-            <div className="flex flex-col leading-none ml-3">
-              <span className="text-2xl font-serif font-bold uppercase text-white">Posgrado</span>
-              <span className="text-[22px] font-serif font-bold uppercase text-white">Educación</span>
-            </div>
-          </Link>
+            <span
+              className={`block w-6 h-0.5 bg-white transition-opacity duration-300 ${
+                menuOpen ? "opacity-0" : "opacity-100"
+              }`}
+            />
+            <span
+              className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${
+                menuOpen ? "-rotate-45 -translate-y-0.5" : ""
+              }`}
+            />
+          </button>
         </div>
-        
-        <div className="max-w-7xl mx-auto flex justify-between items-center px-4 py-4">
-          {/* Navegación principal */}
-          <nav className="hidden md:flex gap-6 items-center select-none font-bold relative w-full justify-center">
-            {/* Sección izquierda */}
-            <div className="flex gap-6 items-center">
-              <Link
-                to="/home"
-                className={`pb-1 border-b-2 transition-colors ${
-                  pathname === "/home"
-                    ? "text-unmsm-mint-300 border-unmsm-mint-300"
-                    : "border-transparent hover:text-gray-300"
-                }`}
-              >
+
+        {/* ESTADO 2 — TABLET / ACHICADO (768–1279px): dos filas. Fila 1 =
+            logo + buscador (con todo el ancho para respirar); fila 2 = el
+            menú completo, ahora sin competir por espacio con nada más, así
+            nunca se comprime ni se desborda. */}
+        <div className="hidden md:block xl:hidden max-w-7xl mx-auto">
+          <div className="flex items-center justify-between gap-4 px-4 py-2 border-b border-white/10">
+            <Link
+              to="/home"
+              className="flex items-center gap-2.5 min-w-0 hover:text-gray-300 transition-colors"
+            >
+              <img
+                src={universidadLogo}
+                alt="Logo Universidad"
+                className="h-11 w-11 object-contain flex-shrink-0"
+              />
+              <div className="flex flex-col leading-none">
+                <span className="text-base font-serif font-bold uppercase text-white">Posgrado</span>
+                <span className="text-[11px] font-serif font-bold uppercase text-white/80">Educación</span>
+              </div>
+            </Link>
+            <SearchForm
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              onSubmit={buscarEnSitio}
+              className="w-56 lg:w-64 flex-shrink-0"
+              inputClassName="w-full pl-8 pr-3 py-1.5 text-xs"
+            />
+          </div>
+          <nav className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 lg:gap-x-6 px-2 py-2.5 select-none font-bold text-sm">
+            <Link to="/home" className={inicioLinkClass(pathname === "/home")}>
+              Inicio
+            </Link>
+            {TODOS_LOS_GRUPOS.map((group) => (
+              <NavDropdown
+                key={group.key}
+                group={group}
+                isOpen={dropdownOpen[group.key]}
+                isActiveGroup={isActive(group.key)}
+                onToggle={() => toggleDropdown(group.key)}
+                onHoverOpen={() => openDropdownOnHover(group.key)}
+                onHoverClose={closeDropdownOnLeave}
+                onItemClick={closeAllDropdowns}
+              />
+            ))}
+          </nav>
+        </div>
+
+        {/* ESTADO 3 — ESCRITORIO (>=1280px): una fila. Grid de 3 columnas
+            (1fr / auto / 1fr): la nav se centra sola según su propio
+            contenido (columna "auto"), el buscador vive en su propia celda
+            de la derecha — nunca se superponen ni pueden desbordar el
+            contenedor, porque ambos están dentro del mismo grid. */}
+        <div className="hidden xl:grid grid-cols-[1fr_auto_1fr] items-center max-w-7xl mx-auto px-4 py-4 gap-4">
+          <div />
+
+          <nav className="flex items-center gap-5 select-none font-bold">
+            <div className="flex gap-5 items-center">
+              <Link to="/home" className={inicioLinkClass(pathname === "/home")}>
                 Inicio
               </Link>
-
-              {/* Nosotros Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => openDropdownOnHover('nosotros')}
-                onMouseLeave={closeDropdownOnLeave}
-              >
-                <button
-                  onClick={() => toggleDropdown('nosotros')}
-                  className={navLinkClass(isActive("nosotros"))}
-                  aria-expanded={dropdownOpen.nosotros}
-                  aria-haspopup="true"
-                >
-                  Nosotros
-                  <svg
-                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.nosotros ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {dropdownOpen.nosotros && (
-                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
-                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
-                      <div className="py-2">
-                      <Link
-                        to="/nosotros/quienes-somos"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdInfo className="text-unmsm-navy" /> Quiénes somos
-                      </Link>
-                      <Link
-                        to="/nosotros/directorio-flch"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdBadge className="text-unmsm-navy" /> Directorio Facultad Educación
-                      </Link>
-                      <Link
-                        to="/nosotros/directorio-posgrado"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdPeople className="text-unmsm-navy" /> Directorio Posgrado
-                      </Link>
-                      <Link
-                        to="/nosotros/documentos-recursos"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdDescription className="text-unmsm-navy" /> Documentos y Recursos
-                      </Link>
-                    </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Programas Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => openDropdownOnHover('programas')}
-                onMouseLeave={closeDropdownOnLeave}
-              >
-                <button
-                  onClick={() => toggleDropdown('programas')}
-                  className={navLinkClass(isActive("programas"))}
-                  aria-expanded={dropdownOpen.programas}
-                  aria-haspopup="true"
-                >
-                  Programas
-                  <svg
-                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.programas ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {dropdownOpen.programas && (
-                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
-                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
-                      <div className="py-2">
-                      <Link
-                        to="/programas/maestria"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdSchool className="text-unmsm-navy" /> Maestría
-                      </Link>
-                      <Link
-                        to="/programas/doctorado"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdWorkspacePremium className="text-unmsm-navy" /> Doctorado
-                      </Link>
-                      <Link
-                        to="/programas/diplomado"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdCardMembership className="text-unmsm-navy" /> Diplomado
-                      </Link>
-                    </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Noticias Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => openDropdownOnHover('noticias')}
-                onMouseLeave={closeDropdownOnLeave}
-              >
-                <button
-                  onClick={() => toggleDropdown('noticias')}
-                  className={navLinkClass(isActive("noticias"))}
-                  aria-expanded={dropdownOpen.noticias}
-                  aria-haspopup="true"
-                >
-                  Actualidad
-                  <svg
-                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.noticias ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {dropdownOpen.noticias && (
-                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
-                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
-                      <div className="py-2">
-                      <Link
-                        to="/noticias"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdArticle className="text-unmsm-navy" /> Noticias
-                      </Link>
-                      <Link
-                        to="/eventos"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdEvent className="text-unmsm-navy" /> Eventos
-                      </Link>
-                      <Link
-                        to="/comunicados"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdCampaign className="text-unmsm-navy" /> Comunicados
-                      </Link>
-                    </div>
-                    </div>
-                  </div>
-                )}
-              </div>
+              {NAV_GROUPS_IZQUIERDA.map((group) => (
+                <NavDropdown
+                  key={group.key}
+                  group={group}
+                  isOpen={dropdownOpen[group.key]}
+                  isActiveGroup={isActive(group.key)}
+                  onToggle={() => toggleDropdown(group.key)}
+                  onHoverOpen={() => openDropdownOnHover(group.key)}
+                  onHoverClose={closeDropdownOnLeave}
+                  onItemClick={closeAllDropdowns}
+                />
+              ))}
             </div>
 
-            {/* Logo en el centro */}
-            <div className="flex items-center gap-3 px-8 flex-shrink-0">
+            <div className="flex items-center gap-3 px-4 xl:px-6 flex-shrink-0">
               <Link
                 to="/home"
                 className="flex items-center gap-3 cursor-pointer hover:text-gray-300 transition-colors"
@@ -357,213 +477,38 @@ function Header() {
               </Link>
             </div>
 
-            {/* Sección derecha */}
-            <div className="flex gap-6 items-center">
-              {/* Matrícula Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => openDropdownOnHover('matricula')}
-                onMouseLeave={closeDropdownOnLeave}
-              >
-                <button
-                  onClick={() => toggleDropdown('matricula')}
-                  className={navLinkClass(isActive("matricula"))}
-                  aria-expanded={dropdownOpen.matricula}
-                  aria-haspopup="true"
-                >
-                  Matrícula
-                  <svg
-                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.matricula ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {dropdownOpen.matricula && (
-                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
-                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
-                      <div className="py-2">
-                      <Link
-                        to="/matricula/cronograma-academico"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdSchedule className="text-unmsm-navy" /> Cronograma Académico
-                      </Link>
-                      <Link
-                        to="/matricula/cronograma-pagos"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdPayment className="text-unmsm-navy" /> Cronograma de Pagos
-                      </Link>
-                      <Link
-                        to="/matricula/proceso-matricula"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdEdit className="text-unmsm-navy" /> Proceso de Matrícula
-                      </Link>
-                      <Link
-                        to="/matricula/horario-cursos"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdSchedule className="text-unmsm-navy" /> Horario de Cursos
-                      </Link>
-                    </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Información Académica Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => openDropdownOnHover('informacion')}
-                onMouseLeave={closeDropdownOnLeave}
-              >
-                <button
-                  onClick={() => toggleDropdown('informacion')}
-                  className={navLinkClass(isActive("informacion"))}
-                  aria-expanded={dropdownOpen.informacion}
-                  aria-haspopup="true"
-                >
-                  Información Académica
-                  <svg 
-                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.informacion ? 'rotate-180' : ''}`}
-                    fill="none" 
-                    stroke="currentColor" 
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {dropdownOpen.informacion && (
-                  <div className="absolute top-full left-0 pt-2 w-64 z-50">
-                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
-                      <div className="py-2">
-                      <Link
-                        to="/informacion-academica/docentes"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdPersonSearch className="text-unmsm-navy" /> Plana Docente
-                      </Link>
-                      <Link
-                        to="/informacion-academica/plan-estudios"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdLibraryBooks className="text-unmsm-navy" /> Plan de Estudios
-                      </Link>
-                      <Link
-                        to="/informacion-academica/preguntas-frecuentes"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdHelpOutline className="text-unmsm-navy" /> Preguntas Frecuentes
-                      </Link>
-                    </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Trámites Dropdown */}
-              <div
-                className="relative"
-                onMouseEnter={() => openDropdownOnHover('tramites')}
-                onMouseLeave={closeDropdownOnLeave}
-              >
-                <button
-                  onClick={() => toggleDropdown('tramites')}
-                  className={navLinkClass(isActive("tramites"))}
-                  aria-expanded={dropdownOpen.tramites}
-                  aria-haspopup="true"
-                >
-                  Trámites
-                  <svg
-                    className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.tramites ? 'rotate-180' : ''}`}
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-                  </svg>
-                </button>
-                {dropdownOpen.tramites && (
-                  <div className="absolute top-full left-0 pt-2 w-72 z-50">
-                    <div className="bg-white rounded-lg shadow-xl text-gray-800 font-normal">
-                      <div className="py-2">
-                      <Link
-                        to="/tramites/maestria-1-anio"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdSchool className="text-unmsm-navy" /> Grado de Magíster · 1 Año
-                      </Link>
-                      <Link
-                        to="/tramites/maestria-2-anios"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdSchool className="text-unmsm-navy" /> Grado de Magíster · 2 Años
-                      </Link>
-                      <Link
-                        to="/tramites/doctorado"
-                        className="flex items-center gap-2 px-4 py-2 hover:bg-unmsm-bg transition-colors"
-                        onClick={closeAllDropdowns}
-                      >
-                        <MdWorkspacePremium className="text-unmsm-navy" /> Grado de Doctor
-                      </Link>
-                    </div>
-                    </div>
-                  </div>
-                )}
-              </div>
-
+            <div className="flex gap-5 items-center">
+              {NAV_GROUPS_DERECHA.map((group) => (
+                <NavDropdown
+                  key={group.key}
+                  group={group}
+                  isOpen={dropdownOpen[group.key]}
+                  isActiveGroup={isActive(group.key)}
+                  onToggle={() => toggleDropdown(group.key)}
+                  onHoverOpen={() => openDropdownOnHover(group.key)}
+                  onHoverClose={closeDropdownOnLeave}
+                  onItemClick={closeAllDropdowns}
+                />
+              ))}
             </div>
           </nav>
 
-          <div className="flex items-center gap-4 text-sm">
-            {/* Botón hamburguesa en mobile */}
-            <button
-              className={`flex flex-col justify-center items-center w-10 h-10 transition-all duration-300 md:hidden ${
-                menuOpen ? "gap-0" : "gap-1.5"
-              }`}
-              onClick={() => {
-                setMenuOpen(!menuOpen);
-                closeAllDropdowns();
-              }}
-              aria-label="Abrir menú de navegación"
-              aria-expanded={menuOpen}
-            >
-              <span
-                className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${
-                  menuOpen ? "rotate-45 translate-y-0.5" : ""
-                }`}
-              />
-              <span
-                className={`block w-6 h-0.5 bg-white transition-opacity duration-300 ${
-                  menuOpen ? "opacity-0" : "opacity-100"
-                }`}
-              />
-              <span
-                className={`block w-6 h-0.5 bg-white transition-transform duration-300 ${
-                  menuOpen ? "-rotate-45 -translate-y-0.5" : ""
-                }`}
-              />
-            </button>
+          <div className="flex justify-end min-w-0">
+            <SearchForm
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              onSubmit={buscarEnSitio}
+              className="w-40 2xl:w-52"
+              inputClassName="w-full pl-8 pr-2 py-1.5 text-xs"
+            />
           </div>
         </div>
       </header>
 
-      {/* Menú móvil */}
+      {/* Menú móvil (drawer) — solo existe en el ESTADO 1. */}
       <div
-        className={`md:hidden fixed top-[70px] left-0 w-full h-[calc(100vh-70px)] text-white z-40 transition-all duration-300 ease-in-out ${
+        style={{ top: "calc(70px + var(--aviso-bar-height, 0px))", height: "calc(100vh - 70px - var(--aviso-bar-height, 0px))" }}
+        className={`md:hidden fixed left-0 w-full text-white z-40 transition-all duration-300 ease-in-out ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         } ${
           isScrolled
@@ -572,6 +517,15 @@ function Header() {
         }`}
       >
         <div className="p-6 flex flex-col gap-4 overflow-y-auto h-full" data-mobile-menu="true">
+          <SearchForm
+            variant="drawer"
+            value={busqueda}
+            onChange={(e) => setBusqueda(e.target.value)}
+            onSubmit={buscarEnSitio}
+            className="w-full"
+            inputClassName="w-full pl-8 pr-3 py-2.5 text-sm"
+          />
+
           <Link
             to="/home"
             onClick={() => setMenuOpen(false)}
@@ -584,284 +538,16 @@ function Header() {
             </div>
           </Link>
 
-          {/* Nosotros Mobile Submenu */}
-          <div>
-            <button
-              onClick={(e) => toggleMobileDropdown('nosotros', e)}
-              className={mobileNavLinkClass(isActive("nosotros"))}
-              aria-expanded={dropdownOpen.nosotros}
-            >
-              Nosotros
-              <svg
-                className={`w-5 h-5 transition-transform ${dropdownOpen.nosotros ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {dropdownOpen.nosotros && (
-              <div className="mt-2 ml-4 space-y-2">
-                <Link
-                  to="/nosotros/quienes-somos"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdInfo className="text-lg" /> Quiénes somos
-                </Link>
-                <Link
-                  to="/nosotros/directorio-flch"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdBadge className="text-lg" /> Directorio Facultad Educación
-                </Link>
-                <Link
-                  to="/nosotros/directorio-posgrado"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdPeople className="text-lg" /> Directorio Posgrado
-                </Link>
-                <Link
-                  to="/nosotros/documentos-recursos"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdDescription className="text-lg" /> Documentos y Recursos
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Programas Mobile Submenu */}
-          <div>
-            <button
-              onClick={(e) => toggleMobileDropdown('programas', e)}
-              className={mobileNavLinkClass(isActive("programas"))}
-              aria-expanded={dropdownOpen.programas}
-            >
-              Programas
-              <svg
-                className={`w-5 h-5 transition-transform ${dropdownOpen.programas ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {dropdownOpen.programas && (
-              <div className="mt-2 ml-4 space-y-2">
-                <Link
-                  to="/programas/maestria"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdSchool className="text-lg" /> Maestría
-                </Link>
-                <Link
-                  to="/programas/doctorado"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdWorkspacePremium className="text-lg" /> Doctorado
-                </Link>
-                <Link
-                  to="/programas/diplomado"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdCardMembership className="text-lg" /> Diplomado
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Noticias Mobile Submenu */}
-          <div>
-            <button
-              onClick={(e) => toggleMobileDropdown('noticias', e)}
-              className={mobileNavLinkClass(isActive("noticias"))}
-              aria-expanded={dropdownOpen.noticias}
-            >
-              Actualidad
-              <svg
-                className={`w-5 h-5 transition-transform ${dropdownOpen.noticias ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {dropdownOpen.noticias && (
-              <div className="mt-2 ml-4 space-y-2">
-                <Link
-                  to="/noticias"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdArticle className="text-lg" /> Noticias
-                </Link>
-                <Link
-                  to="/eventos"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdEvent className="text-lg" /> Eventos
-                </Link>
-                <Link
-                  to="/comunicados"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdCampaign className="text-lg" /> Comunicados
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Matrícula Mobile Submenu */}
-          <div>
-            <button
-              onClick={(e) => toggleMobileDropdown('matricula', e)}
-              className={mobileNavLinkClass(isActive("matricula"))}
-              aria-expanded={dropdownOpen.matricula}
-            >
-              Matrícula
-              <svg
-                className={`w-5 h-5 transition-transform ${dropdownOpen.matricula ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {dropdownOpen.matricula && (
-              <div className="mt-2 ml-4 space-y-2">
-                <Link
-                  to="/matricula/cronograma-academico"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdSchedule className="text-lg" /> Cronograma Académico
-                </Link>
-                <Link
-                  to="/matricula/cronograma-pagos"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdPayment className="text-lg" /> Cronograma de Pagos
-                </Link>
-                <Link
-                  to="/matricula/proceso-matricula"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdEdit className="text-lg" /> Proceso de Matrícula
-                </Link>
-                <Link
-                  to="/matricula/horario-cursos"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdSchedule className="text-lg" /> Horarios de Cursos
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Información Académica Mobile Submenu */}
-          <div>
-            <button
-              onClick={(e) => toggleMobileDropdown('informacion', e)}
-              className={mobileNavLinkClass(isActive("informacion"))}
-              aria-expanded={dropdownOpen.informacion}
-            >
-              Información Académica
-              <svg 
-                className={`w-5 h-5 transition-transform ${dropdownOpen.informacion ? 'rotate-180' : ''}`} 
-                fill="none" 
-                stroke="currentColor" 
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {dropdownOpen.informacion && (
-              <div className="mt-2 ml-4 space-y-2">
-                <Link 
-                  to="/informacion-academica/docentes" 
-                  onClick={() => setMenuOpen(false)} 
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdPersonSearch className="text-lg" /> Plana Docente
-                </Link>
-                <Link 
-                  to="/informacion-academica/plan-estudios" 
-                  onClick={() => setMenuOpen(false)} 
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdLibraryBooks className="text-lg" /> Plan de Estudios
-                </Link>
-                <Link 
-                  to="/informacion-academica/preguntas-frecuentes"
-                  onClick={() => setMenuOpen(false)} 
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdHelpOutline className="text-lg" /> Preguntas Frecuentes
-                </Link>
-              </div>
-            )}
-          </div>
-
-          {/* Trámites Mobile Submenu */}
-          <div>
-            <button
-              onClick={(e) => toggleMobileDropdown('tramites', e)}
-              className={mobileNavLinkClass(isActive("tramites"))}
-              aria-expanded={dropdownOpen.tramites}
-            >
-              Trámites
-              <svg
-                className={`w-5 h-5 transition-transform ${dropdownOpen.tramites ? 'rotate-180' : ''}`}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
-              </svg>
-            </button>
-            {dropdownOpen.tramites && (
-              <div className="mt-2 ml-4 space-y-2">
-                <Link
-                  to="/tramites/maestria-1-anio"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdSchool className="text-lg" /> Grado de Magíster · 1 Año
-                </Link>
-                <Link
-                  to="/tramites/maestria-2-anios"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdSchool className="text-lg" /> Grado de Magíster · 2 Años
-                </Link>
-                <Link
-                  to="/tramites/doctorado"
-                  onClick={() => setMenuOpen(false)}
-                  className="flex items-center gap-2 text-base text-gray-300 hover:text-white transition-colors py-1"
-                >
-                  <MdWorkspacePremium className="text-lg" /> Grado de Doctor
-                </Link>
-              </div>
-            )}
-          </div>
-
+          {TODOS_LOS_GRUPOS.map((group) => (
+            <MobileNavGroup
+              key={group.key}
+              group={group}
+              isOpen={dropdownOpen[group.key]}
+              isActiveGroup={isActive(group.key)}
+              onToggle={(e) => toggleMobileDropdown(group.key, e)}
+              onItemClick={() => setMenuOpen(false)}
+            />
+          ))}
         </div>
       </div>
     </>

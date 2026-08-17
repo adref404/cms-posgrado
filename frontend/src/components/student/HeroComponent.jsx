@@ -270,7 +270,7 @@ function AcademicHeroCarousel() {
       `}</style>
 
       {/* Hero Section Principal */}
-      <div 
+      <div
         className="relative min-h-screen overflow-hidden select-none"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
@@ -534,7 +534,7 @@ function AcademicHeroCarousel() {
         </div>
 
         {/* Indicador de scroll - Desktop */}
-        <div className="absolute bottom-8 right-8 z-20 hidden sm:block">
+        {/* <div className="absolute bottom-8 right-8 z-20 hidden sm:block">
           <div className="flex flex-col items-center text-white/70 hover:text-white transition-colors duration-300">
             <span className="text-sm mb-2 font-light tracking-wide select-none">
               Explorar
@@ -543,7 +543,7 @@ function AcademicHeroCarousel() {
               <div className="w-1 h-3 bg-white/70 rounded-full absolute left-1/2 top-2 transform -translate-x-1/2 animate-bounce" />
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Barra de progreso */}
         <div className="absolute top-0 left-0 right-0 z-20">

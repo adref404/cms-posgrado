@@ -3,7 +3,7 @@ import BreadcrumbBar from "../common/BreadcrumbBar";
 const PageHero = ({ eyebrow, title, subtitle, image }) => {
   return (
     <>
-      <div className="relative overflow-hidden bg-unmsm-blue text-white pt-36 pb-16 md:pt-44 md:pb-20">
+      <div className="relative overflow-hidden bg-unmsm-blue text-white pb-16 md:pb-20 pt-[calc(9rem+var(--aviso-bar-height,0px))] md:pt-[calc(11rem+var(--aviso-bar-height,0px))]">
         {image && (
           <img
             src={image}

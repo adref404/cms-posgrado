@@ -17,7 +17,7 @@ const NoticiaDetallePage = () => {
 
   return (
     <div className="min-h-screen bg-unmsm-bg">
-      <div className="h-24 bg-unmsm-blue" />
+      <div className="h-[calc(6rem+var(--aviso-bar-height,0px))] bg-unmsm-blue" />
       <BreadcrumbBar />
       <div className="max-w-6xl mx-auto px-4 py-10">
         <div className="grid lg:grid-cols-3 gap-10">

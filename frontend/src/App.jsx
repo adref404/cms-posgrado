@@ -1,6 +1,7 @@
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import HomeStudent from './pages/student/HomeStudent';
+import BusquedaPage from './pages/student/BusquedaPage';
 import ToasterProvider from './components/ui/ToasterProvider';
 import ScrollToTop from './components/common/ScrollToTop';
 import BackToTopButton from './components/common/BackToTopButton';
@@ -57,6 +58,7 @@ function App() {
 
         <Route element={<Layout />}>
           <Route path="/home" element={<HomeStudent />} />
+          <Route path="/buscar" element={<BusquedaPage />} />
 
           {/* 👥 Nosotros */}
           <Route path="/nosotros/quienes-somos" element={<QuienesSomosPage />} />

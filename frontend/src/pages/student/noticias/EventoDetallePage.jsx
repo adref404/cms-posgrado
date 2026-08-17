@@ -15,7 +15,7 @@ const EventoDetallePage = () => {
 
   return (
     <div className="min-h-screen bg-unmsm-bg">
-      <div className="h-24 bg-unmsm-blue" />
+      <div className="h-[calc(6rem+var(--aviso-bar-height,0px))] bg-unmsm-blue" />
       <BreadcrumbBar />
       <div className="max-w-3xl mx-auto px-4 py-10">
         <div className="flex items-start gap-4">

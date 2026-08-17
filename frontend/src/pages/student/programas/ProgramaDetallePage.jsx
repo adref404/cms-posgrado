@@ -1,7 +1,6 @@
 import { Navigate, useParams, Link } from "react-router-dom";
 import { MdInfo } from "react-icons/md";
 import PageHero from "../../../components/ui/PageHero";
-import InfoBanner from "../../../components/matricula/InfoBanner";
 import EnDesarrolloPage from "../../../components/common/EnDesarrolloPage";
 import ProgramaAccordion from "../../../components/programas/ProgramaAccordion";
 import ProgramaInfoClaveCard from "../../../components/programas/ProgramaInfoClaveCard";
@@ -226,12 +225,6 @@ const ProgramaDetallePage = () => {
       />
 
       <div className="max-w-6xl mx-auto px-4 py-10">
-        <InfoBanner icon={MdInfo} title="Contenido de ejemplo" tone="blue">
-          Esta vista de detalle es un ejemplo para mostrar cómo funciona el diseño (acordeón, información clave,
-          contacto). El texto, los cursos y los montos son ilustrativos y todavía no son información oficial del
-          programa.
-        </InfoBanner>
-
         <div className="grid lg:grid-cols-3 gap-8 mt-8">
           <div className="lg:col-span-2 min-w-0">
             <ProgramaAccordion sections={sections} />
