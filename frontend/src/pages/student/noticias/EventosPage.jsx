@@ -28,13 +28,13 @@ const EventosPage = () => {
   return (
     <div className="min-h-screen bg-unmsm-bg">
       <PageHero
-        eyebrow="Noticias y Eventos"
+        eyebrow="Actualidad"
         title="Eventos"
         subtitle="Actividades y fechas por venir de la Facultad de Educación"
         image={NOSOTROS_HERO_IMAGE}
       />
 
-      <div className="max-w-3xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-12">
         <ListToolbar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}

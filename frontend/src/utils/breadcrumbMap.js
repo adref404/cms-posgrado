@@ -29,9 +29,9 @@ const BREADCRUMB_MAP = {
   "/matricula/proceso-matricula": { seccion: "Matrícula", subseccion: "Proceso de Matrícula" },
   "/matricula/horario-cursos": { seccion: "Matrícula", subseccion: "Horario de Cursos" },
 
-  "/noticias": { seccion: "Novedades", subseccion: "Noticias" },
-  "/eventos": { seccion: "Novedades", subseccion: "Eventos" },
-  "/comunicados": { seccion: "Novedades", subseccion: "Comunicados" },
+  "/noticias": { seccion: "Actualidad", subseccion: "Noticias" },
+  "/eventos": { seccion: "Actualidad", subseccion: "Eventos" },
+  "/comunicados": { seccion: "Actualidad", subseccion: "Comunicados" },
 
   "/informacion-academica/docentes": { seccion: "Información Académica", subseccion: "Plana Docente" },
   "/informacion-academica/plan-estudios": { seccion: "Información Académica", subseccion: "Plan de Estudios" },

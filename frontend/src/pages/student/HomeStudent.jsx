@@ -1,5 +1,4 @@
 import React from 'react';
-import AvisoDestacadoBar from '../../components/student/AvisoDestacadoBar';
 import HeroSection from './../../components/student/HeroComponent';
 import ProgramasHomeSection from '../../components/student/ProgramasHomeSection';
 import AdmisionHomeSection from '../../components/student/AdmisionHomeSection';
@@ -12,11 +11,6 @@ const HomeStudent = () => {
 
   return (
     <>
-      {/* Barra de aviso urgente (Noticias/Eventos/Comunicados marcados como
-          "Destacar en el Home" desde /admin) — lo primero de la página,
-          ancho completo. No se muestra nada si no hay avisos destacados. */}
-      <AvisoDestacadoBar />
-
       {/* Hero Section */}
       <HeroSection/>
 

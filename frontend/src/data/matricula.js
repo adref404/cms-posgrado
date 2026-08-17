@@ -40,7 +40,7 @@ export const procesoAdmision2026II = [
   {
     icono: MdRecordVoiceOver,
     evento: "Entrevista personal",
-    fecha: "Hasta el 18 de agosto",
+    fecha: "Doctorado hasta el 15 · Maestría hasta el 18 de agosto",
     fechaInicio: "2026-08-16",
     fechaFin: "2026-08-18",
   },

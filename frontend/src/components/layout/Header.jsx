@@ -123,7 +123,9 @@ function Header() {
     RUTAS_ACTIVAS[grupo].some((prefijo) => pathname === prefijo || pathname.startsWith(`${prefijo}/`));
 
   const navLinkClass = (activo) =>
-    `flex items-center gap-1 transition-colors ${activo ? "text-unmsm-mint-300" : "hover:text-gray-300"}`;
+    `flex items-center gap-1 pb-1 border-b-2 transition-colors ${
+      activo ? "text-unmsm-mint-300 border-unmsm-mint-300" : "border-transparent hover:text-gray-300"
+    }`;
 
   const mobileNavLinkClass = (activo) =>
     `w-full flex justify-between items-center text-lg font-medium transition-colors ${
@@ -165,7 +167,11 @@ function Header() {
             <div className="flex gap-6 items-center">
               <Link
                 to="/home"
-                className={`transition-colors ${pathname === "/home" ? "text-unmsm-mint-300" : "hover:text-gray-300"}`}
+                className={`pb-1 border-b-2 transition-colors ${
+                  pathname === "/home"
+                    ? "text-unmsm-mint-300 border-unmsm-mint-300"
+                    : "border-transparent hover:text-gray-300"
+                }`}
               >
                 Inicio
               </Link>
@@ -295,7 +301,7 @@ function Header() {
                   aria-expanded={dropdownOpen.noticias}
                   aria-haspopup="true"
                 >
-                  Novedades
+                  Actualidad
                   <svg
                     className={`w-4 h-4 flex-shrink-0 transition-transform ${dropdownOpen.noticias ? 'rotate-180' : ''}`}
                     fill="none"
@@ -680,7 +686,7 @@ function Header() {
               className={mobileNavLinkClass(isActive("noticias"))}
               aria-expanded={dropdownOpen.noticias}
             >
-              Novedades
+              Actualidad
               <svg
                 className={`w-5 h-5 transition-transform ${dropdownOpen.noticias ? 'rotate-180' : ''}`}
                 fill="none"

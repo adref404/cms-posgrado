@@ -34,13 +34,13 @@ const ComunicadosPage = () => {
   return (
     <div className="min-h-screen bg-unmsm-bg">
       <PageHero
-        eyebrow="Comunicados"
+        eyebrow="Actualidad"
         title="Comunicados"
         subtitle="Avisos oficiales de la Facultad de Educación"
         image={NOSOTROS_HERO_IMAGE}
       />
 
-      <div className="max-w-3xl mx-auto px-4 py-12">
+      <div className="max-w-6xl mx-auto px-4 py-12">
         <ListToolbar
           searchTerm={searchTerm}
           onSearchChange={setSearchTerm}

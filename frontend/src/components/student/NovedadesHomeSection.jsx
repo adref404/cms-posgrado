@@ -34,10 +34,10 @@ const NovedadesHomeSection = () => {
       <div className="max-w-6xl mx-auto px-4">
         <Reveal className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
           <p className="text-unmsm-green font-semibold tracking-widest uppercase text-sm mb-2">
-            Novedades
+            Actualidad
           </p>
           <h2 className="text-2xl md:text-4xl font-bold text-unmsm-navy mb-3">
-            Noticias y Eventos
+            Noticias, Eventos y Comunicados
           </h2>
           <p className="text-unmsm-muted text-base md:text-lg leading-relaxed">
             Mantente al día con lo que pasa en la Facultad de Educación.

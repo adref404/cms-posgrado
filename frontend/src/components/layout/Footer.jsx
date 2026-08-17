@@ -13,7 +13,7 @@ const ENLACES = [
   { to: "/nosotros/quienes-somos", label: "Nosotros" },
   { to: "/programas/maestria", label: "Programas" },
   { to: "/matricula/cronograma-academico", label: "Matrícula" },
-  { to: "/noticias", label: "Novedades" },
+  { to: "/noticias", label: "Actualidad" },
   { to: "/tramites", label: "Trámites" },
 ];
 

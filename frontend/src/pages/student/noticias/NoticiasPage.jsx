@@ -28,7 +28,7 @@ const NoticiasPage = () => {
   return (
     <div className="min-h-screen bg-unmsm-bg">
       <PageHero
-        eyebrow="Noticias y Eventos"
+        eyebrow="Actualidad"
         title="Noticias"
         subtitle="Novedades e institucionales de la Facultad de Educación"
         image={NOSOTROS_HERO_IMAGE}
