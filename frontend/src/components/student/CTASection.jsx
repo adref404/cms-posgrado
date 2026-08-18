@@ -51,7 +51,7 @@ const CTASection = () => (
             <MdPhone className="text-2xl flex-shrink-0" />
             <div>
               <div className="text-sm">Llámanos</div>
-              <div className="font-semibold">(01) 619-7000</div>
+              <div className="font-semibold">(01) 619-7000 | Anexo 3020</div>
             </div>
           </div>
           <div className="flex items-center justify-center gap-3">

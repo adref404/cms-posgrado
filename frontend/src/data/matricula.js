@@ -1,73 +1,4 @@
-import {
-  MdCheckCircle,
-  MdWarning,
-  MdSchedule,
-  MdInfo,
-  MdPerson,
-  MdBook,
-  MdEdit,
-  MdCampaign,
-  MdQuiz,
-  MdRecordVoiceOver,
-  MdEmojiEvents,
-  MdHowToReg,
-  MdPersonAdd,
-  MdAutorenew,
-  MdGroups,
-  MdMenuBook,
-  MdBookmarkAdded,
-  MdCancel,
-  MdFlag,
-  MdGrade,
-} from "react-icons/md";
-
-// Proceso de Admisión 2026-II (el que está en curso) — pasos relevantes
-// para un postulante; se omiten trámites internos (evaluación de
-// expediente, SISEVA, envíos a DGEP/MINEDU-SUNEDU) que no le sirven a
-// alguien fuera de la facultad. Fuente: cronograma oficial de Admisión y
-// Matrícula 2026 (actualizado).
-//
-// "fechaInicio"/"fechaFin" (ISO) son la fuente de verdad para calcular el
-// estado y el avance del timeline en vivo, comparando con la fecha del
-// dispositivo — ver calcularEstadoPaso/calcularProgresoProceso más abajo.
-// "fecha" es solo el texto que se muestra.
-export const procesoAdmision2026II = [
-  {
-    icono: MdCampaign,
-    evento: "Inscripción de postulantes",
-    fecha: "Hasta el 20 de agosto",
-    fechaInicio: "2026-05-04",
-    fechaFin: "2026-08-20",
-  },
-  {
-    icono: MdQuiz,
-    evento: "Examen de conocimientos",
-    fecha: "Hasta el 22 de agosto",
-    fechaInicio: "2026-08-21",
-    fechaFin: "2026-08-22",
-  },
-  {
-    icono: MdRecordVoiceOver,
-    evento: "Entrevista personal",
-    fecha: "Doctorado hasta el 23 · Maestría hasta el 25 de agosto",
-    fechaInicio: "2026-08-23",
-    fechaFin: "2026-08-25",
-  },
-  {
-    icono: MdEmojiEvents,
-    evento: "Publicación de resultados",
-    fecha: "27 de agosto",
-    fechaInicio: "2026-08-27",
-    fechaFin: "2026-08-27",
-  },
-  {
-    icono: MdHowToReg,
-    evento: "Matrícula de ingresantes",
-    fecha: "31 de agosto al 01 de setiembre",
-    fechaInicio: "2026-08-31",
-    fechaFin: "2026-09-01",
-  },
-];
+import { MdCheckCircle, MdWarning, MdSchedule, MdInfo, MdPerson, MdBook, MdEdit } from "react-icons/md";
 
 // Estado de un paso comparando sus fechas contra "hoy" (la del dispositivo):
 // completado (ya pasó) · activo (hoy cae dentro del rango) · proximo (empieza
@@ -113,92 +44,12 @@ export const calcularProgresoProceso = (pasos, hoy = new Date()) => {
   return 100;
 };
 
-// Cronograma Académico del semestre 2026-II — igual que
-// procesoAdmision2026II, el estado de cada fila se calcula en vivo con
-// calcularEstadoPaso comparando fechaInicio/fechaFin contra la fecha del
-// dispositivo (ver CronogramaAcademicoPage y AdmisionHomeSection).
-// Fuente: cronograma oficial de Admisión y Matrícula 2026 (actualizado).
-export const cronogramaAcademico = [
-  {
-    icono: MdAutorenew,
-    evento: "Reactualización de matrícula",
-    fecha: "Hasta el 17 de agosto",
-    fechaInicio: "2026-08-01",
-    fechaFin: "2026-08-17",
-  },
-  {
-    icono: MdHowToReg,
-    evento: "Matrícula Regular",
-    fecha: "Del 18 al 28 de agosto",
-    fechaInicio: "2026-08-18",
-    fechaFin: "2026-08-28",
-  },
-  {
-    icono: MdPersonAdd,
-    evento: "Matrícula de Ingresantes",
-    fecha: "Del 31 de agosto al 01 de setiembre",
-    fechaInicio: "2026-08-31",
-    fechaFin: "2026-09-01",
-  },
-  {
-    icono: MdGroups,
-    evento: "Inducción académica",
-    fecha: "31 de agosto al 01 de setiembre",
-    fechaInicio: "2026-08-31",
-    fechaFin: "2026-09-01",
-  },
-  {
-    icono: MdMenuBook,
-    evento: "Inicio de Clases",
-    fecha: "02 de setiembre",
-    fechaInicio: "2026-09-02",
-    fechaFin: "2026-09-02",
-  },
-  {
-    icono: MdEdit,
-    evento: "Matrícula extemporánea y rectificación",
-    fecha: "Del 14 al 18 de setiembre",
-    fechaInicio: "2026-09-14",
-    fechaFin: "2026-09-18",
-  },
-  {
-    icono: MdBookmarkAdded,
-    evento: "Reserva de matrícula",
-    fecha: "Hasta el 28 de setiembre",
-    fechaInicio: "2026-09-01",
-    fechaFin: "2026-09-28",
-  },
-  {
-    icono: MdCancel,
-    evento: "Anulación de matrícula",
-    fecha: "Del 21 al 28 de setiembre",
-    fechaInicio: "2026-09-21",
-    fechaFin: "2026-09-28",
-  },
-  {
-    icono: MdFlag,
-    evento: "Fin de Clases",
-    fecha: "22 de diciembre",
-    fechaInicio: "2026-12-22",
-    fechaFin: "2026-12-22",
-  },
-  {
-    icono: MdGrade,
-    evento: "Ingreso de Notas",
-    fecha: "Del 23 al 26 de diciembre",
-    fechaInicio: "2026-12-23",
-    fechaFin: "2026-12-26",
-  },
-];
-
-// Subconjunto destacado para la vista "reverso" del Home (mismo criterio de
-// curaduría que procesoAdmision2026II: solo los hitos que le importan a
-// cualquier estudiante, sin los trámites más internos/administrativos).
-export const cronogramaAcademicoDestacado = cronogramaAcademico.filter((item) =>
-  ["Matrícula Regular", "Matrícula de Ingresantes", "Inicio de Clases", "Fin de Clases", "Ingreso de Notas"].includes(
-    item.evento
-  )
-);
+// El Cronograma de Admisión y el Cronograma Académico ya NO viven acá
+// como arrays estáticos: se editan desde /admin/cronograma y se leen en
+// vivo con hooks/useCronograma.js (tabla "cronograma_actividades" en
+// Supabase — ver supabase-cronograma.sql). Lo que queda en este archivo
+// son solo las funciones puras que ambos siguen usando para calcular
+// estado/avance a partir de las fechas que traiga cada fila.
 
 // completado = ya pasó (verde) · activo = en curso ahora (verde)
 // proximo = requiere atención pronto (guinda) · programado = a futuro, sin

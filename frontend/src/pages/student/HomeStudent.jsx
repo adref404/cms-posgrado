@@ -20,6 +20,12 @@ const HomeStudent = () => {
       {/* Sección de Cronograma de Admisión — acción con urgencia real */}
       <AdmisionHomeSection />
 
+      {/* Sección de Novedades (Actualidad) — sube de posición para que se
+          descubra rápido: es el contenido que más cambia semana a semana,
+          no tiene sentido enterrarlo debajo de las secciones de marca que
+          casi no cambian. */}
+      <NovedadesHomeSection />
+
       {/* Sección: Quiénes Somos */}
       <NosotrosHomeSection />
 
@@ -28,9 +34,6 @@ const HomeStudent = () => {
 
       {/* Sección de Testimonios */}
       <TestimonialsSection />
-
-      {/* Sección de Novedades */}
-      <NovedadesHomeSection />
 
       {/* Sección CTA */}
       <CTASection />

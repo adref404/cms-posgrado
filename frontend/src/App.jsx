@@ -16,6 +16,7 @@ import ProtectedRoute from './components/admin/ProtectedRoute';
 const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
 const AdminHomePage = lazy(() => import('./pages/admin/AdminHomePage'));
 const AdminNovedadesPage = lazy(() => import('./pages/admin/AdminNovedadesPage'));
+const AdminCronogramaPage = lazy(() => import('./pages/admin/AdminCronogramaPage'));
 
 import QuienesSomosPage from './pages/student/nosotros/QuienesSomosPage';
 import DirectorioFEPage from './pages/student/nosotros/DirectorioFEPage';
@@ -72,6 +73,16 @@ function App() {
             <ProtectedRoute>
               <Suspense fallback={null}>
                 <AdminHomePage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/cronograma"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={null}>
+                <AdminCronogramaPage />
               </Suspense>
             </ProtectedRoute>
           }

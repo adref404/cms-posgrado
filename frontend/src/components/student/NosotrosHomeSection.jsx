@@ -85,7 +85,7 @@ const NosotrosHomeSection = () => (
           to="/nosotros/quienes-somos"
           className="inline-flex items-center gap-2 text-unmsm-navy font-semibold hover:text-unmsm-blue transition-colors"
         >
-          Conoce más sobre la Facultad <MdArrowForward className="text-lg" />
+          Conoce más sobre la Unidad de Posgrado <MdArrowForward className="text-lg" />
         </Link>
       </Reveal>
     </div>

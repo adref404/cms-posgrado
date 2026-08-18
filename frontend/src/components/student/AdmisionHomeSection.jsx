@@ -2,30 +2,30 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { MdArrowForward, MdSync } from "react-icons/md";
 import Reveal from "../common/Reveal";
-import {
-  procesoAdmision2026II,
-  cronogramaAcademicoDestacado,
-  getEstadoConfig,
-  calcularEstadoPaso,
-  calcularProgresoProceso,
-} from "../../data/matricula";
+import { getEstadoConfig, calcularEstadoPaso, calcularProgresoProceso } from "../../data/matricula";
+import { useCronograma } from "../../hooks/useCronograma";
 
 // Vitrina del proceso de admisión 2026-II (el ciclo en curso) — con una
 // "solapa" en la esquina inferior derecha que voltea la sección hacia el
 // Cronograma Académico (matrícula, inicio/fin de clases). La admisión dura
 // unas semanas; el cronograma académico le importa a cualquier estudiante
 // durante todo el semestre, así que ambos conviven en el mismo espacio del
-// Home en vez de competir por lugar. La fuente de verdad de fechas es
-// data/matricula.js; el estado de cada paso y el avance de la línea se
+// Home en vez de competir por lugar. La fuente de verdad de fechas es la
+// tabla "cronograma_actividades" en Supabase, editable desde /admin/cronograma
+// (ver useCronograma); el estado de cada paso y el avance de la línea se
 // calculan comparando con la fecha del dispositivo (ver
 // calcularEstadoPaso/calcularProgresoProceso), no están escritos a mano.
 const AdmisionHomeSection = () => {
   const [vista, setVista] = useState("admision"); // "admision" | "academico"
   const [animando, setAnimando] = useState(false);
 
+  const { data: procesoAdmision } = useCronograma("admision");
+  const { data: cronogramaAcademico } = useCronograma("academico");
+  const cronogramaAcademicoDestacado = cronogramaAcademico.filter((item) => item.destacado_home);
+
   const esAdmision = vista === "admision";
-  const pasos = esAdmision ? procesoAdmision2026II : cronogramaAcademicoDestacado;
-  const progreso = calcularProgresoProceso(pasos);
+  const pasos = esAdmision ? procesoAdmision : cronogramaAcademicoDestacado;
+  const progreso = pasos.length > 0 ? calcularProgresoProceso(pasos) : 0;
 
   // Fade breve antes de cambiar el contenido, para que el salto de un
   // cronograma a otro no se sienta como un parpadeo brusco.
@@ -86,7 +86,7 @@ const AdmisionHomeSection = () => {
                 const { color, label, icon: EstadoIcon } = getEstadoConfig(estado);
                 const Icono = paso.icono;
                 return (
-                  <Reveal key={`${vista}-${paso.evento}`} delay={index * 100}>
+                  <Reveal key={`${vista}-${paso.id}`} delay={index * 100}>
                     <div className="relative">
                       {/* < lg: ícono chico integrado a la izquierda de la card, para no desperdiciar alto */}
                       <div className="flex lg:hidden items-center gap-3 bg-white/5 border border-white/10 rounded-xl p-3.5">

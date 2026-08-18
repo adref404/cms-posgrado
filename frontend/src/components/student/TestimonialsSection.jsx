@@ -25,7 +25,7 @@ const TestimonialsSection = () => {
   };
 
   return (
-    <section className="bg-unmsm-bg py-12 md:py-20">
+    <section className="bg-white py-12 md:py-20">
       <div className="max-w-6xl mx-auto px-4">
         <Reveal className="text-center max-w-2xl mx-auto mb-4 md:mb-6">
           <p className="text-unmsm-green font-semibold tracking-widest uppercase text-sm mb-2">

@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MdArticle, MdEvent, MdCampaign, MdArrowForward } from "react-icons/md";
+import { MdArticle, MdEvent, MdCampaign, MdSchedule, MdArrowForward } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
 
 const SECCIONES = [
@@ -21,6 +21,12 @@ const SECCIONES = [
     titulo: "Comunicados",
     descripcion: "Publica avisos oficiales, urgentes o no.",
   },
+  {
+    to: "/admin/cronograma",
+    icon: MdSchedule,
+    titulo: "Cronograma",
+    descripcion: "Edita las fechas de Admisión y del Cronograma Académico.",
+  },
 ];
 
 const AdminHomePage = () => (
@@ -30,7 +36,7 @@ const AdminHomePage = () => (
       Los cambios que hagas aquí se ven de inmediato en la web pública, sin necesidad de tocar código.
     </p>
 
-    <div className="grid sm:grid-cols-3 gap-5">
+    <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
       {SECCIONES.map(({ to, icon: Icon, titulo, descripcion }) => (
         <Link
           key={to}
