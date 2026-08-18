@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { MdCampaign, MdDescription } from "react-icons/md";
 import { formatFechaLarga } from "../../utils/dateFormat";
 
-const ComunicadoCard = ({ id, titulo, resumen, fecha, cuerpo, documento, urgente }) => {
+const ComunicadoCard = ({ id, titulo, resumen, fecha, imagen, cuerpo, documento, urgente }) => {
   const tieneDetalle = Boolean(cuerpo && cuerpo.length > 0);
   const destino = tieneDetalle ? `/comunicados/${id}` : documento || null;
 
@@ -12,13 +12,17 @@ const ComunicadoCard = ({ id, titulo, resumen, fecha, cuerpo, documento, urgente
         urgente ? "border-unmsm-guinda/30 border-l-4 border-l-unmsm-guinda" : "border-gray-200"
       }`}
     >
-      <div
-        className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
-          urgente ? "bg-unmsm-guinda/10 text-unmsm-guinda" : "bg-unmsm-navy/10 text-unmsm-navy"
-        }`}
-      >
-        <MdCampaign className="text-xl" />
-      </div>
+      {imagen ? (
+        <img src={imagen} alt="" className="w-16 h-16 rounded-lg object-cover flex-shrink-0" />
+      ) : (
+        <div
+          className={`w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${
+            urgente ? "bg-unmsm-guinda/10 text-unmsm-guinda" : "bg-unmsm-navy/10 text-unmsm-navy"
+          }`}
+        >
+          <MdCampaign className="text-xl" />
+        </div>
+      )}
 
       <div className="min-w-0 flex-1">
         <div className="flex items-center gap-2 flex-wrap">

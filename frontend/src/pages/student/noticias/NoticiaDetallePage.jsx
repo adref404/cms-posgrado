@@ -3,6 +3,7 @@ import { MdArrowForward, MdArticle } from "react-icons/md";
 import { useSupabaseItem } from "../../../hooks/useSupabaseItem";
 import { useSupabaseCollection } from "../../../hooks/useSupabaseCollection";
 import { formatFechaLarga } from "../../../utils/dateFormat";
+import { sanitizeHtml } from "../../../utils/sanitizeHtml";
 import BreadcrumbBar from "../../../components/common/BreadcrumbBar";
 
 const NoticiaDetallePage = () => {
@@ -41,11 +42,21 @@ const NoticiaDetallePage = () => {
               </div>
             )}
 
-            <div className="mt-6 space-y-4 text-unmsm-text leading-relaxed">
-              {(noticia.cuerpo || [noticia.resumen]).map((parrafo, index) => (
-                <p key={index}>{parrafo}</p>
-              ))}
-            </div>
+            {Array.isArray(noticia.cuerpo) ? (
+              // Formato antiguo (registro creado antes del editor enriquecido).
+              <div className="mt-6 space-y-4 text-unmsm-text leading-relaxed">
+                {noticia.cuerpo.map((parrafo, index) => (
+                  <p key={index}>{parrafo}</p>
+                ))}
+              </div>
+            ) : noticia.cuerpo ? (
+              <div
+                className="mt-6 rich-content text-unmsm-text"
+                dangerouslySetInnerHTML={{ __html: sanitizeHtml(noticia.cuerpo) }}
+              />
+            ) : (
+              <p className="mt-6 text-unmsm-text leading-relaxed">{noticia.resumen}</p>
+            )}
 
             {noticia.url && (
               <a

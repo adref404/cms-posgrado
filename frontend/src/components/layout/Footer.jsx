@@ -110,7 +110,7 @@ const Footer = () => {
               </h3>
               <div className="text-gray-300 text-sm space-y-2">
                 <p className="flex items-center gap-2">
-                  <MdPhone className="text-base flex-shrink-0" /> Central: (01) 619-7000
+                  <MdPhone className="text-base flex-shrink-0" /> Central: (01) 619-7000 | Anexo 3020
                 </p>
                 <a
                   href="mailto:upg.educacion@unmsm.edu.pe"

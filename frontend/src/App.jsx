@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import Layout from './components/layout/Layout';
 import HomeStudent from './pages/student/HomeStudent';
@@ -7,9 +8,14 @@ import ScrollToTop from './components/common/ScrollToTop';
 import BackToTopButton from './components/common/BackToTopButton';
 import { AuthProvider } from './context/AuthContext';
 import ProtectedRoute from './components/admin/ProtectedRoute';
-import AdminLoginPage from './pages/admin/AdminLoginPage';
-import AdminHomePage from './pages/admin/AdminHomePage';
-import AdminNovedadesPage from './pages/admin/AdminNovedadesPage';
+
+// El panel admin (y sobre todo el editor de texto enriquecido que usa
+// AdminNovedadesPage) solo lo carga quien entra a /admin/*. Con lazy() ese
+// código deja de viajar en el bundle público que descarga cualquier
+// visitante del sitio.
+const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
+const AdminHomePage = lazy(() => import('./pages/admin/AdminHomePage'));
+const AdminNovedadesPage = lazy(() => import('./pages/admin/AdminNovedadesPage'));
 
 import QuienesSomosPage from './pages/student/nosotros/QuienesSomosPage';
 import DirectorioFEPage from './pages/student/nosotros/DirectorioFEPage';
@@ -52,9 +58,34 @@ function App() {
 
       <Routes>
         {/* 🔐 Panel de Administración (sin Header/Footer públicos) */}
-        <Route path="/admin/login" element={<AdminLoginPage />} />
-        <Route path="/admin" element={<ProtectedRoute><AdminHomePage /></ProtectedRoute>} />
-        <Route path="/admin/:tipo" element={<ProtectedRoute><AdminNovedadesPage /></ProtectedRoute>} />
+        <Route
+          path="/admin/login"
+          element={
+            <Suspense fallback={null}>
+              <AdminLoginPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={null}>
+                <AdminHomePage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/:tipo"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={null}>
+                <AdminNovedadesPage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
 
         <Route element={<Layout />}>
           <Route path="/home" element={<HomeStudent />} />

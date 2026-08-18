@@ -127,3 +127,86 @@
   transform: translateX(100px);
   opacity: 0;
 }
+
+/* Contenido enriquecido (cuerpo de noticias/eventos/comunicados): mismas
+   reglas para el editor admin (RichTextEditor) y para la vista pública, así
+   lo que el admin ve al escribir se parece a lo que sale publicado. */
+.rich-content {
+  line-height: 1.75;
+}
+
+.rich-content p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+.rich-content p:last-child {
+  margin-bottom: 0;
+}
+
+.rich-content h2 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-unmsm-navy);
+  margin-top: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.rich-content h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-unmsm-navy);
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.rich-content ul,
+.rich-content ol {
+  margin-top: 0;
+  margin-bottom: 1rem;
+  padding-left: 1.5rem;
+}
+
+.rich-content ul {
+  list-style-type: disc;
+}
+
+.rich-content ol {
+  list-style-type: decimal;
+}
+
+.rich-content li {
+  margin-bottom: 0.25rem;
+}
+
+.rich-content blockquote {
+  border-left: 3px solid var(--color-unmsm-green);
+  padding-left: 1rem;
+  margin: 1rem 0;
+  color: var(--color-unmsm-muted);
+  font-style: italic;
+}
+
+.rich-content a {
+  color: var(--color-unmsm-blue);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.rich-content a:hover {
+  color: var(--color-unmsm-navy);
+}
+
+.rich-content strong {
+  font-weight: 700;
+}
+
+/* Placeholder del editor cuando está vacío (Tiptap deja el párrafo vacío
+   con esta clase mediante editorProps; el estilo se aplica a mano). */
+.rich-content p.is-editor-empty:first-child::before {
+  content: attr(data-placeholder);
+  color: var(--color-unmsm-muted);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}

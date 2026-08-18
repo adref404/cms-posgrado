@@ -2,10 +2,17 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { MdAdd, MdEdit, MdDelete, MdClose, MdImage, MdCheck } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
+import RichTextEditor from "../../components/admin/RichTextEditor";
 import { supabase, BUCKET_NOVEDADES } from "../../lib/supabaseClient";
 import { ADMIN_NOVEDADES_CONFIG } from "../../data/adminNovedadesConfig";
 import { slugify } from "../../utils/slugify";
 import { formatFechaCorta } from "../../utils/dateFormat";
+
+// Un párrafo suelto (string) -> "<p>...</p>", para convertir registros
+// antiguos (cuerpo guardado como array de párrafos, antes del editor
+// enriquecido) al mismo HTML que ahora produce RichTextEditor.
+const escaparHtml = (texto) =>
+  texto.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
 
 // Valores por defecto de un registro nuevo, según el tipo de campo.
 const valorVacio = (campo) => {
@@ -15,13 +22,18 @@ const valorVacio = (campo) => {
 };
 
 // De fila de la base de datos -> valores editables del formulario
-// (cuerpo: array -> texto con saltos de línea).
+// ("richtext" acepta tanto el HTML nuevo como, por compatibilidad, un
+// array de párrafos de antes de tener el editor enriquecido).
 const filaAValores = (fila, campos) => {
   const valores = {};
   campos.forEach((campo) => {
     const crudo = fila[campo.nombre];
-    if (campo.tipo === "parrafos") {
-      valores[campo.nombre] = Array.isArray(crudo) ? crudo.join("\n") : "";
+    if (campo.tipo === "richtext") {
+      if (Array.isArray(crudo)) {
+        valores[campo.nombre] = crudo.map((p) => `<p>${escaparHtml(p)}</p>`).join("");
+      } else {
+        valores[campo.nombre] = crudo ?? "";
+      }
     } else if (campo.tipo === "check") {
       valores[campo.nombre] = Boolean(crudo);
     } else {
@@ -31,18 +43,15 @@ const filaAValores = (fila, campos) => {
   return valores;
 };
 
-// De valores del formulario -> payload para Supabase (texto con saltos de
-// línea -> array de párrafos, strings vacíos -> null para columnas opcionales).
+// De valores del formulario -> payload para Supabase (HTML vacío -> null
+// para columnas opcionales).
 const valoresAPayload = (valores, campos) => {
   const payload = {};
   campos.forEach((campo) => {
     const valor = valores[campo.nombre];
-    if (campo.tipo === "parrafos") {
-      const parrafos = (valor || "")
-        .split("\n")
-        .map((p) => p.trim())
-        .filter(Boolean);
-      payload[campo.nombre] = parrafos.length > 0 ? parrafos : null;
+    if (campo.tipo === "richtext") {
+      const esVacio = !valor || valor === "<p></p>";
+      payload[campo.nombre] = esVacio ? null : valor;
     } else if (campo.tipo === "check") {
       payload[campo.nombre] = Boolean(valor);
     } else {
@@ -190,14 +199,25 @@ const AdminNovedadesPage = () => {
                 <div>
                   <label className="block text-sm font-semibold text-unmsm-navy mb-1">{campo.etiqueta}</label>
                   {valores.imagen && (
-                    <img src={valores.imagen} alt="" className="h-24 rounded-lg border border-gray-200 mb-2 object-cover" />
+                    <div className="relative w-fit mb-2">
+                      <img src={valores.imagen} alt="" className="h-24 rounded-lg border border-gray-200 object-cover" />
+                      <button
+                        type="button"
+                        onClick={() => setValores((v) => ({ ...v, imagen: "" }))}
+                        title="Quitar imagen"
+                        aria-label="Quitar imagen"
+                        className="absolute -top-2 -right-2 w-6 h-6 flex items-center justify-center bg-unmsm-guinda text-white rounded-full shadow hover:bg-unmsm-guinda-700 transition-colors"
+                      >
+                        <MdClose className="text-sm" />
+                      </button>
+                    </div>
                   )}
                   <label className="flex items-center gap-2 w-fit text-sm bg-unmsm-bg border border-gray-200 rounded-lg px-3 py-2 cursor-pointer hover:bg-gray-100 transition-colors">
-                    <MdImage /> {subiendoImagen ? "Subiendo..." : "Elegir imagen"}
+                    <MdImage /> {subiendoImagen ? "Subiendo..." : valores.imagen ? "Cambiar imagen" : "Elegir imagen"}
                     <input type="file" accept="image/*" onChange={handleImagenChange} disabled={subiendoImagen} className="hidden" />
                   </label>
                 </div>
-              ) : campo.tipo === "textarea" || campo.tipo === "parrafos" ? (
+              ) : campo.tipo === "textarea" ? (
                 <div>
                   <label className="block text-sm font-semibold text-unmsm-navy mb-1">{campo.etiqueta}</label>
                   <textarea
@@ -206,6 +226,14 @@ const AdminNovedadesPage = () => {
                     value={valores[campo.nombre] || ""}
                     onChange={(e) => setValores((v) => ({ ...v, [campo.nombre]: e.target.value }))}
                     className="w-full px-3 py-2 bg-unmsm-bg border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-unmsm-navy"
+                  />
+                </div>
+              ) : campo.tipo === "richtext" ? (
+                <div>
+                  <label className="block text-sm font-semibold text-unmsm-navy mb-1">{campo.etiqueta}</label>
+                  <RichTextEditor
+                    value={valores[campo.nombre] || ""}
+                    onChange={(html) => setValores((v) => ({ ...v, [campo.nombre]: html }))}
                   />
                 </div>
               ) : (

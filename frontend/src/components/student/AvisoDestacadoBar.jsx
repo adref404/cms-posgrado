@@ -61,22 +61,22 @@ const AvisoDestacadoBar = () => {
       ref={barRef}
       className="fixed top-0 left-0 right-0 z-[60] w-full bg-gradient-to-r from-unmsm-green to-unmsm-green-700 text-white shadow-md"
     >
-      <div className="max-w-7xl mx-auto px-4 py-2.5 flex items-start sm:items-center gap-3">
-        <span className="flex items-center justify-center w-8 h-8 rounded-full bg-white/15 flex-shrink-0 mt-0.5 sm:mt-0">
-          <MdCampaign className="text-lg animate-pulse" />
+      <div className="max-w-7xl mx-auto px-4 py-1.5 flex items-start sm:items-center gap-3">
+        <span className="flex items-center justify-center w-6 h-6 rounded-full bg-white/15 flex-shrink-0 mt-0.5 sm:mt-0">
+          <MdCampaign className="text-sm animate-pulse" />
         </span>
 
         <Link
           to={`${RUTA_POR_TIPO[aviso.tipo]}/${aviso.id}`}
           className="group flex-1 min-w-0 flex flex-col sm:flex-row sm:items-center gap-0.5 sm:gap-2.5"
         >
-          <span className="text-[11px] font-bold uppercase tracking-widest text-white/80 flex-shrink-0">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-white/80 flex-shrink-0">
             Aviso
           </span>
-          <span className="font-serif font-bold text-lg sm:text-xl leading-snug sm:truncate group-hover:underline">
+          <span className="font-serif font-bold text-sm sm:text-base leading-snug sm:truncate group-hover:underline">
             {aviso.titulo}
           </span>
-          <MdArrowForward className="hidden sm:block text-base flex-shrink-0 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
+          <MdArrowForward className="hidden sm:block text-sm flex-shrink-0 opacity-70 group-hover:opacity-100 group-hover:translate-x-1 transition-all" />
         </Link>
 
         {avisos.length > 1 && (
@@ -86,9 +86,9 @@ const AvisoDestacadoBar = () => {
               aria-label="Aviso anterior"
               className="hover:text-white transition-colors"
             >
-              <MdChevronLeft className="text-lg" />
+              <MdChevronLeft className="text-base" />
             </button>
-            <span className="text-xs tabular-nums">
+            <span className="text-[11px] tabular-nums">
               {i + 1}/{avisos.length}
             </span>
             <button
@@ -96,7 +96,7 @@ const AvisoDestacadoBar = () => {
               aria-label="Siguiente aviso"
               className="hover:text-white transition-colors"
             >
-              <MdChevronRight className="text-lg" />
+              <MdChevronRight className="text-base" />
             </button>
           </div>
         )}
@@ -106,7 +106,7 @@ const AvisoDestacadoBar = () => {
           aria-label="Cerrar aviso"
           className="flex-shrink-0 text-white/70 hover:text-white transition-colors mt-0.5 sm:mt-0"
         >
-          <MdClose className="text-lg" />
+          <MdClose className="text-base" />
         </button>
       </div>
     </div>

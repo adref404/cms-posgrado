@@ -42,7 +42,7 @@ const PorQueEstudiarSection = () => (
     <div className="max-w-6xl mx-auto px-4">
       <Reveal className="text-center max-w-2xl mx-auto mb-8 md:mb-10">
         <p className="text-unmsm-green font-semibold tracking-widest uppercase text-sm mb-2">
-          La Facultad
+          Posgrado Educación
         </p>
         <h2 className="text-2xl md:text-4xl font-bold text-unmsm-navy mb-3">
           ¿Por qué estudiar con nosotros?

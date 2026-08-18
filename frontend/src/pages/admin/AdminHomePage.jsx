@@ -7,7 +7,7 @@ const SECCIONES = [
     to: "/admin/noticias",
     icon: MdArticle,
     titulo: "Noticias",
-    descripcion: "Publica, edita o elimina noticias de la Facultad.",
+    descripcion: "Publica, edita o elimina noticias de posgrado educación.",
   },
   {
     to: "/admin/eventos",

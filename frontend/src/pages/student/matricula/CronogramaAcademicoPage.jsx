@@ -1,7 +1,7 @@
 import { MdInfo, MdCalendarToday } from "react-icons/md";
 import PageHero from "../../../components/ui/PageHero";
 import InfoBanner from "../../../components/matricula/InfoBanner";
-import { cronogramaAcademico, getEstadoConfig } from "../../../data/matricula";
+import { cronogramaAcademico, calcularEstadoPaso, getEstadoConfig } from "../../../data/matricula";
 import { MATRICULA_HERO_IMAGE } from "../../../utils/constants";
 
 const CronogramaAcademicoPage = () => {
@@ -21,7 +21,8 @@ const CronogramaAcademicoPage = () => {
 
         <div className="grid grid-cols-1 gap-4">
           {cronogramaAcademico.map((item, index) => {
-            const { color, label, icon: StatusIcon } = getEstadoConfig(item.estado);
+            const estado = calcularEstadoPaso(item);
+            const { color, label, icon: StatusIcon } = getEstadoConfig(estado);
             return (
               <div
                 key={index}

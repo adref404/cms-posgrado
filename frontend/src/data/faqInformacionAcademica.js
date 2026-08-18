@@ -54,7 +54,7 @@ export const faqInformacionAcademica = [
     categoria: "Contacto",
     pregunta: "¿Cómo contacto a la Unidad de Posgrado?",
     respuesta:
-      "Por correo a upg.educacion@unmsm.edu.pe, por teléfono a la Central UNMSM (01) 619-7000, o revisando los contactos específicos por cargo en Nosotros → Directorio Posgrado.",
+      "Por correo a upg.educacion@unmsm.edu.pe, por teléfono a la Central UNMSM (01) 619-7000 | Anexo 3020, o revisando los contactos específicos por cargo en Nosotros → Directorio Posgrado.",
   },
   {
     categoria: "Documentos",

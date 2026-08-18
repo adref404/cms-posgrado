@@ -2,6 +2,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { MdCampaign, MdDescription } from "react-icons/md";
 import { useSupabaseItem } from "../../../hooks/useSupabaseItem";
 import { formatFechaLarga } from "../../../utils/dateFormat";
+import { sanitizeHtml } from "../../../utils/sanitizeHtml";
 import BreadcrumbBar from "../../../components/common/BreadcrumbBar";
 
 const ComunicadoDetallePage = () => {
@@ -43,16 +44,36 @@ const ComunicadoDetallePage = () => {
           </div>
         </div>
 
+        {comunicado.imagen && (
+          <img
+            src={comunicado.imagen}
+            alt=""
+            className="w-full aspect-video rounded-xl mt-6 object-cover"
+          />
+        )}
+
         <div
-          className={`mt-6 rounded-xl p-6 space-y-4 leading-relaxed text-unmsm-text ${
+          className={`mt-6 rounded-xl p-6 leading-relaxed text-unmsm-text ${
             comunicado.urgente
               ? "bg-unmsm-guinda/5 border border-unmsm-guinda/20"
               : "bg-white border border-gray-200"
           }`}
         >
-          {(comunicado.cuerpo || [comunicado.resumen]).map((parrafo, index) => (
-            <p key={index}>{parrafo}</p>
-          ))}
+          {Array.isArray(comunicado.cuerpo) ? (
+            // Formato antiguo (registro creado antes del editor enriquecido).
+            <div className="space-y-4">
+              {comunicado.cuerpo.map((parrafo, index) => (
+                <p key={index}>{parrafo}</p>
+              ))}
+            </div>
+          ) : comunicado.cuerpo ? (
+            <div
+              className="rich-content"
+              dangerouslySetInnerHTML={{ __html: sanitizeHtml(comunicado.cuerpo) }}
+            />
+          ) : (
+            <p>{comunicado.resumen}</p>
+          )}
         </div>
 
         {comunicado.documento && (

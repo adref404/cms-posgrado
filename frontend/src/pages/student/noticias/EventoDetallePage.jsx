@@ -2,6 +2,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { MdAccessTime, MdLocationOn, MdArrowForward } from "react-icons/md";
 import { useSupabaseItem } from "../../../hooks/useSupabaseItem";
 import { formatFechaLarga, getDiaMes } from "../../../utils/dateFormat";
+import { sanitizeHtml } from "../../../utils/sanitizeHtml";
 import BreadcrumbBar from "../../../components/common/BreadcrumbBar";
 
 const EventoDetallePage = () => {
@@ -52,11 +53,21 @@ const EventoDetallePage = () => {
           )}
         </div>
 
-        <div className="mt-6 space-y-4 text-unmsm-text leading-relaxed">
-          {(evento.cuerpo || [evento.descripcion]).map((parrafo, index) => (
-            <p key={index}>{parrafo}</p>
-          ))}
-        </div>
+        {Array.isArray(evento.cuerpo) ? (
+          // Formato antiguo (registro creado antes del editor enriquecido).
+          <div className="mt-6 space-y-4 text-unmsm-text leading-relaxed">
+            {evento.cuerpo.map((parrafo, index) => (
+              <p key={index}>{parrafo}</p>
+            ))}
+          </div>
+        ) : evento.cuerpo ? (
+          <div
+            className="mt-6 rich-content text-unmsm-text"
+            dangerouslySetInnerHTML={{ __html: sanitizeHtml(evento.cuerpo) }}
+          />
+        ) : (
+          <p className="mt-6 text-unmsm-text leading-relaxed">{evento.descripcion}</p>
+        )}
 
         {evento.url && (
           <a

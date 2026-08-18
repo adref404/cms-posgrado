@@ -20,11 +20,11 @@ const HomeStudent = () => {
       {/* Sección de Cronograma de Admisión — acción con urgencia real */}
       <AdmisionHomeSection />
 
-      {/* Sección: ¿Por qué estudiar con nosotros? */}
-      <PorQueEstudiarSection />
-
       {/* Sección: Quiénes Somos */}
       <NosotrosHomeSection />
+
+      {/* Sección: ¿Por qué estudiar con nosotros? */}
+      <PorQueEstudiarSection />
 
       {/* Sección de Testimonios */}
       <TestimonialsSection />
