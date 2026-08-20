@@ -45,7 +45,7 @@ const NAV_GROUPS_IZQUIERDA = [
       { to: "/nosotros/quienes-somos", icon: MdInfo, label: "Quiénes somos" },
       { to: "/nosotros/directorio-flch", icon: MdBadge, label: "Directorio Facultad Educación" },
       { to: "/nosotros/directorio-posgrado", icon: MdPeople, label: "Directorio Posgrado" },
-      { to: "/nosotros/documentos-recursos", icon: MdDescription, label: "Documentos y Recursos" },
+      { to: "/nosotros/documentos-recursos", icon: MdDescription, label: "Transparencia" },
     ],
   },
   {
@@ -441,8 +441,15 @@ function Header() {
             (1fr / auto / 1fr): la nav se centra sola según su propio
             contenido (columna "auto"), el buscador vive en su propia celda
             de la derecha — nunca se superponen ni pueden desbordar el
-            contenedor, porque ambos están dentro del mismo grid. */}
-        <div className="hidden xl:grid grid-cols-[1fr_auto_1fr] items-center max-w-7xl mx-auto px-4 py-4 gap-4">
+            contenedor, porque ambos están dentro del mismo grid.
+            max-w-[96rem] (no max-w-7xl/1280px): la nav sola ya necesita
+            ~975px, así que con el contenedor topado en 1280px casi no
+            quedaba margen para el buscador sin importar qué ancho se le
+            pusiera — por eso "se veía siempre igual" aunque se agrandara
+            la clase. Con más techo, el buscador SÍ crece en pantallas
+            reales (1366px+); en el límite exacto de 1280px se queda
+            modesto porque ahí de verdad no hay más espacio que ceder. */}
+        <div className="hidden xl:grid grid-cols-[1fr_auto_1fr] items-center max-w-[96rem] mx-auto px-4 py-4 gap-4">
           <div />
 
           <nav className="flex items-center gap-5 select-none font-bold">
@@ -498,8 +505,8 @@ function Header() {
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               onSubmit={buscarEnSitio}
-              className="w-40 2xl:w-52"
-              inputClassName="w-full pl-8 pr-2 py-1.5 text-xs"
+              className="w-40 2xl:w-56"
+              inputClassName="w-full pl-9 pr-2 py-1.5 text-xs"
             />
           </div>
         </div>

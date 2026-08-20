@@ -1,10 +1,13 @@
 import { useEffect, useMemo, useState } from "react";
 
 // Búsqueda por palabra clave + rango de fechas + paginación, reutilizable
-// entre Noticias, Eventos y Comunicados.
+// entre Noticias, Eventos y Comunicados. Por defecto ordena por fecha más
+// reciente primero (ideal para un feed de publicaciones); "sortFn" permite
+// reemplazar ese criterio — lo usa EventosPage para mostrar primero los
+// eventos que todavía vienen, no los publicados más recientemente.
 export const useFilteredList = (
   items,
-  { searchFields = [], dateField = "fecha" } = {}
+  { searchFields = [], dateField = "fecha", sortFn } = {}
 ) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [fechaDesde, setFechaDesde] = useState("");
@@ -33,9 +36,9 @@ export const useFilteredList = (
 
         return matchesTerm && matchesDesde && matchesHasta;
       })
-      .sort((a, b) => new Date(b[dateField]) - new Date(a[dateField]));
+      .sort(sortFn || ((a, b) => new Date(b[dateField]) - new Date(a[dateField])));
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [items, searchTerm, fechaDesde, fechaHasta]);
+  }, [items, searchTerm, fechaDesde, fechaHasta, sortFn]);
 
   useEffect(() => {
     setCurrentPage(1);

@@ -28,7 +28,7 @@ const DocumentosRecursosPage = () => {
     <div className="min-h-screen bg-unmsm-bg">
       <PageHero
         eyebrow="Nosotros"
-        title="Documentos y Recursos"
+        title="Transparencia"
         subtitle="Reglamentos, directivas y enlaces útiles del Posgrado"
         image={NOSOTROS_HERO_IMAGE}
       />

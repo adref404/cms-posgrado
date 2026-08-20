@@ -14,7 +14,7 @@ const PAGINAS = [
   { titulo: "Quiénes Somos", descripcion: "Misión, visión, valores, principios y autoridades de la Facultad de Educación.", ruta: "/nosotros/quienes-somos", seccion: "Nosotros" },
   { titulo: "Directorio Facultad de Educación", descripcion: "Directorio de autoridades y contactos de la Facultad de Educación.", ruta: "/nosotros/directorio-flch", seccion: "Nosotros" },
   { titulo: "Directorio Posgrado", descripcion: "Directorio de la Unidad de Posgrado.", ruta: "/nosotros/directorio-posgrado", seccion: "Nosotros" },
-  { titulo: "Documentos y Recursos", descripcion: "Documentos y recursos institucionales descargables.", ruta: "/nosotros/documentos-recursos", seccion: "Nosotros" },
+  { titulo: "Transparencia", descripcion: "Documentos y recursos institucionales descargables.", ruta: "/nosotros/documentos-recursos", seccion: "Nosotros" },
 
   { titulo: "Programas de Maestría", descripcion: "Listado de programas de maestría de la Facultad de Educación.", ruta: "/programas/maestria", seccion: "Programas" },
   { titulo: "Programa de Doctorado", descripcion: "Programa de doctorado en Educación.", ruta: "/programas/doctorado", seccion: "Programas" },

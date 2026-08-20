@@ -18,7 +18,11 @@ const NovedadesHomeSection = () => {
   const ultimasNoticias = [...noticias]
     .sort((a, b) => new Date(b.fecha) - new Date(a.fecha))
     .slice(0, 2);
+  // "Próximos" de verdad: solo eventos de hoy en adelante, el más cercano
+  // primero — nunca uno que ya pasó, aunque sea el más antiguo del set.
+  const hoy = new Date().toISOString().slice(0, 10);
   const proximosEventos = [...eventos]
+    .filter((e) => e.fecha >= hoy)
     .sort((a, b) => new Date(a.fecha) - new Date(b.fecha))
     .slice(0, 2);
   // Comunicados urgentes primero, igual criterio que /comunicados.

@@ -18,7 +18,7 @@ const BREADCRUMB_MAP = {
   "/nosotros/quienes-somos": { seccion: "Nosotros", subseccion: "Quiénes somos" },
   "/nosotros/directorio-flch": { seccion: "Nosotros", subseccion: "Directorio Facultad Educación" },
   "/nosotros/directorio-posgrado": { seccion: "Nosotros", subseccion: "Directorio Posgrado" },
-  "/nosotros/documentos-recursos": { seccion: "Nosotros", subseccion: "Documentos y Recursos" },
+  "/nosotros/documentos-recursos": { seccion: "Nosotros", subseccion: "Transparencia" },
 
   "/programas/maestria": { seccion: "Programas", subseccion: "Maestría" },
   "/programas/doctorado": { seccion: "Programas", subseccion: "Doctorado" },
