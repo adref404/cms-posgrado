@@ -65,46 +65,33 @@ const DEFAULT_ESTADO = { color: "#EFEFEF", label: "Programado", icon: MdInfo };
 
 export const getEstadoConfig = (estado) => ESTADO_CONFIG[estado] || DEFAULT_ESTADO;
 
+// Ya no se diferencia por fecha de ingreso (antes/después de 2022-2) — esa
+// distinción quedó obsoleta. Ahora la única variable es si es tu primer
+// ciclo (matrícula de ingresante, S/ 310 para ambos programas) o uno de
+// los siguientes (matrícula regular, distinta por programa). Las fechas
+// límite de cada una coinciden con el Cronograma Académico (Matrícula
+// Regular: hasta el 28 de agosto · Matrícula de Ingresantes: hasta el 01
+// de setiembre). Las pensiones no cambian según el ciclo: siempre son 4
+// cuotas mensuales, con las mismas fechas para ambos casos.
 export const cronogramaPagos = {
-  // Para quienes ingresaron DESDE 2022-2 hasta 2026-I
   maestria: {
-    matricula: { monto: "S/ 400.00", fecha: "24/08/2026" },
+    matriculaPrimerCiclo: { monto: "S/ 310.00", fecha: "01/09/2026" },
+    matriculaCiclosSiguientes: { monto: "S/ 400.00", fecha: "28/08/2026" },
     pensiones: [
-      { cuota: "1°", monto: "S/ 600.00", fecha: "Hasta 30/08/2026" },
+      { cuota: "1°", monto: "S/ 600.00", fecha: "Hasta 31/08/2026" },
       { cuota: "2°", monto: "S/ 600.00", fecha: "30/09/2026" },
       { cuota: "3°", monto: "S/ 600.00", fecha: "30/10/2026" },
       { cuota: "4°", monto: "S/ 600.00", fecha: "30/11/2026" },
     ],
   },
   doctorado: {
-    matricula: { monto: "S/ 500.00", fecha: "24/08/2026" },
+    matriculaPrimerCiclo: { monto: "S/ 310.00", fecha: "01/09/2026" },
+    matriculaCiclosSiguientes: { monto: "S/ 500.00", fecha: "28/08/2026" },
     pensiones: [
-      { cuota: "1°", monto: "S/ 750.00", fecha: "Hasta 30/08/2026" },
+      { cuota: "1°", monto: "S/ 750.00", fecha: "Hasta 31/08/2026" },
       { cuota: "2°", monto: "S/ 750.00", fecha: "30/09/2026" },
       { cuota: "3°", monto: "S/ 750.00", fecha: "30/10/2026" },
       { cuota: "4°", monto: "S/ 750.00", fecha: "30/11/2026" },
-    ],
-  },
-
-  // Para quienes ingresaron ANTES del 2022-2
-  maestria_ant: {
-    matricula: { monto: "S/ 400.00", fecha: "24/08/2026" },
-    pensiones: [
-      { cuota: "1°", monto: "S/ 600.00", fecha: "Hasta 30/08/2026" },
-      { cuota: "2°", monto: "S/ 600.00", fecha: "30/09/2026" },
-      { cuota: "3°", monto: "S/ 600.00", fecha: "30/10/2026" },
-      { cuota: "4°", monto: "S/ 600.00", fecha: "30/11/2026" },
-      { cuota: "5°", monto: "S/ 600.00", fecha: "15/12/2026" },
-    ],
-  },
-  doctorado_ant: {
-    matricula: { monto: "S/ 500.00", fecha: "24/08/2026" },
-    pensiones: [
-      { cuota: "1°", monto: "S/ 750.00", fecha: "Hasta 30/08/2026" },
-      { cuota: "2°", monto: "S/ 750.00", fecha: "30/09/2026" },
-      { cuota: "3°", monto: "S/ 750.00", fecha: "30/10/2026" },
-      { cuota: "4°", monto: "S/ 750.00", fecha: "30/11/2026" },
-      { cuota: "5°", monto: "S/ 750.00", fecha: "15/12/2026" },
     ],
   },
 };

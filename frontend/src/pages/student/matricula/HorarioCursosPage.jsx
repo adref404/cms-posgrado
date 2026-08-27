@@ -4,7 +4,6 @@ import {
   MdInfo,
   MdSearch,
   MdPerson,
-  MdClass,
   MdHourglassEmpty,
 } from "react-icons/md";
 import PageHero from "../../../components/ui/PageHero";
@@ -60,10 +59,14 @@ const HorarioCursosPage = () => {
         image={MATRICULA_HERO_IMAGE}
       />
 
-      <div className="max-w-6xl mx-auto px-4 py-12">
-        <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        {/* Sidebar de ancho fijo (no una fracción del grid): el selector de
+            ciclo son 3 botones, no necesita 1/4 del ancho de la página —
+            ese espacio se lo cedemos a la tabla de horarios, que sí lo
+            necesita. */}
+        <div className="grid grid-cols-1 lg:grid-cols-[220px_1fr] gap-6">
           {/* Sub-sección: selector de ciclo */}
-          <div className="lg:col-span-1">
+          <div className="min-w-0">
             <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6 sticky top-24">
               <h3 className="font-semibold text-gray-800 mb-4">Ciclo</h3>
               <nav className="space-y-2">
@@ -85,7 +88,7 @@ const HorarioCursosPage = () => {
           </div>
 
           {/* Contenido del ciclo seleccionado */}
-          <div className="lg:col-span-3 space-y-6">
+          <div className="min-w-0 space-y-6">
             {!programas ? (
               <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-12 text-center">
                 <MdHourglassEmpty className="text-unmsm-muted text-5xl mx-auto mb-4" />
@@ -173,27 +176,27 @@ const HorarioCursosPage = () => {
                     />
                   </div>
 
-                  {/* Tabla de cursos */}
+                  {/* Tabla de cursos — table-fixed + ancho explícito por
+                      columna, así el nombre del curso (lo más largo, lejos)
+                      se reparte en 2-3 líneas cómodas en vez de una sola
+                      columna angosta o forzar scroll horizontal. */}
                   <div className="overflow-x-auto">
-                    <table className="min-w-full divide-y divide-gray-200">
+                    <table className="min-w-full table-fixed divide-y divide-gray-200">
                       <thead className="bg-gray-50">
                         <tr>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[38%]">
                             Curso
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[21%]">
                             Horario
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[21%]">
                             Docente
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Aula
-                          </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[10%]">
                             Créd.
                           </th>
-                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                          <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider w-[10%]">
                             Sec.
                           </th>
                         </tr>
@@ -208,7 +211,7 @@ const HorarioCursosPage = () => {
                               <React.Fragment key={ciclo}>
                                 <tr>
                                   <td
-                                    colSpan={6}
+                                    colSpan={5}
                                     className="px-6 py-2 text-center text-sm font-semibold text-gray-700 bg-unmsm-bg border-t-2 border-gray-200"
                                   >
                                     {getCicloNombre(ciclo)}
@@ -219,25 +222,19 @@ const HorarioCursosPage = () => {
                                     key={index}
                                     className="hover:bg-gray-50 transition-colors"
                                   >
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
+                                    <td className="px-6 py-4 text-sm font-medium text-gray-900">
                                       {curso.curso}
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                      <div className="flex items-center">
-                                        <MdAccessTime className="mr-1 text-unmsm-muted" />
-                                        {curso.horario}
+                                    <td className="px-6 py-4 text-sm text-gray-600">
+                                      <div className="flex items-start gap-1">
+                                        <MdAccessTime className="mt-0.5 flex-shrink-0 text-unmsm-muted" />
+                                        <span>{curso.horario}</span>
                                       </div>
                                     </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                      <div className="flex items-center">
-                                        <MdPerson className="mr-1 text-unmsm-muted" />
-                                        {curso.docente}
-                                      </div>
-                                    </td>
-                                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                                      <div className="flex items-center">
-                                        <MdClass className="mr-1 text-unmsm-muted" />
-                                        {curso.aula || "—"}
+                                    <td className="px-6 py-4 text-sm text-gray-600">
+                                      <div className="flex items-start gap-1">
+                                        <MdPerson className="mt-0.5 flex-shrink-0 text-unmsm-muted" />
+                                        <span>{curso.docente}</span>
                                       </div>
                                     </td>
                                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">

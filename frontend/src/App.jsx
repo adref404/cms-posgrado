@@ -29,6 +29,7 @@ import ProcesoMatriculaPage from './pages/student/matricula/ProcesoMatriculaPage
 import HorarioCursosPage from './pages/student/matricula/HorarioCursosPage';
 
 import PlanaDocentePage from './pages/student/informacionAcademica/PlanaDocentePage';
+import PlanEstudiosPage from './pages/student/informacionAcademica/PlanEstudiosPage';
 import FAQInformacionAcademicaPage from './pages/student/informacionAcademica/PreguntasFrecuentesPage';
 
 import NoticiasPage from './pages/student/noticias/NoticiasPage';
@@ -132,17 +133,7 @@ function App() {
 
           {/* 🎓 Información Académica */}
           <Route path="/informacion-academica/docentes" element={<PlanaDocentePage />} />
-          <Route
-            path="/informacion-academica/plan-estudios"
-            element={
-              <EnDesarrolloPage
-                eyebrow="Información Académica"
-                title="Plan de Estudios"
-                subtitle="Malla curricular de los programas de posgrado"
-                image={NOSOTROS_HERO_IMAGE}
-              />
-            }
-          />
+          <Route path="/informacion-academica/plan-estudios" element={<PlanEstudiosPage />} />
           <Route path="/informacion-academica/preguntas-frecuentes" element={<FAQInformacionAcademicaPage />} />
 
           {/* 📰 Noticias */}

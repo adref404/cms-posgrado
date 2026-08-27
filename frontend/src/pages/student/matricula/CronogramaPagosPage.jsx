@@ -12,10 +12,13 @@ import { MATRICULA_HERO_IMAGE } from "../../../utils/constants";
 
 const CronogramaPagosPage = () => {
   const [selectedProgram, setSelectedProgram] = useState("maestria");
-  const [isAnterior, setIsAnterior] = useState(false);
+  const [esPrimerCiclo, setEsPrimerCiclo] = useState(false);
 
-  const datosPago =
-    cronogramaPagos[`${selectedProgram}${isAnterior ? "_ant" : ""}`];
+  const datosPrograma = cronogramaPagos[selectedProgram];
+  const matricula = esPrimerCiclo
+    ? datosPrograma?.matriculaPrimerCiclo
+    : datosPrograma?.matriculaCiclosSiguientes;
+  const pensiones = datosPrograma?.pensiones;
 
   return (
     <div className="min-h-screen bg-unmsm-bg">
@@ -65,34 +68,35 @@ const CronogramaPagosPage = () => {
           </div>
         </div>
 
-        {/* Selección de antigüedad */}
+        {/* Selección de ciclo — solo cambia el monto de matrícula; las
+            pensiones son las mismas sin importar el ciclo. */}
         <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
           <div className="flex items-center mb-4">
             <MdInfo className="text-unmsm-green text-xl mr-2" />
-            <h4 className="font-semibold text-gray-800">¿Cuándo ingresaste?</h4>
+            <h4 className="font-semibold text-gray-800">¿Cuál es tu situación?</h4>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <button
-              onClick={() => setIsAnterior(false)}
+              onClick={() => setEsPrimerCiclo(false)}
               className={`p-4 rounded-lg border-2 transition-colors ${
-                !isAnterior
+                !esPrimerCiclo
                   ? "border-unmsm-green bg-unmsm-green/10 text-unmsm-green"
                   : "border-gray-200 text-gray-700 hover:border-gray-300"
               }`}
             >
-              <div className="font-medium">Ingresé después 2022-2</div>
-              <div className="text-sm text-gray-600">Pago en 4 cuotas</div>
+              <div className="font-medium">Matrícula Regular</div>
+              <div className="text-sm text-gray-600">Ya estás matriculado en el programa</div>
             </button>
             <button
-              onClick={() => setIsAnterior(true)}
+              onClick={() => setEsPrimerCiclo(true)}
               className={`p-4 rounded-lg border-2 transition-colors ${
-                isAnterior
+                esPrimerCiclo
                   ? "border-unmsm-green bg-unmsm-green/10 text-unmsm-green"
                   : "border-gray-200 text-gray-700 hover:border-gray-300"
               }`}
             >
-              <div className="font-medium">Ingresé antes de 2022-2</div>
-              <div className="text-sm text-gray-600">Pago en 5 cuotas</div>
+              <div className="font-medium">Matrícula de Ingresantes</div>
+              <div className="text-sm text-gray-600">Es tu primer ciclo en el programa</div>
             </button>
           </div>
         </div>
@@ -112,11 +116,9 @@ const CronogramaPagosPage = () => {
             </div>
             <div className="bg-gray-50 rounded-lg p-4">
               <div className="flex justify-between items-center">
-                <span className="text-2xl font-bold text-gray-800">
-                  {datosPago?.matricula?.monto}
-                </span>
+                <span className="text-2xl font-bold text-gray-800">{matricula?.monto}</span>
                 <span className="text-sm text-unmsm-guinda font-medium">
-                  Hasta {datosPago?.matricula?.fecha}
+                  Hasta {matricula?.fecha}
                 </span>
               </div>
             </div>
@@ -134,7 +136,7 @@ const CronogramaPagosPage = () => {
               </div>
             </div>
             <div className="space-y-3">
-              {(datosPago?.pensiones || []).map((pension, index) => (
+              {(pensiones || []).map((pension, index) => (
                 <div
                   key={index}
                   className="flex justify-between items-center bg-gray-50 rounded-lg p-3"
