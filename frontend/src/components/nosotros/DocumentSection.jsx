@@ -12,11 +12,17 @@ const DocumentSection = ({ titulo, documentos }) => (
       </h3>
     </div>
     <div className="h-px bg-unmsm-line mb-4" />
-    <div className="grid sm:grid-cols-2 gap-4">
-      {documentos.map((doc) => (
-        <DocumentCard key={doc.titulo} {...doc} />
-      ))}
-    </div>
+    {documentos.length > 0 ? (
+      <div className="grid sm:grid-cols-2 gap-4">
+        {documentos.map((doc) => (
+          <DocumentCard key={doc.titulo} {...doc} />
+        ))}
+      </div>
+    ) : (
+      <p className="text-unmsm-muted text-sm italic">
+        Aún no hay documentos publicados en esta categoría.
+      </p>
+    )}
   </section>
 );
 

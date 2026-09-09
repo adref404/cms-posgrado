@@ -54,6 +54,10 @@ export const documentosRecursos = [
     ],
   },
   {
+    titulo: "Estatuto",
+    documentos: [],
+  },
+  {
     titulo: "Reglamentos",
     documentos: [
       {
@@ -112,45 +116,8 @@ export const documentosRecursos = [
     ],
   },
   {
-    titulo: "Horarios",
-    documentos: [
-      {
-        titulo: "Programación de EACE 2026-1",
-        descripcion: "HORARIOS",
-        tipo: "docx",
-        url: "https://docs.google.com/document/d/1MiRiUUrEim-Xy60repbpIZ9_QcCAPSFi/edit?usp=drive_link&ouid=106052797955184247109&rtpof=true&sd=true",
-      },
-      {
-        titulo: "Progrmación Didáctica de la Matemática 2026-1",
-        descripcion: "HORARIOS",
-        tipo: "docx",
-        url: "https://docs.google.com/document/d/1oSqE2g5htnl71rO1Mevcr-nYTOwqNxen/edit?usp=drive_link&ouid=106052797955184247109&rtpof=true&sd=true",
-      },
-      {
-        titulo: "Programación de Didáctica de la Comunicación 2026-1",
-        descripcion: "HORARIOS",
-        tipo: "docx",
-        url: "https://docs.google.com/document/d/1jTAR0AHpE6Zfu0YEmikHM5aNsxGpPq29/edit?usp=drive_link&ouid=106052797955184247109&rtpof=true&sd=true",
-      },
-      {
-        titulo: "Programación Doctorado 2026-1",
-        descripcion: "HORARIOS",
-        tipo: "docx",
-        url: "https://docs.google.com/document/d/1GzXabKW4Xa0goV10CTsCEBDwJl-4I1ho/edit?usp=drive_link&ouid=106052797955184247109&rtpof=true&sd=true",
-      },
-      {
-        titulo: "Programación Gestión de la Educación 2026-1",
-        descripcion: "HORARIOS",
-        tipo: "docx",
-        url: "https://docs.google.com/document/d/1qMVFhf4E5Scjz3de755m33PvhgAzC7nE/edit?usp=drive_link&ouid=106052797955184247109&rtpof=true&sd=true",
-      },
-      {
-        titulo: "Programación 2026-1 - Docencia Universitaria",
-        descripcion: "HORARIOS",
-        tipo: "docx",
-        url: "https://docs.google.com/document/d/1whPkYcFXzVbPBW7GSa3nuXU0Vt4CPSzx/edit?usp=drive_link&ouid=106052797955184247109&rtpof=true&sd=true",
-      },
-    ],
+    titulo: "Lineamientos",
+    documentos: [],
   },
   {
     titulo: "Cronograma de Actividades Académicas",
