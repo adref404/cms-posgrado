@@ -60,6 +60,6 @@ export const faqInformacionAcademica = [
     categoria: "Documentos",
     pregunta: "¿Dónde encuentro reglamentos, directivas y otros documentos oficiales?",
     respuesta:
-      "En Nosotros → Transparencia, organizados por categoría (Plataformas y Trámites, Estatuto, Reglamentos, Directivas, Lineamientos).",
+      "En Nosotros → Transparencia, organizados por categoría (Plataformas y Trámites, Estatuto, Reglamentos, Directivas, Líneas de Investigación).",
   },
 ];

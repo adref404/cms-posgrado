@@ -20,7 +20,20 @@ import {
   MdCardMembership,
   MdSearch,
 } from "react-icons/md";
+import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import universidadLogo from "../../assets/UNMSM - Logo UPG 2024 04.png";
+
+// Redes sociales de la Facultad — se muestran en los tres estados del
+// header (ver RedesSociales más abajo), cada uno con su propia ubicación.
+const REDES_SOCIALES = [
+  { href: "https://www.facebook.com/share/1DiGFuGDXL/", label: "Facebook", icon: FaFacebook },
+  {
+    href: "https://www.instagram.com/posgradoeducacion.unmsm?stkn=aDJ2YnBwdzM2dXlk",
+    label: "Instagram",
+    icon: FaInstagram,
+  },
+  { href: "https://youtube.com/@posgradoeducacionunmsm?si=rEcqbJf5KBPWu4au", label: "YouTube", icon: FaYoutube },
+];
 
 // Prefijos de ruta por grupo del menú, para resaltar la sección activa.
 const RUTAS_ACTIVAS = {
@@ -227,6 +240,27 @@ function SearchForm({ value, onChange, onSubmit, className = "", inputClassName 
   );
 }
 
+// Íconos de redes sociales, reutilizados en los tres estados del header
+// (cada uno los ubica en un lugar distinto, ver comentarios más abajo).
+function RedesSociales({ className = "", iconClassName = "text-lg" }) {
+  return (
+    <div className={`flex items-center gap-3 ${className}`}>
+      {REDES_SOCIALES.map(({ href, label, icon: Icon }) => (
+        <a
+          key={label}
+          href={href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={label}
+          className="text-white/70 hover:text-white transition-colors"
+        >
+          <Icon className={iconClassName} />
+        </a>
+      ))}
+    </div>
+  );
+}
+
 function Header() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
@@ -410,13 +444,16 @@ function Header() {
                 <span className="text-[11px] font-serif font-bold uppercase text-white/80">Educación</span>
               </div>
             </Link>
-            <SearchForm
-              value={busqueda}
-              onChange={(e) => setBusqueda(e.target.value)}
-              onSubmit={buscarEnSitio}
-              className="w-56 lg:w-64 flex-shrink-0"
-              inputClassName="w-full pl-8 pr-3 py-1.5 text-xs"
-            />
+            <div className="flex items-center gap-4 flex-shrink-0">
+              <SearchForm
+                value={busqueda}
+                onChange={(e) => setBusqueda(e.target.value)}
+                onSubmit={buscarEnSitio}
+                className="w-56 lg:w-64 flex-shrink-0"
+                inputClassName="w-full pl-8 pr-3 py-1.5 text-xs"
+              />
+              <RedesSociales iconClassName="text-base" />
+            </div>
           </div>
           <nav className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1.5 lg:gap-x-6 px-2 py-2.5 select-none font-bold text-sm">
             <Link to="/home" className={inicioLinkClass(pathname === "/home")}>
@@ -450,7 +487,9 @@ function Header() {
             reales (1366px+); en el límite exacto de 1280px se queda
             modesto porque ahí de verdad no hay más espacio que ceder. */}
         <div className="hidden xl:grid grid-cols-[1fr_auto_1fr] items-center max-w-[96rem] mx-auto px-4 py-4 gap-4">
-          <div />
+          <div className="flex justify-start min-w-0">
+            <RedesSociales />
+          </div>
 
           <nav className="flex items-center gap-5 select-none font-bold">
             <div className="flex gap-5 items-center">
@@ -555,6 +594,10 @@ function Header() {
               onItemClick={() => setMenuOpen(false)}
             />
           ))}
+
+          <div className="mt-auto pt-4 border-t border-white/10 flex justify-center">
+            <RedesSociales iconClassName="text-2xl" className="gap-6" />
+          </div>
         </div>
       </div>
     </>

@@ -55,7 +55,14 @@ export const documentosRecursos = [
   },
   {
     titulo: "Estatuto",
-    documentos: [],
+    documentos: [
+      {
+        titulo: "Estatuto de la Universidad Nacional Mayor de San Marcos",
+        descripcion: "De conformidad con la Ley N.° 30220 — Junio 2016",
+        tipo: "pdf",
+        url: "https://cdn.www.gob.pe/uploads/document/file/8553620/7084905-rr-n-03013-estatuto-de-la-unmsm.pdf?v=1756242339",
+      },
+    ],
   },
   {
     titulo: "Reglamentos",
@@ -116,8 +123,15 @@ export const documentosRecursos = [
     ],
   },
   {
-    titulo: "Lineamientos",
-    documentos: [],
+    titulo: "Líneas de Investigación",
+    documentos: [
+      {
+        titulo: "Líneas de Investigación",
+        descripcion: "LÍNEAS DE INVESTIGACIÓN",
+        tipo: "pdf",
+        url: "https://drive.google.com/file/d/1Z2GgYFV6JbZAhhYLjt_tL1kJp8SUHaKK/view?usp=drive_link",
+      },
+    ],
   },
   {
     titulo: "Cronograma de Actividades Académicas",

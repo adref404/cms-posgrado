@@ -254,10 +254,16 @@ function AcademicHeroCarousel() {
         }
 
         .content-container {
-          min-height: 400px;
+          min-height: 260px;
           display: flex;
           flex-direction: column;
           justify-content: center;
+        }
+
+        @media (min-width: 640px) {
+          .content-container {
+            min-height: 400px;
+          }
         }
 
         .slide-transition {
@@ -267,11 +273,27 @@ function AcademicHeroCarousel() {
         .background-transition {
           transition: opacity 0.8s ease-in-out;
         }
+
+        /* En celular el contenido ya no tiene un h-screen completo de sobra
+           (se reparte con HeroStatsBar), así que el centrado vertical puede
+           acercar el título al header fijo. Reservamos el espacio real que
+           ocupan el header + el aviso destacado (su alto es variable: el
+           aviso puede envolver a 1, 2 o 3 líneas según el mensaje) para que
+           nunca se superpongan, sin tocar el diseño de escritorio. */
+        .hero-safe-top {
+          padding-top: 0;
+        }
+
+        @media (max-width: 640px) {
+          .hero-safe-top {
+            padding-top: calc(100px + var(--aviso-bar-height, 0px));
+          }
+        }
       `}</style>
 
       {/* Hero Section Principal */}
       <div
-        className="relative min-h-screen overflow-hidden select-none"
+        className="relative h-full overflow-hidden select-none"
         onTouchStart={onTouchStart}
         onTouchMove={onTouchMove}
         onTouchEnd={onTouchEnd}
@@ -330,7 +352,12 @@ function AcademicHeroCarousel() {
         </div>
 
         {/* Contenido principal */}
-        <div className="relative z-10 flex items-center min-h-screen">
+        {/* hero-safe-top va en ESTE contenedor (el que centra verticalmente,
+            no en su hijo): el padding-top aquí desplaza hacia abajo el área
+            completa de centrado, así el título nunca puede terminar más
+            arriba que el padding aunque "items-center" reparta el resto del
+            espacio libre por igual arriba y abajo. */}
+        <div className="hero-safe-top relative z-10 flex items-center h-full">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
             <div className="grid lg:grid-cols-2 gap-12 items-center">
               {/* Lado izquierdo - Espacio para imagen/contenido visual */}
