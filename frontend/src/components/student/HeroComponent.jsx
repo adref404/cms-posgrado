@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
+import maestriaBackground from "../../assets/background.webp";
 
 // Datos del carrusel con diferentes slides académicos
 const heroSlides = [
@@ -22,8 +23,7 @@ const heroSlides = [
     subtitle: "Maestría",
     description:
       "Impulsa tu carrera docente con nuestros programas de maestría profesional en nuestros distintos campos de la educación.",
-    backgroundImage:
-      "https://posgradoeducacion.unmsm.edu.pe/assets/facultad-educacion.jpg",
+    backgroundImage: maestriaBackground,
     accent: "Maestría",
     buttonText: "Conoce Más",
     // aqui se redirigijira a la vista de progrmas de maestria, que es la misma vista de programas pero con un filtro de tipo de programa
