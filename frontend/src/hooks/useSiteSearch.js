@@ -1,17 +1,20 @@
 import { useMemo } from "react";
 import { useSupabaseCollection } from "./useSupabaseCollection";
+import { usePlanaDocente } from "./usePlanaDocente";
 import { searchIndexEstatico } from "../data/searchIndex";
 import { normalizeText } from "../utils/normalizeText";
 
-// Combina el índice estático (páginas, programas, FAQ, docentes) con el
-// contenido en vivo de Supabase (Noticias/Eventos/Comunicados) y filtra por
-// palabra clave — sin tildes/mayúsculas, y busca en título + descripción +
-// sección, para que "matricula" encuentre "Matrícula" y también cosas cuya
-// sección es "Matrícula" aunque la palabra no esté en el título.
+// Combina el índice estático (páginas, programas, FAQ) con el contenido en
+// vivo de Supabase (Noticias/Eventos/Comunicados/Plana Docente) y filtra
+// por palabra clave — sin tildes/mayúsculas, y busca en título +
+// descripción + sección, para que "matricula" encuentre "Matrícula" y
+// también cosas cuya sección es "Matrícula" aunque la palabra no esté en
+// el título.
 export const useSiteSearch = (query) => {
   const { data: noticias } = useSupabaseCollection("noticias");
   const { data: eventos } = useSupabaseCollection("eventos");
   const { data: comunicados } = useSupabaseCollection("comunicados");
+  const { docentes } = usePlanaDocente();
 
   const indiceCompleto = useMemo(() => {
     const dinamico = [
@@ -33,9 +36,15 @@ export const useSiteSearch = (query) => {
         ruta: `/comunicados/${c.id}`,
         seccion: "Comunicados",
       })),
+      ...docentes.map((d) => ({
+        titulo: `${d.nombres} ${d.apellidos}`,
+        descripcion: [d.grado, d.categoria].filter(Boolean).join(" · "),
+        ruta: "/informacion-academica/docentes",
+        seccion: "Plana Docente",
+      })),
     ];
     return [...searchIndexEstatico, ...dinamico];
-  }, [noticias, eventos, comunicados]);
+  }, [noticias, eventos, comunicados, docentes]);
 
   const resultados = useMemo(() => {
     const term = normalizeText(query);

@@ -2,13 +2,19 @@ import { useMemo, useState } from "react";
 import { MdSearch, MdSchool, MdExpandMore } from "react-icons/md";
 import PageHero from "../../../components/ui/PageHero";
 import DocenteCard from "../../../components/informacionAcademica/DocenteCard";
-import { planaDocente } from "../../../data/planaDocente";
-import { programasFiltro, clavesPorDocente, getClaveDocente } from "../../../data/docentesPorPrograma";
+import { usePlanaDocente } from "../../../hooks/usePlanaDocente";
+import { construirFiltroProgramas, getClaveDocente } from "../../../data/docentesPorPrograma";
 import { NOSOTROS_HERO_IMAGE } from "../../../utils/constants";
 
 const PlanaDocentePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedPrograma, setSelectedPrograma] = useState("");
+  const { docentes: planaDocente, loading } = usePlanaDocente();
+
+  const { programasFiltro, clavesPorDocente } = useMemo(
+    () => construirFiltroProgramas(planaDocente),
+    [planaDocente]
+  );
 
   const filtered = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
@@ -32,7 +38,7 @@ const PlanaDocentePage = () => {
         .filter(Boolean)
         .some((field) => field.toLowerCase().includes(term));
     });
-  }, [searchTerm, selectedPrograma]);
+  }, [searchTerm, selectedPrograma, planaDocente, clavesPorDocente]);
 
   return (
     <div className="min-h-screen bg-unmsm-bg">
@@ -121,7 +127,9 @@ const PlanaDocentePage = () => {
               {filtered.length} {filtered.length === 1 ? "docente" : "docentes"}
             </p>
 
-            {filtered.length > 0 ? (
+            {loading ? (
+              <p className="text-center text-unmsm-muted py-12">Cargando docentes...</p>
+            ) : filtered.length > 0 ? (
               <div className="grid sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4 gap-5">
                 {filtered.map((docente) => (
                   <DocenteCard key={getClaveDocente(docente)} {...docente} />

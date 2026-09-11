@@ -1,10 +1,9 @@
 import programasPosgrado from "./programas";
 import { faqInformacionAcademica } from "./faqInformacionAcademica";
-import { planaDocente } from "./planaDocente";
 
 // Índice de búsqueda del sitio — todo lo que NO cambia en vivo (páginas
-// fijas, programas, preguntas frecuentes, docentes). El contenido que sí
-// cambia en vivo (Noticias/Eventos/Comunicados) se agrega aparte en
+// fijas, programas, preguntas frecuentes). El contenido que sí cambia en
+// vivo (Noticias/Eventos/Comunicados/Plana Docente) se agrega aparte en
 // hooks/useSiteSearch.js, trayéndolo de Supabase.
 //
 // Cada entrada: { titulo, descripcion, ruta, seccion }. "seccion" es la
@@ -49,16 +48,8 @@ const FAQ_INDEX = faqInformacionAcademica.map((f) => ({
   seccion: `Preguntas Frecuentes · ${f.categoria}`,
 }));
 
-const DOCENTES_INDEX = planaDocente.map((d) => ({
-  titulo: `${d.nombres} ${d.apellidos}`,
-  descripcion: [d.grado, d.categoria].filter(Boolean).join(" · "),
-  ruta: "/informacion-academica/docentes",
-  seccion: "Plana Docente",
-}));
-
 export const searchIndexEstatico = [
   ...PAGINAS,
   ...PROGRAMAS_INDEX,
   ...FAQ_INDEX,
-  ...DOCENTES_INDEX,
 ];

@@ -2,11 +2,12 @@ import { useMemo, useState } from "react";
 import { MdSearch } from "react-icons/md";
 import PageHero from "../../../components/ui/PageHero";
 import DocumentSection from "../../../components/nosotros/DocumentSection";
-import { documentosRecursos } from "../../../data/documentosRecursos";
+import { useTransparencia } from "../../../hooks/useTransparencia";
 import { NOSOTROS_HERO_IMAGE } from "../../../utils/constants";
 
 const DocumentosRecursosPage = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const { secciones: documentosRecursos, loading } = useTransparencia();
 
   const filteredSections = useMemo(() => {
     const term = searchTerm.trim().toLowerCase();
@@ -22,7 +23,7 @@ const DocumentosRecursosPage = () => {
         ),
       }))
       .filter((seccion) => seccion.documentos.length > 0);
-  }, [searchTerm]);
+  }, [searchTerm, documentosRecursos]);
 
   return (
     <div className="min-h-screen bg-unmsm-bg">
@@ -47,7 +48,9 @@ const DocumentosRecursosPage = () => {
           />
         </div>
 
-        {filteredSections.length > 0 ? (
+        {loading ? (
+          <p className="text-center text-unmsm-muted py-12">Cargando documentos...</p>
+        ) : filteredSections.length > 0 ? (
           filteredSections.map((seccion) => (
             <DocumentSection
               key={seccion.titulo}
@@ -57,7 +60,9 @@ const DocumentosRecursosPage = () => {
           ))
         ) : (
           <p className="text-center text-unmsm-muted py-12">
-            No se encontraron documentos para "{searchTerm}"
+            {searchTerm
+              ? `No se encontraron documentos para "${searchTerm}"`
+              : "Todavía no hay documentos publicados."}
           </p>
         )}
       </div>

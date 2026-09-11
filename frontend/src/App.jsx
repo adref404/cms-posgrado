@@ -17,6 +17,8 @@ const AdminLoginPage = lazy(() => import('./pages/admin/AdminLoginPage'));
 const AdminHomePage = lazy(() => import('./pages/admin/AdminHomePage'));
 const AdminNovedadesPage = lazy(() => import('./pages/admin/AdminNovedadesPage'));
 const AdminCronogramaPage = lazy(() => import('./pages/admin/AdminCronogramaPage'));
+const AdminTransparenciaPage = lazy(() => import('./pages/admin/AdminTransparenciaPage'));
+const AdminPlanaDocentePage = lazy(() => import('./pages/admin/AdminPlanaDocentePage'));
 
 import QuienesSomosPage from './pages/student/nosotros/QuienesSomosPage';
 import DirectorioFEPage from './pages/student/nosotros/DirectorioFEPage';
@@ -85,6 +87,26 @@ function App() {
             <ProtectedRoute>
               <Suspense fallback={null}>
                 <AdminCronogramaPage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/transparencia"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={null}>
+                <AdminTransparenciaPage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/plana-docente"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={null}>
+                <AdminPlanaDocentePage />
               </Suspense>
             </ProtectedRoute>
           }

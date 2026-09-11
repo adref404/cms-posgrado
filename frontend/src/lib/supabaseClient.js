@@ -16,3 +16,11 @@ export const supabase = createClient(supabaseUrl, supabaseAnonKey);
 
 // Bucket público donde se guardan las fotos que sube el admin desde el panel.
 export const BUCKET_NOVEDADES = "novedades-imagenes";
+
+// Bucket público donde se guardan los PDF que el admin sube desde el panel
+// de Transparencia (además de poder simplemente pegar un link externo).
+export const BUCKET_TRANSPARENCIA = "transparencia-archivos";
+
+// Bucket público donde se guardan los CV/biodata que el admin suba desde el
+// panel de Plana Docente (además de poder simplemente pegar un link externo).
+export const BUCKET_PLANA_DOCENTE = "plana-docente-archivos";

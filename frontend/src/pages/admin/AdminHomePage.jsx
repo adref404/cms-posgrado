@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MdArticle, MdEvent, MdCampaign, MdSchedule, MdArrowForward } from "react-icons/md";
+import { MdArticle, MdEvent, MdCampaign, MdSchedule, MdGavel, MdGroups, MdArrowForward } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
 
 const SECCIONES = [
@@ -26,6 +26,18 @@ const SECCIONES = [
     icon: MdSchedule,
     titulo: "Cronograma",
     descripcion: "Edita las fechas de Admisión y del Cronograma Académico.",
+  },
+  {
+    to: "/admin/transparencia",
+    icon: MdGavel,
+    titulo: "Transparencia",
+    descripcion: "Sube, edita o quita los documentos y enlaces de Transparencia.",
+  },
+  {
+    to: "/admin/plana-docente",
+    icon: MdGroups,
+    titulo: "Plana Docente",
+    descripcion: "Agrega, edita o quita docentes investigadores.",
   },
 ];
 

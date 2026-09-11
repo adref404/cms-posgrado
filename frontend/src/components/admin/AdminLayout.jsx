@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
-import { MdLogout, MdArticle, MdEvent, MdCampaign, MdDashboard, MdSchedule } from "react-icons/md";
+import { MdLogout, MdArticle, MdEvent, MdCampaign, MdDashboard, MdSchedule, MdGavel, MdGroups } from "react-icons/md";
 import { useAuth } from "../../context/AuthContext";
 
 const NAV = [
@@ -8,6 +8,8 @@ const NAV = [
   { to: "/admin/eventos", label: "Eventos", icon: MdEvent },
   { to: "/admin/comunicados", label: "Comunicados", icon: MdCampaign },
   { to: "/admin/cronograma", label: "Cronograma", icon: MdSchedule },
+  { to: "/admin/transparencia", label: "Transparencia", icon: MdGavel },
+  { to: "/admin/plana-docente", label: "Plana Docente", icon: MdGroups },
 ];
 
 // Shell propio del panel de administración — a propósito NO usa el
