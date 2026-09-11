@@ -134,6 +134,17 @@ export const documentosRecursos = [
     ],
   },
   {
+    titulo: "Estadística: Número de postulantes, ingresantes, matriculados y egresados.",
+    documentos: [
+      {
+        titulo: "Informe Estadístico de Posgrado",
+        descripcion: "INFORME ESTADÍSTICO",
+        tipo: "pdf",
+        url: "https://drive.google.com/file/d/14l8_5KJzvZfKeX5eeROmPhGnw78g8cpJ/view?usp=drive_link",
+      },
+    ],
+  },
+  {
     titulo: "Cronograma de Actividades Académicas",
     documentos: [
       {

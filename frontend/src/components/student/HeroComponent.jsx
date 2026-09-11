@@ -461,67 +461,59 @@ function AcademicHeroCarousel() {
           </div>
         </div>
 
-        {/* Controles del carrusel */}
-        <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 z-20">
-          <div className="flex items-center space-x-6">
-            {/* Botón anterior - Solo desktop */}
-            <button
-              onClick={prevSlide}
-              disabled={isTransitioning}
-              className="hidden sm:block p-3 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M15 19l-7-7 7-7"
-                />
-              </svg>
-            </button>
+        {/* Flecha anterior — sin círculo, invisible en reposo; aparece
+            deslizándose desde el borde solo al acercar el cursor (desktop).
+            La zona clicable es ancha a propósito, para que "sentir cerca"
+            el borde ya la revele, no haga falta apuntar justo al ícono. */}
+        <button
+          onClick={prevSlide}
+          disabled={isTransitioning}
+          aria-label="Diapositiva anterior"
+          className="group/arrow hidden sm:flex absolute left-0 top-1/2 -translate-y-1/2 z-20 h-28 md:h-36 w-16 md:w-24 items-center justify-start pl-3 md:pl-6 cursor-pointer disabled:cursor-not-allowed"
+        >
+          <svg
+            className="w-7 h-7 md:w-8 md:h-8 text-white opacity-0 -translate-x-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] transition-all duration-300 ease-out group-hover/arrow:opacity-90 group-hover/arrow:translate-x-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
+          </svg>
+        </button>
 
-            {/* Indicadores de puntos */}
-            <div className="flex space-x-3">
-              {heroSlides.map((_, index) => (
-                <button
-                  key={index}
-                  onClick={() => goToSlide(index)}
-                  disabled={isTransitioning}
-                  className={`w-3 h-3 rounded-full transition-all duration-300 disabled:cursor-not-allowed ${
-                    index === currentSlide
-                      ? "bg-white scale-125"
-                      : "bg-white/50 hover:bg-white/75"
-                  }`}
-                />
-              ))}
-            </div>
+        {/* Flecha siguiente — misma idea, espejada en el borde derecho. */}
+        <button
+          onClick={nextSlide}
+          disabled={isTransitioning}
+          aria-label="Siguiente diapositiva"
+          className="group/arrow hidden sm:flex absolute right-0 top-1/2 -translate-y-1/2 z-20 h-28 md:h-36 w-16 md:w-24 items-center justify-end pr-3 md:pr-6 cursor-pointer disabled:cursor-not-allowed"
+        >
+          <svg
+            className="w-7 h-7 md:w-8 md:h-8 text-white opacity-0 translate-x-3 drop-shadow-[0_2px_8px_rgba(0,0,0,0.7)] transition-all duration-300 ease-out group-hover/arrow:opacity-90 group-hover/arrow:translate-x-0"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
+          </svg>
+        </button>
 
-            {/* Botón siguiente - Solo desktop */}
-            <button
-              onClick={nextSlide}
-              disabled={isTransitioning}
-              className="hidden sm:block p-3 rounded-full bg-white/10 backdrop-blur-md text-white hover:bg-white/20 transition-all duration-300 hover:scale-110 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
-            >
-              <svg
-                className="w-5 h-5"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M9 5l7 7-7 7"
-                />
-              </svg>
-            </button>
-
+        {/* Controles del carrusel: play/pause + contador "01 / 04" + puntos.
+            bottom-* los deja siempre POR ENCIMA de la tarjeta de cifras
+            (HeroStatsBar, pegada a bottom-0), sin importar el tamaño de
+            pantalla — nunca se tapan entre sí. */}
+        <div className="absolute bottom-24 sm:bottom-28 lg:bottom-32 left-1/2 transform -translate-x-1/2 z-30">
+          <div className="flex items-center space-x-4">
             {/* Botón play/pause - Solo en desktop */}
             <button
               onClick={() => setIsPlaying(!isPlaying)}
@@ -557,6 +549,27 @@ function AcademicHeroCarousel() {
                 </svg>
               )}
             </button>
+
+            {/* Contador de diapositiva - Solo en desktop */}
+            <span className="hidden sm:inline-block text-white/70 text-xs font-mono tracking-widest tabular-nums select-none">
+              {String(currentSlide + 1).padStart(2, "0")} / {String(heroSlides.length).padStart(2, "0")}
+            </span>
+
+            {/* Indicadores de puntos */}
+            <div className="flex space-x-3">
+              {heroSlides.map((_, index) => (
+                <button
+                  key={index}
+                  onClick={() => goToSlide(index)}
+                  disabled={isTransitioning}
+                  className={`w-3 h-3 rounded-full transition-all duration-300 disabled:cursor-not-allowed ${
+                    index === currentSlide
+                      ? "bg-white scale-125"
+                      : "bg-white/50 hover:bg-white/75"
+                  }`}
+                />
+              ))}
+            </div>
           </div>
         </div>
 

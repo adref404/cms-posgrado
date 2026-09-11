@@ -1,57 +1,76 @@
+import { useNavigate } from "react-router-dom";
 import { MdMenuBook, MdWorkspacePremium, MdCardMembership, MdStar, MdGroups } from "react-icons/md";
 
-// Cifras institucionales, justo debajo del Hero. A propósito es una
-// sección aparte (no vive dentro del carrusel de arriba): el Hero ya tiene
-// sus propios controles (flechas, puntos, play/pause) anclados abajo — si
-// esta franja fuera parte del mismo bloque, en pantallas chicas terminaría
-// peleando por el mismo espacio. Al ser una sección independiente, nunca
-// puede superponerse ni romper esos controles, sin importar el tamaño de
-// pantalla.
+// Cifras institucionales, flotando ENCIMA del Hero (overlay con
+// position:absolute + z-index), no como una sección aparte debajo de él.
+// El Hero (HomeStudent.jsx lo envuelve en "relative h-screen") ocupa
+// siempre la pantalla completa; esta tarjeta se dibuja por encima, pegada
+// al borde inferior de la vista (bottom-0), con márgenes a los costados en
+// todas las resoluciones (nunca ancho completo). Solo las esquinas
+// superiores tienen curva — las inferiores quedan rectas porque la tarjeta
+// está "saliendo" desde abajo del borde de la pantalla, no flotando
+// separada de él.
 //
-// En HomeStudent.jsx esta franja vive junto al Hero dentro de un
-// contenedor "h-screen flex flex-col": el Hero toma flex-1 (se encoge a lo
-// que sobre) y esta franja conserva su alto natural, así ambos caben
-// siempre en una sola vista sin necesidad de hacer scroll.
+// Los controles propios del Hero (flechas, play/pause, contador y puntos)
+// se reubican más arriba (ver bottom-* en HeroComponent.jsx) para quedar
+// siempre POR ENCIMA de esta tarjeta, nunca tapados por ella.
+//
+// Las 5 métricas van siempre en una sola fila (grid-cols-5 fijo, nunca 2 o
+// 3): en pantallas chicas cada columna se angosta y el contenido se hace
+// más compacto (ícono más chico, sin el detalle), pero nunca se acomodan
+// en filas nuevas.
+//
+// Cada métrica (salvo Estudiantes, que no tiene una vista propia porque no
+// hay base de datos de estudiantes) navega a su sección correspondiente.
 const STATS = [
-  { icono: MdMenuBook, valor: "5", etiqueta: "Maestrías" },
-  { icono: MdWorkspacePremium, valor: "1", etiqueta: "Doctorado" },
-  { icono: MdCardMembership, valor: "3", etiqueta: "Diplomados" },
-  { icono: MdStar, valor: "50+", etiqueta: "Docentes Renacyt" },
-  { icono: MdGroups, valor: "500+", etiqueta: "Estudiantes" },
+  { icono: MdMenuBook, valor: "5", etiqueta: "Maestrías", detalle: "Especializadas", url: "/programas/maestria" },
+  { icono: MdWorkspacePremium, valor: "1", etiqueta: "Doctorado", detalle: "Máximo grado", url: "/programas/detalle/6" },
+  { icono: MdCardMembership, valor: "3", etiqueta: "Diplomados", detalle: "Alta especialización", url: "/programas/diplomado" },
+  { icono: MdStar, valor: "50+", etiqueta: "Docentes Renacyt", detalle: "Investigadores", url: "/informacion-academica/docentes" },
+  { icono: MdGroups, valor: "500+", etiqueta: "Estudiantes", detalle: "Comunidad activa", url: null },
 ];
 
-const HeroStatsBar = () => (
-  <div className="relative overflow-hidden bg-gradient-to-br from-unmsm-navy-950 via-unmsm-navy to-unmsm-blue-900">
-    {/* Línea de borde superior con brillo, en vez de un borde plano */}
-    <div className="absolute top-0 inset-x-0 h-px bg-gradient-to-r from-transparent via-unmsm-blue-300/50 to-transparent" />
+const HeroStatsBar = () => {
+  const navigate = useNavigate();
 
-    {/* Manchas de color difuminadas: le dan profundidad y son lo que el
-        backdrop-blur de las tarjetas termina "leyendo" detrás, generando
-        el efecto de vidrio azulado. */}
-    <div className="pointer-events-none absolute -top-16 left-1/4 w-72 h-72 rounded-full bg-unmsm-blue-500/25 blur-3xl" />
-    <div className="pointer-events-none absolute -bottom-20 right-1/4 w-80 h-80 rounded-full bg-unmsm-mint-500/10 blur-3xl" />
+  return (
+    <div className="absolute inset-x-0 bottom-0 z-20 px-3 sm:px-8 md:px-14 lg:px-20 xl:px-28">
+      <div className="relative max-w-6xl mx-auto overflow-hidden rounded-t-2xl sm:rounded-t-3xl bg-gradient-to-br from-unmsm-navy-950 via-unmsm-navy to-unmsm-blue-900 shadow-[0_-14px_30px_-10px_rgba(0,0,0,0.55)] border border-b-0 border-white/10">
+        {/* Manchas de color difuminadas, para que la tarjeta no se vea plana */}
+        <div className="pointer-events-none absolute -top-16 left-1/4 w-72 h-72 rounded-full bg-unmsm-blue-500/25 blur-3xl" />
+        <div className="pointer-events-none absolute -bottom-20 right-1/4 w-80 h-80 rounded-full bg-unmsm-mint-500/10 blur-3xl" />
 
-    <div className="relative max-w-6xl mx-auto px-4 py-3 sm:py-7">
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-2 sm:gap-4">
-        {STATS.map(({ icono: Icono, valor, etiqueta }, index) => (
-          <div
-            key={etiqueta}
-            className={`group flex flex-col items-center text-center gap-1 sm:gap-2 rounded-xl sm:rounded-2xl border border-white/10 bg-white/5 backdrop-blur-xl px-2 py-2 sm:px-3 sm:py-4 shadow-lg shadow-black/10 transition-all duration-300 hover:bg-white/10 hover:border-white/20 ${
-              // El 5to ítem, solo en la fila mobile de a 2, se centra ocupando
-              // ambas columnas en vez de quedar solo pegado a la izquierda.
-              index === STATS.length - 1 ? "col-span-2 sm:col-span-1" : ""
-            }`}
-          >
-            <span className="flex items-center justify-center w-7 h-7 sm:w-10 sm:h-10 rounded-full bg-gradient-to-br from-unmsm-blue-400/30 to-unmsm-mint-400/20 ring-1 ring-white/20 backdrop-blur-sm transition-transform duration-300 group-hover:scale-110">
-              <Icono className="text-unmsm-mint-300 text-sm sm:text-lg" />
-            </span>
-            <span className="text-lg sm:text-2xl md:text-3xl font-bold text-white leading-none">{valor}</span>
-            <span className="text-white/60 text-[10px] sm:text-xs uppercase tracking-wide">{etiqueta}</span>
-          </div>
-        ))}
+        <div className="relative grid grid-cols-5 divide-x divide-white/10">
+          {STATS.map(({ icono: Icono, valor, etiqueta, detalle, url }) => {
+            // Mismo lineamiento de color para las 5 (ícono y hover en verde
+            // de marca) — solo cambia si la métrica es o no navegable.
+            const Tag = url ? "button" : "div";
+            return (
+              <Tag
+                key={etiqueta}
+                type={url ? "button" : undefined}
+                onClick={url ? () => navigate(url) : undefined}
+                className={`group flex flex-col sm:flex-row items-center sm:items-center justify-center sm:justify-start text-center sm:text-left gap-0.5 sm:gap-3 px-1 sm:px-3 lg:px-4 py-2.5 sm:py-4 lg:py-5 transition-colors duration-300 hover:bg-unmsm-green-500/10 ${
+                  url ? "cursor-pointer" : ""
+                }`}
+              >
+                <span className="flex-shrink-0 flex items-center justify-center w-6 h-6 sm:w-9 sm:h-9 lg:w-11 lg:h-11 rounded-md sm:rounded-xl bg-unmsm-green-500/15 text-unmsm-green-400 transition-transform duration-300 group-hover:scale-110">
+                  <Icono className="text-[11px] sm:text-base lg:text-lg" />
+                </span>
+                <div className="flex flex-col items-center sm:items-start leading-tight min-w-0">
+                  <span className="text-xs sm:text-lg lg:text-2xl font-bold text-white">{valor}</span>
+                  <span className="text-white/90 text-[6px] leading-[1.15] sm:text-[10px] lg:text-[11px] sm:leading-tight font-semibold uppercase tracking-tight sm:tracking-wide">
+                    {etiqueta}
+                  </span>
+                  <span className="hidden lg:block text-white/50 text-[11px] truncate">{detalle}</span>
+                </div>
+              </Tag>
+            );
+          })}
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 export default HeroStatsBar;
