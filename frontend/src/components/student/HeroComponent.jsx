@@ -551,9 +551,9 @@ function AcademicHeroCarousel() {
             </button>
 
             {/* Contador de diapositiva - Solo en desktop */}
-            <span className="hidden sm:inline-block text-white/70 text-xs font-mono tracking-widest tabular-nums select-none">
+            {/* <span className="hidden sm:inline-block text-white/70 text-xs font-mono tracking-widest tabular-nums select-none">
               {String(currentSlide + 1).padStart(2, "0")} / {String(heroSlides.length).padStart(2, "0")}
-            </span>
+            </span> */}
 
             {/* Indicadores de puntos */}
             <div className="flex space-x-3">

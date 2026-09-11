@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MdSchool, MdWorkspacePremium, MdArrowForward } from "react-icons/md";
+import { MdSchool, MdWorkspacePremium, MdArrowForward, MdReceiptLong } from "react-icons/md";
 import PageHero from "../../../components/ui/PageHero";
 import { MATRICULA_HERO_IMAGE } from "../../../utils/constants";
 
@@ -24,6 +24,12 @@ const TRAMITES = [
     icon: MdWorkspacePremium,
     titulo: "Grado de Doctor",
     descripcion: "Procesos, requisitos y solicitudes para optar el grado de Doctor.",
+  },
+  {
+    to: "/tramites/tupa",
+    icon: MdReceiptLong,
+    titulo: "TUPA · Tarifario Único de Pagos",
+    descripcion: "Tarifas oficiales de trámites y programas de Posgrado, pagadas a través de SAN MARKET.",
   },
 ];
 

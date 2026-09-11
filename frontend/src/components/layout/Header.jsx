@@ -19,6 +19,7 @@ import {
   MdWorkspacePremium,
   MdCardMembership,
   MdSearch,
+  MdReceiptLong,
 } from "react-icons/md";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import universidadLogo from "../../assets/UNMSM - Logo UPG 2024 04.png";
@@ -113,6 +114,7 @@ const NAV_GROUPS_DERECHA = [
       { to: "/tramites/maestria-1-anio", icon: MdSchool, label: "Grado de Magíster · 1 Año" },
       { to: "/tramites/maestria-2-anios", icon: MdSchool, label: "Grado de Magíster · 2 Años" },
       { to: "/tramites/doctorado", icon: MdWorkspacePremium, label: "Grado de Doctor" },
+      { to: "/tramites/tupa", icon: MdReceiptLong, label: "TUPA" },
     ],
   },
 ];

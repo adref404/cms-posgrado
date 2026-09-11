@@ -44,7 +44,7 @@ const NovedadesHomeSection = () => {
             Noticias, Eventos y Comunicados
           </h2>
           <p className="text-unmsm-muted text-base md:text-lg leading-relaxed">
-            Mantente al día con lo que pasa en la Facultad de Educación.
+            Mantente al día con lo que pasa en Posgrado de Educación.
           </p>
         </Reveal>
 

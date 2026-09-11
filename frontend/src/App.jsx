@@ -43,6 +43,7 @@ import TramitesLandingPage from './pages/student/tramites/TramitesLandingPage';
 import TramiteMaestria2AniosPage from './pages/student/tramites/TramiteMaestria2AniosPage';
 import TramiteDoctorPage from './pages/student/tramites/TramiteDoctorPage';
 import TramiteMaestria1AnioPage from './pages/student/tramites/TramiteMaestria1AnioPage';
+import TramiteTupaPage from './pages/student/tramites/TramiteTupaPage';
 
 import ProgramasPage from './pages/student/programas/ProgramasPage';
 import ProgramaDetallePage from './pages/student/programas/ProgramaDetallePage';
@@ -151,6 +152,7 @@ function App() {
           <Route path="/tramites/maestria-1-anio" element={<TramiteMaestria1AnioPage />} />
           <Route path="/tramites/maestria-2-anios" element={<TramiteMaestria2AniosPage />} />
           <Route path="/tramites/doctorado" element={<TramiteDoctorPage />} />
+          <Route path="/tramites/tupa" element={<TramiteTupaPage />} />
 
           {/* Otras secciones futuras... */}
         </Route>

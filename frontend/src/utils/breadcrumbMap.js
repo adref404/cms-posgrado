@@ -43,6 +43,7 @@ const BREADCRUMB_MAP = {
   "/tramites/maestria-1-anio": { seccion: "Trámites", seccionTo: "/tramites", subseccion: "Grado de Magíster · Maestría 1 Año" },
   "/tramites/maestria-2-anios": { seccion: "Trámites", seccionTo: "/tramites", subseccion: "Grado de Magíster · Maestría 2 Años" },
   "/tramites/doctorado": { seccion: "Trámites", seccionTo: "/tramites", subseccion: "Grado de Doctor" },
+  "/tramites/tupa": { seccion: "Trámites", seccionTo: "/tramites", subseccion: "TUPA · Tarifario Único de Pagos" },
 };
 
 // Rutas de detalle (/noticias/:id, etc.): heredan el breadcrumb de su lista

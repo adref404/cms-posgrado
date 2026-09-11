@@ -32,6 +32,7 @@ const PAGINAS = [
   { titulo: "Grado Académico de Doctor", descripcion: "Requisitos, pasos y formatos para el trámite de grado de Doctor.", ruta: "/tramites/doctorado", seccion: "Trámites" },
   { titulo: "Grado de Magíster · Maestría 1 Año", descripcion: "Requisitos, pasos y formatos para el trámite de grado de Magíster (maestría profesional de 1 año).", ruta: "/tramites/maestria-1-anio", seccion: "Trámites" },
   { titulo: "Grado de Magíster · Maestría 2 Años", descripcion: "Requisitos, pasos y formatos para el trámite de grado de Magíster (maestría de 2 años).", ruta: "/tramites/maestria-2-anios", seccion: "Trámites" },
+  { titulo: "TUPA · Tarifario Único de Pagos", descripcion: "Tarifas oficiales de trámites y programas de Posgrado, pagadas a través de SAN MARKET.", ruta: "/tramites/tupa", seccion: "Trámites" },
 ];
 
 const PROGRAMAS_INDEX = programasPosgrado.map((p) => ({
