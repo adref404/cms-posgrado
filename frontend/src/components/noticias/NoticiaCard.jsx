@@ -33,7 +33,7 @@ const NoticiaCard = ({ id, titulo, resumen, fecha, imagen, cuerpo, url }) => {
           {formatFechaCorta(fecha)}
         </span>
         <h4 className="font-bold text-unmsm-green mt-1 leading-snug">{titulo}</h4>
-        <p className="text-unmsm-muted text-sm mt-2 flex-1">{resumen}</p>
+        <p className="text-unmsm-muted text-sm mt-2 flex-1 line-clamp-3">{resumen}</p>
         {destino && (
           <span className="flex items-center gap-1 text-unmsm-green text-sm font-semibold mt-3 group-hover:gap-2 transition-all">
             Leer más <MdArrowForward className="text-base" />

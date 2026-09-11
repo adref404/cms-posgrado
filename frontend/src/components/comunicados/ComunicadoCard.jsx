@@ -34,7 +34,7 @@ const ComunicadoCard = ({ id, titulo, resumen, fecha, imagen, cuerpo, documento,
           )}
         </div>
         <p className="text-unmsm-muted text-xs mt-0.5">{formatFechaLarga(fecha)}</p>
-        <p className="text-unmsm-text text-sm mt-2">{resumen}</p>
+        <p className="text-unmsm-text text-sm mt-2 line-clamp-2">{resumen}</p>
 
         {destino &&
           (tieneDetalle ? (

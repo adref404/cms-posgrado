@@ -20,7 +20,7 @@ const EventoCard = ({ id, titulo, descripcion, fecha, hora, lugar, imagen, cuerp
 
       <div className="min-w-0 flex-1">
         <h4 className="font-bold text-unmsm-navy leading-snug">{titulo}</h4>
-        <p className="text-unmsm-muted text-sm mt-1">{descripcion}</p>
+        <p className="text-unmsm-muted text-sm mt-1 line-clamp-2">{descripcion}</p>
         <div className="flex flex-wrap gap-x-4 gap-y-1 mt-3 text-xs text-unmsm-muted">
           {hora && (
             <span className="flex items-center gap-1">
