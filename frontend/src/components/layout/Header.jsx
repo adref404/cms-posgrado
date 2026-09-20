@@ -20,6 +20,7 @@ import {
   MdCardMembership,
   MdSearch,
   MdReceiptLong,
+  MdScience,
 } from "react-icons/md";
 import { FaFacebook, FaInstagram, FaYoutube } from "react-icons/fa";
 import universidadLogo from "../../assets/UNMSM - Logo UPG 2024 04.png";
@@ -102,6 +103,7 @@ const NAV_GROUPS_DERECHA = [
     panelWidth: "w-64",
     items: [
       { to: "/informacion-academica/docentes", icon: MdPersonSearch, label: "Plana Docente" },
+      { to: "/informacion-academica/grupos-investigacion", icon: MdScience, label: "Grupos de Investigación" },
       { to: "/informacion-academica/plan-estudios", icon: MdLibraryBooks, label: "Plan de Estudios" },
       { to: "/informacion-academica/preguntas-frecuentes", icon: MdHelpOutline, label: "Preguntas Frecuentes" },
     ],

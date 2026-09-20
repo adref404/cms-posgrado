@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { MdArticle, MdEvent, MdCampaign, MdSchedule, MdGavel, MdGroups, MdArrowForward } from "react-icons/md";
+import { MdArticle, MdEvent, MdCampaign, MdSchedule, MdGavel, MdGroups, MdScience, MdArrowForward } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
 
 const SECCIONES = [
@@ -38,6 +38,12 @@ const SECCIONES = [
     icon: MdGroups,
     titulo: "Plana Docente",
     descripcion: "Agrega, edita o quita docentes investigadores.",
+  },
+  {
+    to: "/admin/grupos-investigacion",
+    icon: MdScience,
+    titulo: "Grupos de Investigación",
+    descripcion: "Crea grupos y gestiona sus docentes y estudiantes integrantes.",
   },
 ];
 

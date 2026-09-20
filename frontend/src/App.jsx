@@ -19,6 +19,8 @@ const AdminNovedadesPage = lazy(() => import('./pages/admin/AdminNovedadesPage')
 const AdminCronogramaPage = lazy(() => import('./pages/admin/AdminCronogramaPage'));
 const AdminTransparenciaPage = lazy(() => import('./pages/admin/AdminTransparenciaPage'));
 const AdminPlanaDocentePage = lazy(() => import('./pages/admin/AdminPlanaDocentePage'));
+const AdminGruposInvestigacionPage = lazy(() => import('./pages/admin/AdminGruposInvestigacionPage'));
+const AdminGrupoIntegrantesPage = lazy(() => import('./pages/admin/AdminGrupoIntegrantesPage'));
 
 import QuienesSomosPage from './pages/student/nosotros/QuienesSomosPage';
 import DirectorioFEPage from './pages/student/nosotros/DirectorioFEPage';
@@ -31,6 +33,8 @@ import ProcesoMatriculaPage from './pages/student/matricula/ProcesoMatriculaPage
 import HorarioCursosPage from './pages/student/matricula/HorarioCursosPage';
 
 import PlanaDocentePage from './pages/student/informacionAcademica/PlanaDocentePage';
+import GruposInvestigacionPage from './pages/student/informacionAcademica/GruposInvestigacionPage';
+import GrupoInvestigacionDetallePage from './pages/student/informacionAcademica/GrupoInvestigacionDetallePage';
 import PlanEstudiosPage from './pages/student/informacionAcademica/PlanEstudiosPage';
 import FAQInformacionAcademicaPage from './pages/student/informacionAcademica/PreguntasFrecuentesPage';
 
@@ -112,6 +116,26 @@ function App() {
           }
         />
         <Route
+          path="/admin/grupos-investigacion"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={null}>
+                <AdminGruposInvestigacionPage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/admin/grupos-investigacion/:grupoId/integrantes"
+          element={
+            <ProtectedRoute>
+              <Suspense fallback={null}>
+                <AdminGrupoIntegrantesPage />
+              </Suspense>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/admin/:tipo"
           element={
             <ProtectedRoute>
@@ -156,6 +180,8 @@ function App() {
 
           {/* 🎓 Información Académica */}
           <Route path="/informacion-academica/docentes" element={<PlanaDocentePage />} />
+          <Route path="/informacion-academica/grupos-investigacion" element={<GruposInvestigacionPage />} />
+          <Route path="/informacion-academica/grupos-investigacion/:id" element={<GrupoInvestigacionDetallePage />} />
           <Route path="/informacion-academica/plan-estudios" element={<PlanEstudiosPage />} />
           <Route path="/informacion-academica/preguntas-frecuentes" element={<FAQInformacionAcademicaPage />} />
 

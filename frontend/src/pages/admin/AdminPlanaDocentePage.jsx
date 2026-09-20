@@ -1,9 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
+import { Link } from "react-router-dom";
 import { MdAdd, MdEdit, MdDelete, MdClose, MdCheck, MdUploadFile, MdSearch } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { supabase, BUCKET_PLANA_DOCENTE } from "../../lib/supabaseClient";
 
 const TABLA = "plana_docente";
+const TABLA_INTEGRANTES = "grupo_investigacion_integrantes";
 
 const valorVacio = (siguienteOrden) => ({
   codigo: "",
@@ -13,7 +15,6 @@ const valorVacio = (siguienteOrden) => ({
   categoria: "",
   orcid: "",
   renacyt: "",
-  grupoInvestigacion: "",
   lineasInvestigacion: "", // en el formulario es texto (una línea por renglón); se separa al guardar
   biodata: "",
   orden: siguienteOrden,
@@ -30,7 +31,6 @@ const filaAValores = (fila) => ({
   categoria: fila.categoria || "",
   orcid: fila.orcid || "",
   renacyt: fila.renacyt || "",
-  grupoInvestigacion: fila.grupo_investigacion || "",
   lineasInvestigacion: (fila.lineas_investigacion || []).join("\n"),
   biodata: fila.biodata || "",
   orden: fila.orden,
@@ -40,20 +40,35 @@ const filaAValores = (fila) => ({
 // "¿en qué programa dicta este docente?" que se ve en la web pública se
 // sigue calculando aparte (data/docentesPorPrograma.js), no hace falta
 // tocarlo desde acá.
+//
+// Los grupos de investigación de un docente NO se guardan en esta tabla
+// (el viejo campo de texto suelto "grupo_investigacion" quedó obsoleto):
+// se leen y se escriben directo en grupo_investigacion_integrantes, la
+// misma tabla que usa /admin/grupos-investigacion/.../integrantes — es
+// una sola fuente de verdad, se puede enlazar desde cualquiera de los dos
+// lados. Elegir un grupo acá es opcional, igual que crear un docente sin
+// ninguno, o crear un grupo sin integrantes todavía.
 const AdminPlanaDocentePage = () => {
   const [filas, setFilas] = useState([]);
+  const [grupos, setGrupos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [busqueda, setBusqueda] = useState("");
   const [editando, setEditando] = useState(null); // null | "nuevo" | fila
   const [valores, setValores] = useState({});
+  const [gruposSeleccionados, setGruposSeleccionados] = useState([]);
+  const [gruposOriginales, setGruposOriginales] = useState([]);
   const [guardando, setGuardando] = useState(false);
   const [subiendoArchivo, setSubiendoArchivo] = useState(false);
   const [errorForm, setErrorForm] = useState("");
 
   const cargar = async () => {
     setCargando(true);
-    const { data } = await supabase.from(TABLA).select("*").order("orden", { ascending: true });
-    setFilas(data || []);
+    const [filasRes, gruposRes] = await Promise.all([
+      supabase.from(TABLA).select("*").order("orden", { ascending: true }),
+      supabase.from("grupos_investigacion").select("id, nombre, nombre_corto").order("nombre", { ascending: true }),
+    ]);
+    setFilas(filasRes.data || []);
+    setGrupos(gruposRes.data || []);
     setCargando(false);
   };
 
@@ -65,7 +80,7 @@ const AdminPlanaDocentePage = () => {
     const term = busqueda.trim().toLowerCase();
     if (!term) return filas;
     return filas.filter((f) =>
-      [f.nombres, f.apellidos, f.grado, f.categoria, f.grupo_investigacion]
+      [f.nombres, f.apellidos, f.grado, f.categoria]
         .filter(Boolean)
         .some((campo) => campo.toLowerCase().includes(term))
     );
@@ -73,22 +88,30 @@ const AdminPlanaDocentePage = () => {
 
   const gradosExistentes = useMemo(() => [...new Set(filas.map((f) => f.grado).filter(Boolean))], [filas]);
   const categoriasExistentes = useMemo(() => [...new Set(filas.map((f) => f.categoria).filter(Boolean))], [filas]);
-  const gruposExistentes = useMemo(
-    () => [...new Set(filas.map((f) => f.grupo_investigacion).filter(Boolean))],
-    [filas]
-  );
 
   const abrirNuevo = () => {
     const siguienteOrden = filas.length > 0 ? Math.max(...filas.map((f) => f.orden)) + 1 : 1;
     setValores(valorVacio(siguienteOrden));
+    setGruposSeleccionados([]);
+    setGruposOriginales([]);
     setErrorForm("");
     setEditando("nuevo");
   };
 
-  const abrirEditar = (fila) => {
+  const abrirEditar = async (fila) => {
     setValores(filaAValores(fila));
     setErrorForm("");
     setEditando(fila);
+    const { data } = await supabase.from(TABLA_INTEGRANTES).select("grupo_id").eq("docente_id", fila.id);
+    const idsActuales = (data || []).map((f) => f.grupo_id);
+    setGruposSeleccionados(idsActuales);
+    setGruposOriginales(idsActuales);
+  };
+
+  const toggleGrupo = (grupoId) => {
+    setGruposSeleccionados((prev) =>
+      prev.includes(grupoId) ? prev.filter((id) => id !== grupoId) : [...prev, grupoId]
+    );
   };
 
   const handleArchivoChange = async (e) => {
@@ -117,7 +140,6 @@ const AdminPlanaDocentePage = () => {
       categoria: valores.categoria.trim() || null,
       orcid: valores.orcid.trim() || null,
       renacyt: valores.renacyt.trim() || null,
-      grupo_investigacion: valores.grupoInvestigacion.trim() || null,
       lineas_investigacion: valores.lineasInvestigacion
         .split("\n")
         .map((l) => l.trim())
@@ -126,18 +148,59 @@ const AdminPlanaDocentePage = () => {
       orden: Number(valores.orden) || 0,
     };
 
+    let docenteId = editando === "nuevo" ? null : editando.id;
     let error;
+
     if (editando === "nuevo") {
-      ({ error } = await supabase.from(TABLA).insert(payload));
+      const resultado = await supabase.from(TABLA).insert(payload).select().single();
+      error = resultado.error;
+      docenteId = resultado.data?.id;
     } else {
-      ({ error } = await supabase.from(TABLA).update(payload).eq("id", editando.id));
+      ({ error } = await supabase.from(TABLA).update(payload).eq("id", docenteId));
     }
 
-    setGuardando(false);
     if (error) {
+      setGuardando(false);
       setErrorForm("No se pudo guardar. Intenta de nuevo.");
       return;
     }
+
+    // Sincroniza a qué grupos pertenece: quita los que se desmarcaron,
+    // agrega los nuevos (al final de la lista de integrantes de cada
+    // grupo), y si ya estaba enlazado a otros, les actualiza el nombre por
+    // si cambió — para que nunca queden desincronizados.
+    const paraQuitar = gruposOriginales.filter((id) => !gruposSeleccionados.includes(id));
+    const paraAgregar = gruposSeleccionados.filter((id) => !gruposOriginales.includes(id));
+
+    if (paraQuitar.length > 0) {
+      await supabase.from(TABLA_INTEGRANTES).delete().eq("docente_id", docenteId).in("grupo_id", paraQuitar);
+    }
+
+    for (const grupoId of paraAgregar) {
+      const { count } = await supabase
+        .from(TABLA_INTEGRANTES)
+        .select("id", { count: "exact", head: true })
+        .eq("grupo_id", grupoId);
+      await supabase.from(TABLA_INTEGRANTES).insert({
+        grupo_id: grupoId,
+        docente_id: docenteId,
+        nombres: payload.nombres,
+        apellidos: payload.apellidos,
+        vinculo_unmsm: "Docente permanente",
+        facultad: "Educación",
+        tipo_integrante: "Adherente",
+        orden: (count || 0) + 1,
+      });
+    }
+
+    if (editando !== "nuevo") {
+      await supabase
+        .from(TABLA_INTEGRANTES)
+        .update({ nombres: payload.nombres, apellidos: payload.apellidos })
+        .eq("docente_id", docenteId);
+    }
+
+    setGuardando(false);
     setEditando(null);
     cargar();
   };
@@ -273,20 +336,37 @@ const AdminPlanaDocentePage = () => {
 
           <div>
             <label className="block text-sm font-semibold text-unmsm-navy mb-1">
-              Grupo de investigación (opcional)
+              Grupos de investigación (opcional)
             </label>
-            <input
-              type="text"
-              list="grupos-docente"
-              value={valores.grupoInvestigacion || ""}
-              onChange={(e) => setValores((v) => ({ ...v, grupoInvestigacion: e.target.value }))}
-              className="w-full px-3 py-2 bg-unmsm-bg border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-unmsm-navy"
-            />
-            <datalist id="grupos-docente">
-              {gruposExistentes.map((g) => (
-                <option key={g} value={g} />
-              ))}
-            </datalist>
+            {grupos.length === 0 ? (
+              <p className="text-unmsm-muted text-xs">
+                Todavía no hay grupos de investigación creados. Puedes crearlos en{" "}
+                <Link to="/admin/grupos-investigacion" className="text-unmsm-blue font-semibold hover:underline">
+                  Grupos de Investigación
+                </Link>
+                .
+              </p>
+            ) : (
+              <div className="max-h-48 overflow-y-auto border border-gray-200 rounded-lg divide-y divide-gray-100">
+                {grupos.map((g) => (
+                  <label
+                    key={g.id}
+                    className="flex items-center gap-2 px-3 py-2 text-sm cursor-pointer hover:bg-unmsm-bg"
+                  >
+                    <input
+                      type="checkbox"
+                      checked={gruposSeleccionados.includes(g.id)}
+                      onChange={() => toggleGrupo(g.id)}
+                      className="w-4 h-4 accent-unmsm-green flex-shrink-0"
+                    />
+                    {g.nombre_corto ? `${g.nombre_corto} — ${g.nombre}` : g.nombre}
+                  </label>
+                ))}
+              </div>
+            )}
+            <p className="text-unmsm-muted text-xs mt-1">
+              Puedes marcar varios grupos, o ninguno — no es obligatorio pertenecer a uno.
+            </p>
           </div>
 
           <div>
@@ -364,7 +444,7 @@ const AdminPlanaDocentePage = () => {
             </div>
             <input
               type="text"
-              placeholder="Buscar por nombre, grado o grupo..."
+              placeholder="Buscar por nombre, grado o categoría..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
               className="block w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-unmsm-navy"

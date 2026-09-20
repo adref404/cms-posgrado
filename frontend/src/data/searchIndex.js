@@ -25,6 +25,7 @@ const PAGINAS = [
   { titulo: "Horario de Cursos", descripcion: "Horarios de cursos por ciclo y programa.", ruta: "/matricula/horario-cursos", seccion: "Matrícula" },
 
   { titulo: "Plana Docente", descripcion: "Docentes de los programas de posgrado.", ruta: "/informacion-academica/docentes", seccion: "Información Académica" },
+  { titulo: "Grupos de Investigación", descripcion: "Grupos de investigación registrados, con sus docentes y estudiantes integrantes.", ruta: "/informacion-academica/grupos-investigacion", seccion: "Información Académica" },
   { titulo: "Preguntas Frecuentes", descripcion: "Preguntas frecuentes sobre matrícula, horarios y pagos.", ruta: "/informacion-academica/preguntas-frecuentes", seccion: "Información Académica" },
 
   { titulo: "Trámites", descripcion: "Todos los trámites de grado académico.", ruta: "/tramites", seccion: "Trámites" },

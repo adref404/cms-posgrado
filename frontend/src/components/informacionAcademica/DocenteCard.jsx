@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { MdVerified, MdDescription, MdWorkspacePremium } from "react-icons/md";
 
 const getInitials = (nombres, apellidos) =>
@@ -10,7 +11,7 @@ const DocenteCard = ({
   categoria,
   orcid,
   renacyt,
-  grupoInvestigacion,
+  grupos,
   lineasInvestigacion,
   biodata,
 }) => {
@@ -40,10 +41,19 @@ const DocenteCard = ({
         </span>
       )}
 
-      {grupoInvestigacion && (
-        <p className="text-unmsm-navy text-xs italic mt-3">
-          {grupoInvestigacion}
-        </p>
+      {grupos?.length > 0 && (
+        <div className="flex flex-wrap gap-x-2 gap-y-1 mt-3">
+          {grupos.map((g) => (
+            <Link
+              key={g.id}
+              to={`/informacion-academica/grupos-investigacion/${g.id}`}
+              className="text-unmsm-navy text-xs italic hover:text-unmsm-blue hover:underline"
+              title={g.nombre}
+            >
+              {g.nombre_corto || g.nombre}
+            </Link>
+          ))}
+        </div>
       )}
 
       {lineasInvestigacion?.length > 0 && (

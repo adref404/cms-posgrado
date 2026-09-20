@@ -1,4 +1,5 @@
 import { novedadesCache } from "../data/novedadesCache";
+import { gruposInvestigacionCache } from "../data/gruposInvestigacionCache";
 import programasPosgrado from "../data/programas";
 
 // A qué lista ("/programas/maestria", etc.) vuelve el breadcrumb de un
@@ -34,6 +35,7 @@ const BREADCRUMB_MAP = {
   "/comunicados": { seccion: "Actualidad", subseccion: "Comunicados" },
 
   "/informacion-academica/docentes": { seccion: "Información Académica", subseccion: "Plana Docente" },
+  "/informacion-academica/grupos-investigacion": { seccion: "Información Académica", subseccion: "Grupos de Investigación" },
   "/informacion-academica/plan-estudios": { seccion: "Información Académica", subseccion: "Plan de Estudios" },
   "/informacion-academica/preguntas-frecuentes": { seccion: "Información Académica", subseccion: "Preguntas Frecuentes" },
 
@@ -70,6 +72,17 @@ export const getBreadcrumb = (pathname) => {
       subseccion: item.tipo,
       subseccionTo: PROGRAMA_LIST_PATH[item.tipo] || "/programas/maestria",
       detalle: item.name,
+    };
+  }
+
+  if (pathname.startsWith("/informacion-academica/grupos-investigacion/")) {
+    const id = pathname.slice("/informacion-academica/grupos-investigacion/".length);
+    const grupo = gruposInvestigacionCache.lista.find((g) => g.id === id);
+    return {
+      seccion: "Información Académica",
+      subseccion: "Grupos de Investigación",
+      subseccionTo: "/informacion-academica/grupos-investigacion",
+      detalle: grupo ? grupo.nombre : null,
     };
   }
 

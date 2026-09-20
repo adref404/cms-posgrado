@@ -1,6 +1,7 @@
 import { useMemo } from "react";
 import { useSupabaseCollection } from "./useSupabaseCollection";
 import { usePlanaDocente } from "./usePlanaDocente";
+import { useGruposInvestigacion } from "./useGruposInvestigacion";
 import { searchIndexEstatico } from "../data/searchIndex";
 import { normalizeText } from "../utils/normalizeText";
 
@@ -15,6 +16,7 @@ export const useSiteSearch = (query) => {
   const { data: eventos } = useSupabaseCollection("eventos");
   const { data: comunicados } = useSupabaseCollection("comunicados");
   const { docentes } = usePlanaDocente();
+  const { grupos } = useGruposInvestigacion();
 
   const indiceCompleto = useMemo(() => {
     const dinamico = [
@@ -42,9 +44,15 @@ export const useSiteSearch = (query) => {
         ruta: "/informacion-academica/docentes",
         seccion: "Plana Docente",
       })),
+      ...grupos.map((g) => ({
+        titulo: g.nombre,
+        descripcion: g.nombre_corto,
+        ruta: `/informacion-academica/grupos-investigacion/${g.id}`,
+        seccion: "Grupos de Investigación",
+      })),
     ];
     return [...searchIndexEstatico, ...dinamico];
-  }, [noticias, eventos, comunicados, docentes]);
+  }, [noticias, eventos, comunicados, docentes, grupos]);
 
   const resultados = useMemo(() => {
     const term = normalizeText(query);
