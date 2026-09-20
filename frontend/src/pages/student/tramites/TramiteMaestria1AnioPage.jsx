@@ -10,7 +10,7 @@ import {
 const TramiteMaestria1AnioPage = () => (
   <TramiteProcesoPage
     storageKey="tramite_maestria_1anio_checklist"
-    titulo="Grado Académico de Magíster · Maestría Profesional (1 Año)"
+    titulo="Grado Académico de Magíster · 1 Año"
     subtitle="Guía completa para las maestrías de Didáctica de la Comunicación e Innovación y Didáctica de la Matemática: proyecto, expedito, sustentación y diploma."
     programasIncluidos={programasIncluidos}
     pasos={pasosMaestria1Anio}

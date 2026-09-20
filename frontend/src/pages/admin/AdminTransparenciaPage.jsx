@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from "react";
-import { MdAdd, MdEdit, MdDelete, MdClose, MdCheck, MdUploadFile } from "react-icons/md";
+import { MdAdd, MdEdit, MdDelete, MdClose, MdCheck, MdUploadFile, MdSearch } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
 import { supabase, BUCKET_TRANSPARENCIA } from "../../lib/supabaseClient";
 
@@ -50,6 +50,7 @@ const AdminTransparenciaPage = () => {
   const [guardando, setGuardando] = useState(false);
   const [subiendoArchivo, setSubiendoArchivo] = useState(false);
   const [errorForm, setErrorForm] = useState("");
+  const [busqueda, setBusqueda] = useState("");
 
   const cargar = async () => {
     setCargando(true);
@@ -62,7 +63,19 @@ const AdminTransparenciaPage = () => {
     cargar();
   }, []);
 
-  const secciones = useMemo(() => agruparPorCategoria(filas), [filas]);
+  // El buscador filtra los documentos ANTES de agrupar — así una categoría
+  // sin resultados simplemente no aparece, en vez de romper el agrupamiento
+  // con una paginación que no tendría sentido acá (esta vista es por
+  // secciones, no una lista plana).
+  const filasFiltradas = useMemo(() => {
+    const term = busqueda.trim().toLowerCase();
+    if (!term) return filas;
+    return filas.filter((f) =>
+      [f.titulo, f.descripcion, f.categoria].filter(Boolean).some((campo) => campo.toLowerCase().includes(term))
+    );
+  }, [filas, busqueda]);
+
+  const secciones = useMemo(() => agruparPorCategoria(filasFiltradas), [filasFiltradas]);
   const categoriasExistentes = useMemo(() => [...new Set(filas.map((f) => f.categoria))], [filas]);
 
   const abrirNuevo = (categoriaSugerida = "") => {
@@ -280,11 +293,28 @@ const AdminTransparenciaPage = () => {
         </form>
       ) : cargando ? (
         <p className="text-unmsm-muted text-sm">Cargando...</p>
-      ) : secciones.length === 0 ? (
-        <p className="text-unmsm-muted text-sm">
-          Todavía no hay documentos publicados. Crea el primero con el botón de arriba.
-        </p>
       ) : (
+        <>
+          <div className="relative max-w-md mb-6">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <MdSearch className="text-gray-500" />
+            </div>
+            <input
+              type="text"
+              placeholder="Buscar documento o enlace..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              className="block w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-unmsm-navy"
+            />
+          </div>
+
+          {secciones.length === 0 ? (
+            <p className="text-unmsm-muted text-sm">
+              {busqueda
+                ? `No se encontraron documentos para "${busqueda}".`
+                : "Todavía no hay documentos publicados. Crea el primero con el botón de arriba."}
+            </p>
+          ) : (
         <div className="space-y-8">
           {secciones.map((seccion) => (
             <div key={seccion.categoria}>
@@ -307,18 +337,22 @@ const AdminTransparenciaPage = () => {
                         {fila.tipo}
                       </p>
                     </div>
-                    <div className="flex items-center gap-2 flex-shrink-0">
+                    <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                       <button
                         onClick={() => abrirEditar(fila)}
-                        className="flex items-center gap-1 text-unmsm-blue hover:text-unmsm-navy text-sm font-semibold"
+                        title="Editar"
+                        aria-label="Editar"
+                        className="flex items-center gap-1 text-unmsm-blue hover:text-unmsm-navy text-sm font-semibold p-2 sm:p-0"
                       >
-                        <MdEdit /> Editar
+                        <MdEdit className="text-lg sm:text-base" /> <span className="hidden sm:inline">Editar</span>
                       </button>
                       <button
                         onClick={() => handleDelete(fila)}
-                        className="flex items-center gap-1 text-unmsm-guinda hover:text-unmsm-guinda-700 text-sm font-semibold"
+                        title="Eliminar"
+                        aria-label="Eliminar"
+                        className="flex items-center gap-1 text-unmsm-guinda hover:text-unmsm-guinda-700 text-sm font-semibold p-2 sm:p-0"
                       >
-                        <MdDelete /> Eliminar
+                        <MdDelete className="text-lg sm:text-base" /> <span className="hidden sm:inline">Eliminar</span>
                       </button>
                     </div>
                   </div>
@@ -327,6 +361,8 @@ const AdminTransparenciaPage = () => {
             </div>
           ))}
         </div>
+          )}
+        </>
       )}
     </AdminLayout>
   );

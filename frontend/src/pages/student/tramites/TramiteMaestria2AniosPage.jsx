@@ -9,7 +9,7 @@ import {
 const TramiteMaestria2AniosPage = () => (
   <TramiteProcesoPage
     storageKey="tramite_maestria_2anios_checklist"
-    titulo="Grado Académico de Magíster · Maestría (2 Años)"
+    titulo="Grado Académico de Magíster · 2 Años"
     subtitle="Guía paso a paso para completar la inscripción de proyecto, expedito, sustentación y expedición del diploma en las maestrías de 2 años."
     pasos={pasosMaestria2Anios}
     faqs={faqMaestria2Anios}

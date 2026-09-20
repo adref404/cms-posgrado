@@ -2,6 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 import { Link } from "react-router-dom";
 import { MdAdd, MdEdit, MdDelete, MdClose, MdCheck, MdUploadFile, MdSearch } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
+import ItemsPerPageSelect from "../../components/common/ItemsPerPageSelect";
+import Pagination from "../../components/common/Pagination";
 import { supabase, BUCKET_PLANA_DOCENTE } from "../../lib/supabaseClient";
 
 const TABLA = "plana_docente";
@@ -60,6 +62,8 @@ const AdminPlanaDocentePage = () => {
   const [guardando, setGuardando] = useState(false);
   const [subiendoArchivo, setSubiendoArchivo] = useState(false);
   const [errorForm, setErrorForm] = useState("");
+  const [porPagina, setPorPagina] = useState(10);
+  const [pagina, setPagina] = useState(1);
 
   const cargar = async () => {
     setCargando(true);
@@ -85,6 +89,14 @@ const AdminPlanaDocentePage = () => {
         .some((campo) => campo.toLowerCase().includes(term))
     );
   }, [filas, busqueda]);
+
+  useEffect(() => {
+    setPagina(1);
+  }, [busqueda, porPagina]);
+
+  const totalPaginas = Math.max(1, Math.ceil(filasFiltradas.length / porPagina));
+  const paginaActual = Math.min(pagina, totalPaginas);
+  const filasPaginadas = filasFiltradas.slice((paginaActual - 1) * porPagina, paginaActual * porPagina);
 
   const gradosExistentes = useMemo(() => [...new Set(filas.map((f) => f.grado).filter(Boolean))], [filas]);
   const categoriasExistentes = useMemo(() => [...new Set(filas.map((f) => f.categoria).filter(Boolean))], [filas]);
@@ -453,13 +465,22 @@ const AdminPlanaDocentePage = () => {
 
           {cargando ? (
             <p className="text-unmsm-muted text-sm">Cargando...</p>
-          ) : filasFiltradas.length === 0 ? (
-            <p className="text-unmsm-muted text-sm">
-              {busqueda ? `No se encontraron docentes para "${busqueda}".` : "Todavía no hay docentes publicados."}
-            </p>
           ) : (
-            <div className="bg-white rounded-xl border border-gray-200 shadow-sm divide-y divide-gray-100">
-              {filasFiltradas.map((fila) => (
+            <>
+              <div className="flex items-center justify-between mb-3">
+                <p className="text-unmsm-muted text-xs">
+                  {filasFiltradas.length} {filasFiltradas.length === 1 ? "docente" : "docentes"}
+                </p>
+                <ItemsPerPageSelect value={porPagina} onChange={setPorPagina} />
+              </div>
+
+              {filasFiltradas.length === 0 ? (
+                <p className="text-unmsm-muted text-sm">
+                  {busqueda ? `No se encontraron docentes para "${busqueda}".` : "Todavía no hay docentes publicados."}
+                </p>
+              ) : (
+                <div className="bg-white rounded-xl border border-gray-200 shadow-sm divide-y divide-gray-100">
+                  {filasPaginadas.map((fila) => (
                 <div key={fila.id} className="flex items-center justify-between gap-4 p-4">
                   <div className="min-w-0">
                     <p className="font-semibold text-unmsm-navy truncate">
@@ -469,23 +490,33 @@ const AdminPlanaDocentePage = () => {
                       {[fila.grado, fila.categoria].filter(Boolean).join(" · ")}
                     </p>
                   </div>
-                  <div className="flex items-center gap-2 flex-shrink-0">
+                  <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                     <button
                       onClick={() => abrirEditar(fila)}
-                      className="flex items-center gap-1 text-unmsm-blue hover:text-unmsm-navy text-sm font-semibold"
+                      title="Editar"
+                      aria-label="Editar"
+                      className="flex items-center gap-1 text-unmsm-blue hover:text-unmsm-navy text-sm font-semibold p-2 sm:p-0"
                     >
-                      <MdEdit /> Editar
+                      <MdEdit className="text-lg sm:text-base" /> <span className="hidden sm:inline">Editar</span>
                     </button>
                     <button
                       onClick={() => handleDelete(fila)}
-                      className="flex items-center gap-1 text-unmsm-guinda hover:text-unmsm-guinda-700 text-sm font-semibold"
+                      title="Eliminar"
+                      aria-label="Eliminar"
+                      className="flex items-center gap-1 text-unmsm-guinda hover:text-unmsm-guinda-700 text-sm font-semibold p-2 sm:p-0"
                     >
-                      <MdDelete /> Eliminar
+                      <MdDelete className="text-lg sm:text-base" /> <span className="hidden sm:inline">Eliminar</span>
                     </button>
                   </div>
                 </div>
-              ))}
-            </div>
+                  ))}
+                </div>
+              )}
+
+              <div className="mt-6">
+                <Pagination currentPage={paginaActual} totalPages={totalPaginas} onPageChange={setPagina} />
+              </div>
+            </>
           )}
         </>
       )}

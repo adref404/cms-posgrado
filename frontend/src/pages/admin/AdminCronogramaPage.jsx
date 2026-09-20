@@ -1,6 +1,8 @@
-import { useEffect, useState } from "react";
-import { MdAdd, MdEdit, MdDelete, MdClose, MdCheck } from "react-icons/md";
+import { useEffect, useMemo, useState } from "react";
+import { MdAdd, MdEdit, MdDelete, MdClose, MdCheck, MdSearch } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
+import ItemsPerPageSelect from "../../components/common/ItemsPerPageSelect";
+import Pagination from "../../components/common/Pagination";
 import { supabase } from "../../lib/supabaseClient";
 import { OPCIONES_ICONO, ICONOS_CRONOGRAMA, ICONO_POR_DEFECTO } from "../../data/iconosCronograma";
 
@@ -34,6 +36,9 @@ const AdminCronogramaPage = () => {
   const [valores, setValores] = useState({});
   const [guardando, setGuardando] = useState(false);
   const [errorForm, setErrorForm] = useState("");
+  const [busqueda, setBusqueda] = useState("");
+  const [porPagina, setPorPagina] = useState(10);
+  const [pagina, setPagina] = useState(1);
 
   const cargar = async () => {
     setCargando(true);
@@ -49,8 +54,24 @@ const AdminCronogramaPage = () => {
   useEffect(() => {
     cargar();
     setEditando(null);
+    setBusqueda("");
+    setPagina(1);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tipoActivo]);
+
+  useEffect(() => {
+    setPagina(1);
+  }, [busqueda, porPagina]);
+
+  const filasFiltradas = useMemo(() => {
+    const term = busqueda.trim().toLowerCase();
+    if (!term) return filas;
+    return filas.filter((f) => f.evento?.toLowerCase().includes(term));
+  }, [filas, busqueda]);
+
+  const totalPaginas = Math.max(1, Math.ceil(filasFiltradas.length / porPagina));
+  const paginaActual = Math.min(pagina, totalPaginas);
+  const filasPaginadas = filasFiltradas.slice((paginaActual - 1) * porPagina, paginaActual * porPagina);
 
   const abrirNuevo = () => {
     const siguienteOrden = filas.length > 0 ? Math.max(...filas.map((f) => f.orden)) + 1 : 1;
@@ -279,8 +300,32 @@ const AdminCronogramaPage = () => {
           Todavía no hay hitos en este cronograma. Crea el primero con el botón de arriba.
         </p>
       ) : (
+        <>
+          <div className="relative max-w-md mb-4">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <MdSearch className="text-gray-500" />
+            </div>
+            <input
+              type="text"
+              placeholder="Buscar hito..."
+              value={busqueda}
+              onChange={(e) => setBusqueda(e.target.value)}
+              className="block w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-unmsm-navy"
+            />
+          </div>
+
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-unmsm-muted text-xs">
+              {filasFiltradas.length} {filasFiltradas.length === 1 ? "hito" : "hitos"}
+            </p>
+            <ItemsPerPageSelect value={porPagina} onChange={setPorPagina} />
+          </div>
+
+          {filasFiltradas.length === 0 ? (
+            <p className="text-unmsm-muted text-sm">No se encontraron hitos para "{busqueda}".</p>
+          ) : (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm divide-y divide-gray-100">
-          {filas.map((fila) => {
+          {filasPaginadas.map((fila) => {
             const Icono = ICONOS_CRONOGRAMA[fila.icono] || ICONO_POR_DEFECTO;
             return (
               <div key={fila.id} className="flex items-center justify-between gap-4 p-4">
@@ -298,24 +343,34 @@ const AdminCronogramaPage = () => {
                     </p>
                   </div>
                 </div>
-                <div className="flex items-center gap-2 flex-shrink-0">
+                <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                   <button
                     onClick={() => abrirEditar(fila)}
-                    className="flex items-center gap-1 text-unmsm-blue hover:text-unmsm-navy text-sm font-semibold"
+                    title="Editar"
+                    aria-label="Editar"
+                    className="flex items-center gap-1 text-unmsm-blue hover:text-unmsm-navy text-sm font-semibold p-2 sm:p-0"
                   >
-                    <MdEdit /> Editar
+                    <MdEdit className="text-lg sm:text-base" /> <span className="hidden sm:inline">Editar</span>
                   </button>
                   <button
                     onClick={() => handleDelete(fila)}
-                    className="flex items-center gap-1 text-unmsm-guinda hover:text-unmsm-guinda-700 text-sm font-semibold"
+                    title="Eliminar"
+                    aria-label="Eliminar"
+                    className="flex items-center gap-1 text-unmsm-guinda hover:text-unmsm-guinda-700 text-sm font-semibold p-2 sm:p-0"
                   >
-                    <MdDelete /> Eliminar
+                    <MdDelete className="text-lg sm:text-base" /> <span className="hidden sm:inline">Eliminar</span>
                   </button>
                 </div>
               </div>
             );
           })}
         </div>
+          )}
+
+          <div className="mt-6">
+            <Pagination currentPage={paginaActual} totalPages={totalPaginas} onPageChange={setPagina} />
+          </div>
+        </>
       )}
     </AdminLayout>
   );

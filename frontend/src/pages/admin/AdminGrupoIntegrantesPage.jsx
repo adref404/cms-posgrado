@@ -12,6 +12,8 @@ import {
   MdArrowBack,
 } from "react-icons/md";
 import AdminLayout from "../../components/admin/AdminLayout";
+import ItemsPerPageSelect from "../../components/common/ItemsPerPageSelect";
+import Pagination from "../../components/common/Pagination";
 import { supabase } from "../../lib/supabaseClient";
 
 const TABLA = "grupo_investigacion_integrantes";
@@ -58,6 +60,9 @@ const AdminGrupoIntegrantesPage = () => {
   const [valores, setValores] = useState({});
   const [guardando, setGuardando] = useState(false);
   const [errorForm, setErrorForm] = useState("");
+  const [busquedaLista, setBusquedaLista] = useState("");
+  const [porPagina, setPorPagina] = useState(10);
+  const [pagina, setPagina] = useState(1);
 
   const [busquedaDocente, setBusquedaDocente] = useState("");
   const [mostrarCrearDocente, setMostrarCrearDocente] = useState(false);
@@ -85,6 +90,22 @@ const AdminGrupoIntegrantesPage = () => {
     cargar();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [grupoId]);
+
+  useEffect(() => {
+    setPagina(1);
+  }, [busquedaLista, porPagina]);
+
+  const filasFiltradas = useMemo(() => {
+    const term = busquedaLista.trim().toLowerCase();
+    if (!term) return filas;
+    return filas.filter((f) =>
+      [f.nombres, f.apellidos, f.vinculo_unmsm, f.facultad].filter(Boolean).some((campo) => campo.toLowerCase().includes(term))
+    );
+  }, [filas, busquedaLista]);
+
+  const totalPaginas = Math.max(1, Math.ceil(filasFiltradas.length / porPagina));
+  const paginaActual = Math.min(pagina, totalPaginas);
+  const filasPaginadas = filasFiltradas.slice((paginaActual - 1) * porPagina, paginaActual * porPagina);
 
   const gradosExistentes = useMemo(() => [...new Set(docentes.map((d) => d.grado).filter(Boolean))], [docentes]);
   const categoriasExistentes = useMemo(() => [...new Set(docentes.map((d) => d.categoria).filter(Boolean))], [docentes]);
@@ -479,8 +500,32 @@ const AdminGrupoIntegrantesPage = () => {
           Todavía no hay integrantes en este grupo. Agrega el primero con el botón de arriba.
         </p>
       ) : (
+        <>
+          <div className="relative max-w-md mb-4">
+            <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+              <MdSearch className="text-gray-500" />
+            </div>
+            <input
+              type="text"
+              placeholder="Buscar integrante..."
+              value={busquedaLista}
+              onChange={(e) => setBusquedaLista(e.target.value)}
+              className="block w-full pl-10 pr-4 py-2 border border-gray-200 rounded-lg text-sm bg-white focus:outline-none focus:ring-2 focus:ring-unmsm-navy"
+            />
+          </div>
+
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-unmsm-muted text-xs">
+              {filasFiltradas.length} {filasFiltradas.length === 1 ? "integrante" : "integrantes"}
+            </p>
+            <ItemsPerPageSelect value={porPagina} onChange={setPorPagina} />
+          </div>
+
+          {filasFiltradas.length === 0 ? (
+            <p className="text-unmsm-muted text-sm">No se encontraron integrantes para "{busquedaLista}".</p>
+          ) : (
         <div className="bg-white rounded-xl border border-gray-200 shadow-sm divide-y divide-gray-100">
-          {filas.map((fila) => (
+          {filasPaginadas.map((fila) => (
             <div key={fila.id} className="flex items-center justify-between gap-4 p-4">
               <div className="min-w-0 flex items-center gap-2">
                 {fila.docente_id && <MdLink className="text-unmsm-green flex-shrink-0" title="Enlazado a Plana Docente" />}
@@ -493,23 +538,33 @@ const AdminGrupoIntegrantesPage = () => {
                   </p>
                 </div>
               </div>
-              <div className="flex items-center gap-2 flex-shrink-0">
+              <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
                 <button
                   onClick={() => abrirEditar(fila)}
-                  className="flex items-center gap-1 text-unmsm-blue hover:text-unmsm-navy text-sm font-semibold"
+                  title="Editar"
+                  aria-label="Editar"
+                  className="flex items-center gap-1 text-unmsm-blue hover:text-unmsm-navy text-sm font-semibold p-2 sm:p-0"
                 >
-                  <MdEdit /> Editar
+                  <MdEdit className="text-lg sm:text-base" /> <span className="hidden sm:inline">Editar</span>
                 </button>
                 <button
                   onClick={() => handleDelete(fila)}
-                  className="flex items-center gap-1 text-unmsm-guinda hover:text-unmsm-guinda-700 text-sm font-semibold"
+                  title="Quitar"
+                  aria-label="Quitar"
+                  className="flex items-center gap-1 text-unmsm-guinda hover:text-unmsm-guinda-700 text-sm font-semibold p-2 sm:p-0"
                 >
-                  <MdDelete /> Quitar
+                  <MdDelete className="text-lg sm:text-base" /> <span className="hidden sm:inline">Quitar</span>
                 </button>
               </div>
             </div>
           ))}
         </div>
+          )}
+
+          <div className="mt-6">
+            <Pagination currentPage={paginaActual} totalPages={totalPaginas} onPageChange={setPagina} />
+          </div>
+        </>
       )}
     </AdminLayout>
   );
